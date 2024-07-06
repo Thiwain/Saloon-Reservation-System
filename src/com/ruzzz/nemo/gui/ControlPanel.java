@@ -109,7 +109,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         jLabel4.setText("Admin");
 
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
         jScrollPane1.setViewportView(jPanel3);
@@ -226,7 +226,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 0, 1, 0));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 1));
         jScrollPane2.setViewportView(jPanel7);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
