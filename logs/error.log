@@ -1,0 +1,10 @@
+Jul 06, 2024 12:16:52 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error:java.sql.SQLSyntaxErrorException: Table 'saloon_nemo.login_dataaa' doesn't exist
+Jul 06, 2024 12:23:37 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error: java.sql.SQLSyntaxErrorException: Table 'saloon_nemo.login_dataq' doesn't exist
+Jul 06, 2024 12:28:04 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error: java.sql.SQLSyntaxErrorException: Table 'saloon_nemo.login_dataq' doesn't exist
+Jul 06, 2024 12:31:38 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error: java.sql.SQLSyntaxErrorException: Table 'saloon_nemo.login_dataq' doesn't exist
+Jul 06, 2024 3:08:13 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.`status_id`=`status`.`id` WHERE `email`='thiwainm@gmail.com' AND `password`='12' at line 1
