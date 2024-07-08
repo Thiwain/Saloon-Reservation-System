@@ -32,3 +32,7 @@ Jul 06, 2024 5:45:44 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
 INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
 Jul 07, 2024 1:40:33 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
 INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 07, 2024 11:07:33 PM com.ruzzz.nemo.panel.CustomerPanel jButton5ActionPerformed
+INFO: Customer Registered by Name:null null| Customer :Mobile:0779996661Name :Meham Dose
+Jul 07, 2024 11:11:37 PM com.ruzzz.nemo.panel.CustomerPanel jButton5ActionPerformed
+INFO: Customer Registered by Name:null null| Customer :Mobile:0778886669Name :Bose Doel

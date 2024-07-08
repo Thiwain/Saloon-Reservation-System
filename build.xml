@@ -106,4 +106,41 @@
     <target name="run" depends="jar">
         <java jar="${build.dir}/MyJavaProject.jar" fork="true"/>
     </target>
+
+     <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="lib.dir" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.dir}/lib"/>
+        <jar destfile="${build.dir}/MyJavaProject.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="lk.ruzz.sample.Test"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${build.dir}/MyJavaProject.jar" fork="true"/>
+    </target>
 </project>

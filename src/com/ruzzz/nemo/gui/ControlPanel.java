@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
+import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.WelcomePanel;
 import com.ruzzz.nemo.properties.ThemeManager;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
@@ -38,7 +39,11 @@ public class ControlPanel extends javax.swing.JFrame {
         loadPanel(new WelcomePanel());
 
 //        loadAccessPanelToSideBar();
-        loadAccessPanel(new AdminAccessPanel());
+        loadAccessPanel(new AdminAccessPanel(this));
+    }
+
+    public void loadCustomer() {
+        loadPanel(new CustomerPanel(this));
     }
 
     private void loadPanel(JPanel panel) {
@@ -60,7 +65,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void loadAccessPanelToSideBar() {
         if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
-            loadAccessPanel(new AdminAccessPanel());
+            loadAccessPanel(new AdminAccessPanel(this));
         }
     }
 

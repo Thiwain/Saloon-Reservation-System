@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.model;
 
+import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -58,6 +59,7 @@ public class EmailSender {
             return "OK";
         } catch (MessagingException mex) {
             mex.printStackTrace();
+            errorLogger.warning("Email Sender Exception; Error: " + mex);
             return "Failed to send email: " + mex.getMessage();
         }
     }

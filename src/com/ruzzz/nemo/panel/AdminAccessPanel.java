@@ -4,6 +4,9 @@
  */
 package com.ruzzz.nemo.panel;
 
+import com.ruzzz.nemo.gui.ControlPanel;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Acer
@@ -13,8 +16,11 @@ public class AdminAccessPanel extends javax.swing.JPanel {
     /**
      * Creates new form AdminAccessPanel
      */
-    public AdminAccessPanel() {
+    private static ControlPanel cpanel;
+
+    public AdminAccessPanel(JFrame accessPanel) {
         initComponents();
+        cpanel = (ControlPanel) accessPanel;
     }
 
     /**
@@ -204,7 +210,7 @@ public class AdminAccessPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -224,7 +230,7 @@ public class AdminAccessPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
-        // TODO add your handling code here:
+        cpanel.loadCustomer();
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
