@@ -9,6 +9,7 @@ import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
+import com.ruzzz.nemo.panel.EmployeePanel;
 import com.ruzzz.nemo.panel.WelcomePanel;
 import com.ruzzz.nemo.properties.ThemeManager;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
@@ -38,12 +39,16 @@ public class ControlPanel extends javax.swing.JFrame {
 
         loadPanel(new WelcomePanel());
 
-//        loadAccessPanelToSideBar();
+//      loadAccessPanelToSideBar();
         loadAccessPanel(new AdminAccessPanel(this));
     }
 
     public void loadCustomer() {
         loadPanel(new CustomerPanel(this));
+    }
+
+    public void loadEmployee() {
+        loadPanel(new EmployeePanel(this));
     }
 
     private void loadPanel(JPanel panel) {

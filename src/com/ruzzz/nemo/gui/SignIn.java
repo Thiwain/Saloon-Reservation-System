@@ -7,6 +7,7 @@ package com.ruzzz.nemo.gui;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.LoggedUserData;
+import com.ruzzz.nemo.model.PasswordUtil;
 import com.ruzzz.nemo.model.Status;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
@@ -126,12 +127,11 @@ public class SignIn extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox1))
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCheckBox1))
+                            .addComponent(jTextField1))
                         .addContainerGap(30, Short.MAX_VALUE))))
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -166,9 +166,9 @@ public class SignIn extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(30, 30, 30))
         );
 
@@ -251,40 +251,46 @@ public class SignIn extends javax.swing.JFrame {
 
         if (loginValidation()) {
             try {
-                ResultSet rs = MySQL.execute("SELECT * FROM `login_data` INNER JOIN `status` ON `login_data`.`status_id`=`status`.`id` WHERE `email`='" + email + "' AND `password`='" + password + "'");
+                ResultSet rs = MySQL.execute("SELECT * FROM `login_data` INNER JOIN `status` ON `login_data`.`status_id`=`status`.`id` WHERE `email`='" + email + "'");
                 if (rs.next()) {
 
-                    if (rs.getString("status").equals(Status.ACTIVE.name())) {
-                        ResultSet userData = MySQL.execute("SELECT * FROM `employee` INNER JOIN `role` ON `employee`.`role_id`=`role`.`id` WHERE `user_id`='" + rs.getString("employee_user_id") + "'");
+                    PasswordUtil pwu = new PasswordUtil();
 
-                        if (userData.next()) {
+                    if (pwu.checkPassword(password, rs.getString("password"))) {
 
-                            LoggedUserData.setUserId(userData.getString("user_id"));
-                            LoggedUserData.setUserEmail(jTextField1.getText());
-                            LoggedUserData.setFirstName(userData.getString("first_name"));
-                            LoggedUserData.setLastName(userData.getString("last_name"));
-                            LoggedUserData.setMobile(userData.getString("mobile"));
-                            LoggedUserData.setGenderId(userData.getString("gender_id"));
-                            LoggedUserData.setUserPassword(password);
-                            LoggedUserData.setUserRole(userData.getString("role"));
+                        if (rs.getString("status").equals(Status.ACTIVE.name())) {
+                            ResultSet userData = MySQL.execute("SELECT * FROM `employee` INNER JOIN `role` ON `employee`.`role_id`=`role`.`id` WHERE `user_id`='" + rs.getString("employee_user_id") + "'");
 
-                            infoLogger.info("LOGIN SUCCESS; Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| " + "Email:" + email);
+                            if (userData.next()) {
 
-                            MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + userData.getString("user_id") + "', CURRENT_TIMESTAMP, '" + userData.getString("first_name") + " " + userData.getString("last_name") + " Logged in into the system')");
+                                LoggedUserData.setUserId(userData.getString("user_id"));
+                                LoggedUserData.setUserEmail(jTextField1.getText());
+                                LoggedUserData.setFirstName(userData.getString("first_name"));
+                                LoggedUserData.setLastName(userData.getString("last_name"));
+                                LoggedUserData.setMobile(userData.getString("mobile"));
+                                LoggedUserData.setGenderId(userData.getString("gender_id"));
+                                LoggedUserData.setUserPassword(password);
+                                LoggedUserData.setUserRole(userData.getString("role"));
 
-                            new ProgressToControlePanel().setVisible(true);
-                            this.dispose();
+                                infoLogger.info("LOGIN SUCCESS; Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| " + "Email:" + email);
+
+                                MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + userData.getString("user_id") + "', CURRENT_TIMESTAMP, '" + userData.getString("first_name") + " " + userData.getString("last_name") + " Logged in into the system')");
+
+                                new ProgressToControlePanel().setVisible(true);
+                                this.dispose();
+
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Deactivated Account !", "", JOptionPane.WARNING_MESSAGE);
+                            infoLogger.info("DEACTIVATED ACCOUNT TRIED TO LOGIN: LOGIN FAILED;" + "| " + "Email:" + email);
+                            MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + rs.getString("employee_user_id") + "', CURRENT_TIMESTAMP, 'Deativated Email:" + email + " tried to logged in into the system')");
 
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Deactivated Account !", "", JOptionPane.WARNING_MESSAGE);
-                        infoLogger.info("DEACTIVATED ACCOUNT TRIED TO LOGIN: LOGIN FAILED;" + "| " + "Email:" + email);
-                        MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + rs.getString("employee_user_id") + "', CURRENT_TIMESTAMP, 'Deativated Email:" + email + " tried to logged in into the system')");
-
+                        Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Password !");
                     }
-
                 } else {
-                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Details !");
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Email !");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

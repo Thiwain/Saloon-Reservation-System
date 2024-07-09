@@ -76,3 +76,39 @@ Jul 08, 2024 2:53:45 AM com.ruzzz.nemo.panel.CustomerPanel customerSort
 WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.sql.ResultSet.next()" because "rs" is null
 Jul 08, 2024 3:46:36 AM com.ruzzz.nemo.panel.CustomerPanel customerSort
 WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
+Jul 08, 2024 3:00:08 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:09 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:10 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:10 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:10 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:10 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:00:13 PM com.ruzzz.nemo.panel.CustomerPanel jTextField6KeyReleased
+WARNING: Customer Loading error from search; Error: java.sql.SQLException: Column 'gender' not found.
+Jul 08, 2024 3:07:54 PM com.ruzzz.nemo.panel.CustomerPanel jButton5ActionPerformed
+WARNING: CUSTOMER REGISTRATION Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 08, 2024 3:10:45 PM com.ruzzz.nemo.panel.CustomerPanel jButton4ActionPerformed
+WARNING: CUSTOMER DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 09, 2024 8:28:15 PM com.ruzzz.nemo.panel.EmployeePanel loadEmployees
+WARNING: EMPLOYEE LOADING TABLE Exception; Error: java.lang.NullPointerException: Cannot invoke "Object.toString()" because the return value of "javax.swing.JComboBox.getSelectedItem()" is null
+Jul 09, 2024 8:29:22 PM com.ruzzz.nemo.panel.EmployeePanel loadEmployees
+WARNING: EMPLOYEE LOADING TABLE Exception; Error: java.lang.NullPointerException: Cannot invoke "Object.toString()" because the return value of "javax.swing.JComboBox.getSelectedItem()" is null
+Jul 09, 2024 9:08:30 PM com.ruzzz.nemo.panel.EmployeePanel loadEmployees
+WARNING: EMPLOYEE LOADING TABLE Exception; Error: java.lang.NullPointerException: Cannot invoke "Object.toString()" because the return value of "javax.swing.JComboBox.getSelectedItem()" is null
+Jul 09, 2024 9:11:52 PM com.ruzzz.nemo.panel.EmployeePanel loadEmployees
+WARNING: EMPLOYEE LOADING TABLE Exception; Error: java.sql.SQLSyntaxErrorException: Not unique table/alias: 'login_data'
+Jul 09, 2024 9:11:53 PM com.ruzzz.nemo.panel.EmployeePanel loadEmployees
+WARNING: EMPLOYEE LOADING TABLE Exception; Error: java.sql.SQLSyntaxErrorException: Not unique table/alias: 'login_data'
+Jul 10, 2024 1:59:47 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 10, 2024 2:02:35 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 10, 2024 2:03:59 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 10, 2024 2:04:04 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))

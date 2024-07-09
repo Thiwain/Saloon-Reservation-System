@@ -7,6 +7,7 @@ package com.ruzzz.nemo.panel;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.LoggedUserData;
+import com.ruzzz.nemo.model.Role;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.validation.ValidationProcess;
@@ -22,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
-import javax.mail.internet.ParseException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,6 +43,11 @@ public class CustomerPanel extends javax.swing.JPanel {
         customerSort();
         cP = (ControlPanel) cp;
         jButton4.setEnabled(false);
+        if (!LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
+            jTextField5.setEnabled(false);
+            jComboBox2.setEnabled(false);
+            jButton2.setEnabled(false);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +79,8 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jTextField5 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -227,19 +234,25 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".excel", ".pdf" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".csv", ".xlsx" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
             }
         });
 
+        jLabel9.setText("File Name");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(746, Short.MAX_VALUE)
+                .addContainerGap(564, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -247,12 +260,15 @@ public class CustomerPanel extends javax.swing.JPanel {
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(jComboBox2))
-                .addGap(10, 10, 10))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         add(jPanel11, java.awt.BorderLayout.PAGE_END);
@@ -279,7 +295,19 @@ public class CustomerPanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("From");
 
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox3ItemStateChanged(evt);
+            }
+        });
+
         jLabel10.setText("Sort by gender");
+
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField6KeyReleased(evt);
+            }
+        });
 
         jLabel11.setText("Search by Mobile, Name or Email");
 
@@ -320,16 +348,16 @@ public class CustomerPanel extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -369,6 +397,9 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -380,10 +411,10 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addContainerGap()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -411,6 +442,7 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         } catch (Exception e) {
             e.printStackTrace();
+            errorLogger.warning("GENDER LOADING Exception; Error: " + e);
         }
 
     }
@@ -646,36 +678,79 @@ public class CustomerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        printExcel();
-
+        if (!jTextField5.getText().isEmpty()) {
+            printExcel();
+        } else {
+            JOptionPane.showMessageDialog(null, "File Name is Required!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
+        String searchText = jTextField6.getText();
+        jComboBox3.setSelectedIndex(0);
+
+        try {
+            ResultSet rs = MySQL.execute("SELECT *\n"
+                    + "FROM customer INNER JOIN gender ON customer.gender_id = gender.id\n"
+                    + "WHERE mobile LIKE '" + searchText + "%'\n"
+                    + "   OR first_name LIKE '%" + searchText + "%'\n"
+                    + "   OR last_name LIKE '%" + searchText + "%'\n"
+                    + "   OR email LIKE '%" + searchText + "%'");
+
+            DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+            tableModel.setRowCount(0);
+            int rowNO = 0;
+            while (rs.next()) {
+                rowNO++;
+                Vector<String> customerList = new Vector<>();
+                customerList.add(String.valueOf(rowNO));
+                customerList.add(rs.getString("mobile"));
+                customerList.add(rs.getString("first_name"));
+                customerList.add(rs.getString("last_name"));
+                customerList.add(rs.getString("gender"));
+                customerList.add(rs.getString("email"));
+                customerList.add(rs.getString("time_stamp"));
+                tableModel.addRow(customerList);
+//                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
+            }
+
+        } catch (Exception e) {
+            errorLogger.warning("Customer Loading error from search; Error: " + e);
+        }
+
+
+    }//GEN-LAST:event_jTextField6KeyReleased
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+        customerSort();
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
-
             XSSFSheet spreadsheet = workbook.createSheet(" Customer Data ");
-
             XSSFRow row;
 
             Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
 
             for (int i = 0; i < jTable1.getRowCount(); i++) {
                 studentData.put(String.valueOf(i),
-                        new Object[]{jTable1.getValueAt(i, 0), jTable1.getValueAt(i, 1), jTable1.getValueAt(i, 2), jTable1.getValueAt(i, 3), jTable1.getValueAt(i, 4), jTable1.getValueAt(i, 5), jTable1.getValueAt(i, 6)});
+                        new Object[]{jTable1.getValueAt(i, 0), 
+                            jTable1.getValueAt(i, 1),
+                            jTable1.getValueAt(i, 2), 
+                            jTable1.getValueAt(i, 3),
+                            jTable1.getValueAt(i, 4), 
+                            jTable1.getValueAt(i, 5), 
+                            jTable1.getValueAt(i, 6)});
             }
 
             Set<String> keyid = studentData.keySet();
 
             int rowid = 0;
-
             for (String key : keyid) {
-
                 row = spreadsheet.createRow(rowid++);
                 Object[] objectArr = studentData.get(key);
                 int cellid = 0;
-
                 for (Object obj : objectArr) {
                     Cell cell = row.createCell(cellid++);
                     cell.setCellValue((String) obj);
@@ -683,12 +758,12 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
 
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/CustomerDataSheet" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + ".xlsx"));
+                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
 
             workbook.write(out);
             out.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
 
@@ -714,6 +789,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -733,6 +809,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }
