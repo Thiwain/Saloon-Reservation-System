@@ -64,3 +64,25 @@ Jul 10, 2024 2:09:17 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerform
 INFO: EMPLYOYEE DETAILS UPDATEDBY Email:null OF EMPLOYEE:AD_10002
 Jul 10, 2024 2:10:53 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
 INFO: EMPLYOYEE DETAILS UPDATEDBY Email:null OF EMPLOYEE:AD_10002
+Jul 10, 2024 2:41:37 AM com.ruzzz.nemo.gui.SignIn jButton1ActionPerformed
+INFO: LOGIN WITH RECOVARY MODE -> SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 10, 2024 12:28:56 PM com.ruzzz.nemo.panel.EmployeePanel jButton5ActionPerformed
+INFO: EMPLYOYEE PASSWORD UPDATEDBY Email:null OF EMPLOYEE:CA_10590
+Jul 10, 2024 12:32:14 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Winy Disel) REGISTERED BY null
+Jul 10, 2024 2:32:17 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Windy Doel) REGISTERED BY null
+Jul 10, 2024 2:45:40 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, KimJo Oune) REGISTERED BY null
+Jul 10, 2024 2:48:00 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Vollie Bastian) REGISTERED BY null
+Jul 10, 2024 2:50:14 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Jason Mamoa) REGISTERED BY null
+Jul 10, 2024 2:52:37 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Robert Dawny) REGISTERED BY null
+Jul 10, 2024 3:08:58 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Joain  Joejoe) REGISTERED BY null
+Jul 10, 2024 3:09:19 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Joain  Joejoe) REGISTERED BY null
+Jul 10, 2024 4:06:26 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(mendisshayama@gmail.com, Jhonathan Doel) REGISTERED BY null

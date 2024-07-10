@@ -16,6 +16,7 @@ import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import com.ruzzz.nemo.validation.ValidationProcess;
 import javax.swing.ImageIcon;
 import java.sql.ResultSet;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import raven.toast.Notifications;
 
@@ -189,6 +190,11 @@ public class SignIn extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public static int generateSixDigitNumber() {
+        Random random = new Random();
+        return 100000 + random.nextInt(900000);
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String email = JOptionPane.showInputDialog(this, "Type Your Email");
@@ -199,14 +205,48 @@ public class SignIn extends javax.swing.JFrame {
                     ResultSet rs = MySQL.execute("SELECT * FROM `login_data` WHERE `email`='" + email + "'");
                     if (rs.next()) {
                         if (rs.getString("status_id").equals("1")) {
+
+                            int code = generateSixDigitNumber();
+
+                            MySQL.execute("UPDATE `saloon_nemo`.`login_data` SET `vcode`='" + code + "' WHERE  `email`='" + email + "'");
+
                             EmailSender es = new EmailSender();
-                            if (es.sendEmail("Saloon-Nemo(Your Password:" + rs.getString("password") + ")", "<body style=\"font-family: 'Arial', sans-serif; color: #333; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center;\">\n"
+                            if (es.sendEmail("Saloon-Nemo(Your Password:" + String.valueOf(code) + ")", "<body style=\"font-family: 'Arial', sans-serif; color: #333; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center;\">\n"
                                     + "  <div style=\"max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; background-color: #fff;\">\n"
-                                    + "    <h1 style=\"font-size: 24px; color: #2c3e50;\">Your Password Is:</h1>\n"
-                                    + "    <h3 style=\"font-size: 18px; color: #e74c3c; margin-top: 10px;\">" + rs.getString("password") + "</h3>\n"
+                                    + "    <h1 style=\"font-size: 24px; color: #2c3e50;\">Your Verification Is:</h1>\n"
+                                    + "    <h3 style=\"font-size: 18px; color: #e74c3c; margin-top: 10px;\">" + String.valueOf(code) + "</h3>\n"
                                     + "  </div>\n"
                                     + "</body>", email).equals("OK")) {
                                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Email Sent");
+                                String vcode = JOptionPane.showInputDialog(this, "Type Your Verification Code Here ");
+                                if (!vcode.isEmpty()) {
+                                    ResultSet rs2 = MySQL.execute("SELECT * FROM `login_data` WHERE `email`='" + email + "' AND `vcode`='" + vcode + "'");
+                                    if (rs2.next()) {
+                                        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Verification Success");
+                                        ResultSet userData = MySQL.execute("SELECT * FROM `employee` INNER JOIN `role` ON `employee`.`role_id`=`role`.`id` WHERE `user_id`='" + rs.getString("employee_user_id") + "'");
+
+                                        if (userData.next()) {
+
+                                            LoggedUserData.setUserId(userData.getString("user_id"));
+                                            LoggedUserData.setUserEmail(jTextField1.getText());
+                                            LoggedUserData.setFirstName(userData.getString("first_name"));
+                                            LoggedUserData.setLastName(userData.getString("last_name"));
+                                            LoggedUserData.setMobile(userData.getString("mobile"));
+                                            LoggedUserData.setGenderId(userData.getString("gender_id"));
+                                            LoggedUserData.setUserRole(userData.getString("role"));
+
+                                            infoLogger.info("LOGIN WITH RECOVARY MODE -> SUCCESS; Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| " + "Email:" + email);
+
+                                            MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + userData.getString("user_id") + "', CURRENT_TIMESTAMP, '" + userData.getString("first_name") + " " + userData.getString("last_name") + " Logged in into the system with recovary mode')");
+
+                                            new ProgressToControlePanel().setVisible(true);
+                                            this.dispose();
+
+                                        }
+                                    }
+                                } else {
+                                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Code is required");
+                                }
                             } else {
                                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Process Failed !");
                             }

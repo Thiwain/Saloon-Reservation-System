@@ -23,6 +23,7 @@ import raven.toast.Notifications;
 public class EmailSender {
 
     public String sendEmail(String mailSubject, String mailBody, String email) {
+        Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Processing....");
         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Waite Few Seconds.....");
         String to = email;
         String from = "medagamathiwain@gmail.com";

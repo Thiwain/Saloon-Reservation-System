@@ -6,7 +6,10 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
+import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.LoggedUserData;
+import com.ruzzz.nemo.model.PasswordUtil;
+import com.ruzzz.nemo.model.Role;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.validation.ValidationProcess;
@@ -18,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -50,9 +54,29 @@ public class EmployeePanel extends javax.swing.JPanel {
         loadRole();
         loadStatus();
 
+        jPanel23.setVisible(false);
+
         loadEmployees("");
 
         reset();
+    }
+
+    private Boolean validatedUpdate() {
+        if (!ValidationProcess.validateEmail(jTextField2.getText())) {
+            return false;
+        } else if (!ValidationProcess.names(jTextField3.getText())) {
+            return false;
+        } else if (!ValidationProcess.names(jTextField4.getText())) {
+            return false;
+        } else if (jComboBox3.getSelectedIndex() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Role is required!");
+            return false;
+        } else if (jComboBox7.getSelectedIndex() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Status is required!");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void reset() {
@@ -62,10 +86,18 @@ public class EmployeePanel extends javax.swing.JPanel {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jComboBox1.setSelectedIndex(0);
+        jComboBox9.setSelectedIndex(0);
         jComboBox4.setSelectedIndex(0);
         jComboBox5.setSelectedIndex(0);
         jComboBox8.setSelectedIndex(0);
         jLabel17.setText("");
+        jButton5.setEnabled(false);
         loadEmployees("");
     }
 
@@ -252,6 +284,34 @@ public class EmployeePanel extends javax.swing.JPanel {
         }
     }
 
+    private Boolean validateInsert() {
+        if (!ValidationProcess.validateMobile(jTextField6.getText())) {
+            return false;
+        } else if (!ValidationProcess.names(jTextField7.getText())) {
+            return false;
+        } else if (!ValidationProcess.names(jTextField8.getText())) {
+            return false;
+        } else if (!ValidationProcess.validateEmail(jTextField9.getText())) {
+            return false;
+        } else if (jComboBox1.getSelectedIndex() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Gender is required!");
+            return false;
+        } else if (!ValidationProcess.validatePassword(jTextField10.getText())) {
+            return false;
+        } else if (jComboBox9.getSelectedIndex() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Role is required!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static int generateRandomFiveDigitNumber() {
+        Random random = new Random();
+        int randomNumber = 10000 + random.nextInt(90000);
+        return randomNumber;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -281,6 +341,7 @@ public class EmployeePanel extends javax.swing.JPanel {
         jComboBox5 = new javax.swing.JComboBox<>();
         jComboBox7 = new javax.swing.JComboBox<>();
         jComboBox8 = new javax.swing.JComboBox<>();
+        jButton5 = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -322,6 +383,10 @@ public class EmployeePanel extends javax.swing.JPanel {
         jComboBox9 = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel12 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -437,6 +502,13 @@ public class EmployeePanel extends javax.swing.JPanel {
             }
         });
 
+        jButton5.setText("Reset Password");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -451,7 +523,9 @@ public class EmployeePanel extends javax.swing.JPanel {
                             .addGroup(jPanel16Layout.createSequentialGroup()
                                 .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel16Layout.createSequentialGroup()
                                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel16Layout.createSequentialGroup()
@@ -479,9 +553,11 @@ public class EmployeePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(4, 4, 4)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -493,7 +569,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel16Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jComboBox4, jComboBox5, jComboBox7, jComboBox8, jTextField1});
+        jPanel16Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jButton5, jComboBox4, jComboBox5, jComboBox7, jComboBox8, jTextField1});
 
         jPanel3.add(jPanel16, java.awt.BorderLayout.PAGE_START);
 
@@ -587,7 +663,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -625,11 +701,11 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel10.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel3.setText("Mobile");
         jPanel10.add(jLabel3);
 
-        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jTextField6.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel10.add(jTextField6);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -645,7 +721,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -653,18 +729,18 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel11.setLayout(new java.awt.GridLayout(2, 1, 20, 5));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel4.setText("First Name");
         jPanel11.add(jLabel4);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel5.setText("Last Name");
         jPanel11.add(jLabel5);
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jTextField7.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel11.add(jTextField7);
 
-        jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jTextField8.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel11.add(jTextField8);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -680,7 +756,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -688,11 +764,11 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel13.setLayout(new java.awt.GridLayout(2, 1, 5, 5));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel6.setText("Email");
         jPanel13.add(jLabel6);
 
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jTextField9.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel13.add(jTextField9);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -708,7 +784,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -716,18 +792,18 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel14.setLayout(new java.awt.GridLayout(2, 4, 20, 5));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel7.setText("Gender");
         jPanel14.add(jLabel7);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel8.setText("Status");
         jPanel14.add(jLabel8);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel14.add(jComboBox1);
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVE" }));
         jComboBox2.setEnabled(false);
         jPanel14.add(jComboBox2);
@@ -745,7 +821,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -753,18 +829,18 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel15.setLayout(new java.awt.GridLayout(2, 4, 20, 5));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel9.setText("Password");
         jPanel15.add(jLabel9);
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jLabel10.setText("Role");
         jPanel15.add(jLabel10);
 
-        jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jTextField10.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel15.add(jTextField10);
 
-        jComboBox9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jComboBox9.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
         jPanel15.add(jComboBox9);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -780,19 +856,42 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel22.add(jPanel9);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
         jButton1.setText("Register");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -801,14 +900,18 @@ public class EmployeePanel extends javax.swing.JPanel {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(675, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel22.add(jPanel12);
@@ -867,27 +970,131 @@ public class EmployeePanel extends javax.swing.JPanel {
         loadEmployees("");
     }//GEN-LAST:event_jComboBox8ItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private String userIdNo = String.valueOf(generateRandomFiveDigitNumber());
+    private String userIDStart = "";
 
-    private Boolean validatedUpdate() {
-        if (!ValidationProcess.validateEmail(jTextField2.getText())) {
-            return false;
-        } else if (!ValidationProcess.names(jTextField3.getText())) {
-            return false;
-        } else if (!ValidationProcess.names(jTextField4.getText())) {
-            return false;
-        } else if (jComboBox3.getSelectedIndex() == 0) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Role is required!");
-            return false;
-        } else if (jComboBox7.getSelectedIndex() == 0) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Status is required!");
-            return false;
-        } else {
-            return true;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (validateInsert()) {
+
+            if (jComboBox9.getSelectedItem().equals(Role.ADMIN.name())) {
+                userIDStart = "AD_";
+            } else if (jComboBox9.getSelectedItem().equals(Role.CAISHER.name())) {
+                userIDStart = "CA_";
+            } else if (jComboBox9.getSelectedItem().equals(Role.BARBER.name())) {
+                userIDStart = "BA_";
+            }
+
+            PasswordUtil pwu = new PasswordUtil();
+
+            try {
+                ResultSet rs = MySQL.execute("SELECT `email` FROM `login_data` WHERE `email`='" + jTextField9.getText() + "'");
+
+                if (!rs.next()) {
+                    jPanel23.setVisible(true);
+
+                    EmailSender es = new EmailSender();
+
+                    new Thread(() -> {
+                        for (int i = 0; i <= 100; i++) {
+                            jProgressBar1.setValue(i);
+
+                            jLabel12.setText(i + "%");
+
+                            switch (i) {
+                                case 1:
+                                    jLabel11.setText("Processing...");
+                                    break;
+                                case 20:
+                                    jLabel11.setText("Processing........");
+                                    break;
+                                case 30:
+                                    jLabel11.setText("Processing...");
+                                    break;
+                                case 40:
+                                    jLabel11.setText("Verifying Data........");
+                                    break;
+                                case 50:
+                                    jLabel11.setText("Sending Email...");
+                                    String mailBody = "<body style=\"font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;\">\n"
+                                            + "    <div style=\"width: 100%; padding: 20px; background-color: #ffffff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 50px auto; max-width: 600px; border-radius: 8px;\">\n"
+                                            + "        <div style=\"background-color: #007BFF; color: #ffffff; padding: 10px 20px; text-align: center; border-radius: 8px 8px 0 0;\">\n"
+                                            + "            <h2>System Login Credentials</h2>\n"
+                                            + "        </div>\n"
+                                            + "        <div style=\"padding: 20px;\">\n"
+                                            + "            <p>Dear User,</p>\n"
+                                            + "            <p>Your Account Registration Process Successful. Below are your login credentials:</p>\n"
+                                            + "            <div style=\"background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;\">\n"
+                                            + "                <p><strong>Email:</strong> <span id=\"user-email\">" + jTextField9.getText() + "</span></p>\n"
+                                            + "                <p><strong>Password:</strong> <span id=\"user-password\">" + jTextField10.getText() + "</span></p>\n"
+                                            + "            </div>\n"
+                                            + "            <p>Please keep this information secure and do not share it with anyone.</p>\n"
+                                            + "            <p>Best regards,<br>Saloon Nemo.</p>\n"
+                                            + "        </div>\n"
+                                            + "        <div style=\"text-align: center; color: #777777; font-size: 12px; padding: 10px 0;\">\n"
+                                            + "            <p>&copy; 2024 Ruzzz. All rights reserved.</p>\n"
+                                            + "        </div>\n"
+                                            + "    </div>\n"
+                                            + "</body>";
+                                    String Respone = es.sendEmail("System Registration Successful", mailBody, jTextField9.getText());
+                                    if (Respone.equals("OK")) {
+                                        try {
+                                            MySQL.execute("INSERT INTO `saloon_nemo`.`employee` "
+                                                    + "(`user_id`, `first_name`, `last_name`, `mobile`, `gender_id`, `role_id`) "
+                                                    + "VALUES"
+                                                    + " ('" + userIDStart + userIdNo + "', '" + jTextField7.getText() + "', '" + jTextField8.getText() + "', '" + jTextField6.getText() + "', '" + genderMap.get(jComboBox1.getSelectedItem().toString()) + "', '" + roleMap.get(jComboBox9.getSelectedItem().toString()) + "')");
+                                            MySQL.execute("INSERT INTO `saloon_nemo`.`login_data` "
+                                                    + "(`employee_user_id`, `email`, `password`, `status_id`) "
+                                                    + "VALUES "
+                                                    + "('" + userIDStart + userIdNo + "', '" + jTextField9.getText() + "', '" + pwu.hashPassword(jTextField10.getText()) + "', 1)");
+
+                                        } catch (Exception e) {
+                                            errorLogger.warning("EMPLOYEE REGISTRATION ERROR; Error: " + e);
+                                        }
+                                        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Registratin Successful");
+                                    } else {
+                                        Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Email");
+                                    }
+                                    break;
+                                case 60:
+                                    jLabel11.setText("Loading........");
+                                    break;
+                                case 70:
+                                    jLabel11.setText("Loading...");
+                                    break;
+                                case 80:
+                                    jLabel11.setText("Loading........");
+                                    break;
+                                case 90:
+                                    jLabel11.setText("Loading...");
+                                    break;
+                                case 100:
+                                    jLabel11.setText("Loading......");
+                                    break;
+                                default:
+                                    break;
+                            }
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+//                        this.dispose();
+                        reset();
+                        jPanel23.setVisible(false);
+                        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Registered");
+                    }).start();
+
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This Email is already taken");
+                }
+
+                infoLogger.info("EMPLOYEE(" + jTextField9.getText() + ", " + jTextField7.getText() + " " + jTextField8.getText() + ") REGISTERED BY " + LoggedUserData.getUserEmail() + "");
+            } catch (Exception e) {
+                errorLogger.warning("EMPLOYEE REGISTRATION ERROR; Error: " + e);
+            }
         }
-    }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (validatedUpdate()) {
@@ -920,6 +1127,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jButton3.setEnabled(true);
             jComboBox7.setEnabled(true);
             jComboBox3.setEnabled(true);
+            jButton5.setEnabled(true);
             int row = jTable2.getSelectedRow();
 
             jLabel17.setText(jTable2.getValueAt(row, 1).toString());
@@ -932,12 +1140,26 @@ public class EmployeePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String password = JOptionPane.showInputDialog(this, "Type Your New Password");
+        if (ValidationProcess.validatePassword(password)) {
+            PasswordUtil pwu = new PasswordUtil();
+            try {
+                MySQL.execute("UPDATE `saloon_nemo`.`login_data` SET `password`='" + pwu.hashPassword(password) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
+                infoLogger.info("EMPLYOYEE PASSWORD UPDATED" + "BY " + "Email:" + LoggedUserData.getUserEmail() + " OF " + "EMPLOYEE:" + jLabel17.getText());
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Password Updated!");
+            } catch (Exception e) {
+                errorLogger.warning("NEW PASSWORD ASSIGN ERROR; Error: " + e);
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -949,6 +1171,8 @@ public class EmployeePanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -980,6 +1204,7 @@ public class EmployeePanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -987,6 +1212,7 @@ public class EmployeePanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable2;
