@@ -74,6 +74,18 @@ public class ValidationProcess {
         }
     }
 
+    public static boolean validateEmailCustomer(String email) {
+        if (email.isEmpty()) {
+            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Email is required!");
+            return true;
+        } else if (!email.matches(Validation.EMAIL_VALIDATION.validate())) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Email is Invalid!");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static boolean validateMobile(String mobile) {
         if (mobile.isEmpty()) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Mobile number is required!");

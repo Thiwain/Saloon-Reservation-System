@@ -86,3 +86,7 @@ Jul 10, 2024 3:09:19 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerform
 INFO: EMPLOYEE(mendisshayama@gmail.com, Joain  Joejoe) REGISTERED BY null
 Jul 10, 2024 4:06:26 PM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
 INFO: EMPLOYEE(mendisshayama@gmail.com, Jhonathan Doel) REGISTERED BY null
+Jul 11, 2024 7:26:57 PM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+INFO: EMPLYOYEE DETAILS UPDATEDBY Email:null OF EMPLOYEE:CA_21012
+Jul 11, 2024 10:07:11 PM com.ruzzz.nemo.panel.ServicePanel jButton1ActionPerformed
+INFO: Service Added by Name:null null

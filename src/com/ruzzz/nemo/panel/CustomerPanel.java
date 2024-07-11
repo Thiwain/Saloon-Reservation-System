@@ -461,7 +461,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         } else if (jComboBox4.getSelectedIndex() == 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Select a Gender");
             return false;
-        } else if (!ValidationProcess.validateEmail(jTextField4.getText())) {
+        } else if (!ValidationProcess.validateEmailCustomer(jTextField4.getText())) {
             return false;
         } else {
             return true;
@@ -735,12 +735,12 @@ public class CustomerPanel extends javax.swing.JPanel {
 
             for (int i = 0; i < jTable1.getRowCount(); i++) {
                 studentData.put(String.valueOf(i),
-                        new Object[]{jTable1.getValueAt(i, 0), 
+                        new Object[]{jTable1.getValueAt(i, 0),
                             jTable1.getValueAt(i, 1),
-                            jTable1.getValueAt(i, 2), 
+                            jTable1.getValueAt(i, 2),
                             jTable1.getValueAt(i, 3),
-                            jTable1.getValueAt(i, 4), 
-                            jTable1.getValueAt(i, 5), 
+                            jTable1.getValueAt(i, 4),
+                            jTable1.getValueAt(i, 5),
                             jTable1.getValueAt(i, 6)});
             }
 

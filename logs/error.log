@@ -112,3 +112,9 @@ Jul 10, 2024 2:03:59 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerform
 WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
 Jul 10, 2024 2:04:04 AM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
 WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 11, 2024 7:26:57 PM com.ruzzz.nemo.panel.EmployeePanel jButton3ActionPerformed
+WARNING: EMPLOYEE DATA UPDATE Exception; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 11, 2024 9:30:42 PM com.ruzzz.nemo.panel.ServicePanel jButton3ActionPerformed
+WARNING: SERVICE UPDATE ERROR; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Shampoo and Conditioning'', `description`=''Washing the hair with shampoo follow' at line 1
+Jul 11, 2024 10:07:11 PM com.ruzzz.nemo.panel.ServicePanel jButton1ActionPerformed
+WARNING: SERVICE INSERT ERROR; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''SERVICE ADD BY null null' at line 1

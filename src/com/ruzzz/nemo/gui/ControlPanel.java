@@ -5,18 +5,24 @@
 package com.ruzzz.nemo.gui;
 
 import com.formdev.flatlaf.FlatLaf;
+import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.EmployeePanel;
+import com.ruzzz.nemo.panel.ServicePanel;
 import com.ruzzz.nemo.panel.WelcomePanel;
+import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
+import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.properties.ThemeManager;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -45,6 +51,10 @@ public class ControlPanel extends javax.swing.JFrame {
 
     public void loadCustomer() {
         loadPanel(new CustomerPanel(this));
+    }
+
+    public void loadServices() {
+        loadPanel(new ServicePanel(this));
     }
 
     public void loadEmployee() {
@@ -102,6 +112,11 @@ public class ControlPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Control Panel");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -299,8 +314,36 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int x = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Saloon Nemo", JOptionPane.YES_NO_OPTION);
+
+        if (x == JOptionPane.YES_OPTION) {
+
+            infoLogger.info("SYSTEM CLOSED by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
+            try {
+
+                MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
+                        + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
+                        + "'SYSTEM CLOSED BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
+
+            } catch (Exception e) {
+                errorLogger.warning("SYSTEM CLOSE LOG UPDATE ERROR; Error: " + e);
+            }
+            System.exit(0);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        infoLogger.info("SYSTEM CLOSED by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
+        try {
+
+            MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
+                    + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
+                    + "'SYSTEM CLOSED BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
+
+        } catch (Exception e) {
+            errorLogger.warning("SYSTEM CLOSE LOG UPDATE ERROR; Error: " + e);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
