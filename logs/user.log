@@ -236,3 +236,25 @@ Jul 13, 2024 10:15:05 AM com.ruzzz.nemo.gui.SignIn jButton1ActionPerformed
 INFO: LOGIN WITH RECOVARY MODE -> SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
 Jul 13, 2024 10:18:10 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 13, 2024 10:33:31 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 13, 2024 10:34:07 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 13, 2024 10:37:46 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 13, 2024 10:41:19 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 13, 2024 10:42:13 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 13, 2024 11:53:09 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 13, 2024 11:54:40 AM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(kasandun@inovaniar.com, Kasandun User) REGISTERED BY thiwainm@gmail.com
+Jul 13, 2024 11:56:44 AM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(kasandunsathsara01@gmail.com, Kasandun User) REGISTERED BY thiwainm@gmail.com
+Jul 13, 2024 11:59:27 AM com.ruzzz.nemo.panel.EmployeePanel jButton1ActionPerformed
+INFO: EMPLOYEE(kasandun@inovaniar.com, Kasandun User) REGISTERED BY thiwainm@gmail.com
+Jul 13, 2024 12:04:13 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 13, 2024 12:10:09 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com

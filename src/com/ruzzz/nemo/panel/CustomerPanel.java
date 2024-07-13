@@ -713,6 +713,8 @@ public class CustomerPanel extends javax.swing.JPanel {
                     + "   OR last_name LIKE '%" + searchText + "%'\n"
                     + "   OR email LIKE '%" + searchText + "%'");
 
+            jComboBox3.setSelectedIndex(0);
+            
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
