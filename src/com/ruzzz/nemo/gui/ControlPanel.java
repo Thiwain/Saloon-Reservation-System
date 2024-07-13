@@ -11,6 +11,7 @@ import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.EmployeePanel;
+import com.ruzzz.nemo.panel.ReservationPanel;
 import com.ruzzz.nemo.panel.ServicePanel;
 import com.ruzzz.nemo.panel.WelcomePanel;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
@@ -59,6 +60,10 @@ public class ControlPanel extends javax.swing.JFrame {
 
     public void loadEmployee() {
         loadPanel(new EmployeePanel(this));
+    }
+
+    public void loadReservation() {
+        loadPanel(new ReservationPanel(this));
     }
 
     private void loadPanel(JPanel panel) {
@@ -176,7 +181,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -237,7 +242,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 598, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jSeparator3)
@@ -264,7 +269,7 @@ public class ControlPanel extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -281,35 +286,11 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         if (jToggleButton1.isSelected()) {
-//            new Thread(() -> {
-//                for (int i = jPanel6.getWidth(); i > 1; i--) {
-////                    System.out.println(i);
-//                    jPanel6.setPreferredSize(new Dimension(i, jPanel6.getHeight()));
-//                    SwingUtilities.updateComponentTreeUI(jPanel6);
-//                    try {
-//                        Thread.sleep(0);
-//                    } catch (Exception e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }).start();
             jPanel6.setVisible(false);
             SwingUtilities.updateComponentTreeUI(jPanel6);
         } else {
             jPanel6.setVisible(true);
             SwingUtilities.updateComponentTreeUI(jPanel6);
-//            new Thread(() -> {
-//                for (int i = jPanel6.getWidth(); i < 250; i++) {
-////                    System.out.println(i);
-//                    jPanel6.setPreferredSize(new Dimension(i, jPanel6.getHeight()));
-//                    SwingUtilities.updateComponentTreeUI(jPanel6);
-//                    try {
-//                        Thread.sleep(0);
-//                    } catch (Exception e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }).start();
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
@@ -333,6 +314,8 @@ public class ControlPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        JOptionPane.showMessageDialog(null, "System is closing?");
+
         infoLogger.info("SYSTEM CLOSED by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
         try {
 
@@ -343,6 +326,7 @@ public class ControlPanel extends javax.swing.JFrame {
         } catch (Exception e) {
             errorLogger.warning("SYSTEM CLOSE LOG UPDATE ERROR; Error: " + e);
         }
+
     }//GEN-LAST:event_formWindowClosing
 
     /**

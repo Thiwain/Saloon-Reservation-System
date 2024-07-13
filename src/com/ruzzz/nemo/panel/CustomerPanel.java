@@ -43,10 +43,20 @@ public class CustomerPanel extends javax.swing.JPanel {
         customerSort();
         cP = (ControlPanel) cp;
         jButton4.setEnabled(false);
-        if (!LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
-            jTextField5.setEnabled(false);
-            jComboBox2.setEnabled(false);
-            jButton2.setEnabled(false);
+
+        try {
+            if (!LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
+                jPanel11.setVisible(false);
+                jDateChooser1.setEnabled(false);
+                jDateChooser2.setEnabled(false);
+                jButton1.setEnabled(false);
+                jComboBox1.setEnabled(false);
+                jComboBox3.setEnabled(false);
+                jButton3.setVisible(false);
+                jButton6.setVisible(true);
+            }
+        } catch (Exception e) {
+            errorLogger.warning("LOGGED USER DATA LOADING Exception; Error: " + e);
         }
     }
 
@@ -76,6 +86,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -191,6 +202,13 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/6127257_multimedia_music_refresh_repeat_song_icon (1).png"))); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -203,7 +221,9 @@ public class CustomerPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -216,7 +236,8 @@ public class CustomerPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jButton3)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addContainerGap())
@@ -414,7 +435,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -424,11 +445,8 @@ public class CustomerPanel extends javax.swing.JPanel {
     HashMap<String, String> genderMap = new HashMap<>();
 
     private void loadGenders() {
-
         Vector<String> v = new Vector<>();
-
         try {
-
             v.add("Select Gender");
             ResultSet rs = MySQL.execute("SELECT * FROM `gender`");
             while (rs.next()) {
@@ -439,12 +457,10 @@ public class CustomerPanel extends javax.swing.JPanel {
             DefaultComboBoxModel model2 = new DefaultComboBoxModel(v);
             jComboBox4.setModel(model);
             jComboBox3.setModel(model2);
-
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("GENDER LOADING Exception; Error: " + e);
         }
-
     }
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -725,6 +741,17 @@ public class CustomerPanel extends javax.swing.JPanel {
         customerSort();
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jComboBox4.setSelectedIndex(0);
+        jButton4.setEnabled(false);
+        jButton5.setEnabled(true);
+        customerSort();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -773,6 +800,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

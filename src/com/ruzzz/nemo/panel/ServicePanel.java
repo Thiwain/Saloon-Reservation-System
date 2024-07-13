@@ -32,18 +32,18 @@ import raven.toast.Notifications;
  * @author Acer
  */
 public class ServicePanel extends javax.swing.JPanel {
-    
+
     private static ControlPanel controlPanel;
-    
+
     private String serviceId;
-    
+
     public ServicePanel(JFrame cp) {
         initComponents();
         controlPanel = (ControlPanel) cp;
         loadServices("");
         jButton3.setEnabled(false);
     }
-    
+
     private void reset() {
         jTextField1.setText("");
         jFormattedTextField1.setText("");
@@ -54,7 +54,7 @@ public class ServicePanel extends javax.swing.JPanel {
         jButton3.setEnabled(false);
         jButton1.setEnabled(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -287,11 +287,11 @@ public class ServicePanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "#", "Service ID", "Title ", "Description", "Cost", "Profit", "Time(min)", "Time(hh:mm)"
+                "#", "Service ID", "Title ", "Description", "Cost", "Profit", "Total", "Time(min)", "Time(hh:mm)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -304,6 +304,20 @@ public class ServicePanel extends javax.swing.JPanel {
             }
         });
         jScrollPane2.setViewportView(jTable2);
+        if (jTable2.getColumnModel().getColumnCount() > 0) {
+            jTable2.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTable2.getColumnModel().getColumn(1).setMaxWidth(65);
+            jTable2.getColumnModel().getColumn(2).setMinWidth(200);
+            jTable2.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable2.getColumnModel().getColumn(2).setMaxWidth(200);
+            jTable2.getColumnModel().getColumn(4).setMaxWidth(70);
+            jTable2.getColumnModel().getColumn(5).setMaxWidth(70);
+            jTable2.getColumnModel().getColumn(6).setMaxWidth(70);
+            jTable2.getColumnModel().getColumn(7).setMaxWidth(90);
+            jTable2.getColumnModel().getColumn(8).setMinWidth(110);
+            jTable2.getColumnModel().getColumn(8).setPreferredWidth(110);
+            jTable2.getColumnModel().getColumn(8).setMaxWidth(110);
+        }
 
         jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
@@ -312,9 +326,9 @@ public class ServicePanel extends javax.swing.JPanel {
 
     private void loadServices(String searchText) {
         try {
-            
+
             ResultSet rs = MySQL.execute("SELECT * FROM `service` WHERE `service_name` LIKE '%" + searchText + "%' OR `description` LIKE '%" + searchText + "%'");
-            
+
             DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
@@ -327,6 +341,17 @@ public class ServicePanel extends javax.swing.JPanel {
                 employeeList.add(rs.getString("description"));
                 employeeList.add(rs.getString("cost"));
                 employeeList.add(rs.getString("profit"));
+
+                String costStr = rs.getString("cost");
+                String profitStr = rs.getString("profit");
+                try {
+                    double cost = Double.parseDouble(costStr);
+                    double profit = Double.parseDouble(profitStr);
+                    employeeList.add(String.valueOf(cost + profit));
+                } catch (NumberFormatException nfe) {
+                    employeeList.add("Invalid cost/profit");
+                }
+
                 employeeList.add(rs.getString("time_m"));
                 employeeList.add(convertMinutesToHHMM(Integer.parseInt(rs.getString("time_m"))));
                 tableModel.addRow(employeeList);
@@ -335,21 +360,21 @@ public class ServicePanel extends javax.swing.JPanel {
             errorLogger.warning("SERVICE TABLE LOADING Exception; Error: " + e);
         }
     }
-    
+
     private static String convertMinutesToHHMM(int minutes) {
         int hours = minutes / 60;
         int remainingMinutes = minutes % 60;
         return String.format("%02d:%02d", hours, remainingMinutes);
     }
-    
+
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet(" Service Data ");
             XSSFRow row;
-            
+
             Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
-            
+
             for (int i = 0; i < jTable2.getRowCount(); i++) {
                 studentData.put(String.valueOf(i),
                         new Object[]{jTable2.getValueAt(i, 0),
@@ -361,9 +386,9 @@ public class ServicePanel extends javax.swing.JPanel {
                             jTable2.getValueAt(i, 6),
                             jTable2.getValueAt(i, 7)});
             }
-            
+
             Set<String> keyid = studentData.keySet();
-            
+
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
@@ -374,7 +399,7 @@ public class ServicePanel extends javax.swing.JPanel {
                     cell.setCellValue((String) obj);
                 }
             }
-            
+
             FileOutputStream out = new FileOutputStream(
                     new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField7.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox6.getSelectedItem().toString()));
             workbook.write(out);
@@ -383,13 +408,13 @@ public class ServicePanel extends javax.swing.JPanel {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
-    
+
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentDate.format(formatter);
     }
-    
+
     private boolean validateDAta() {
         if (jTextField1.getText().isEmpty()) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Service Title is required!");
@@ -406,9 +431,9 @@ public class ServicePanel extends javax.swing.JPanel {
         } else {
             return true;
         }
-        
+
     }
-    
+
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
 
@@ -423,13 +448,16 @@ public class ServicePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField5KeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         if (validateDAta()) {
             try {
-                
+
                 int x = JOptionPane.showConfirmDialog(null, "Do you want to add this service ?", "service", JOptionPane.YES_NO_OPTION);
-                
+
                 if (x == JOptionPane.YES_OPTION) {
+                    if (jTextArea2.getText().isEmpty()) {
+                        Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Adding description might be helpful");
+                    }
                     MySQL.execute("INSERT INTO `saloon_nemo`.`service` "
                             + "(`service_name`, `description`, `cost`, `profit`, `time_m`) "
                             + "VALUES "
@@ -445,21 +473,18 @@ public class ServicePanel extends javax.swing.JPanel {
             } catch (Exception e) {
                 errorLogger.warning("SERVICE INSERT ERROR; Error: " + e);
             }
-            
-            if (jTextArea2.getText().isEmpty()) {
-                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Adding description might be helpful");
-            }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         if (evt.getClickCount() == 1) {
-            
+
             jButton3.setEnabled(true);
             jButton1.setEnabled(false);
-            
+
             int row = jTable2.getSelectedRow();
-            
+
             serviceId = jTable2.getValueAt(row, 1).toString();//SERVICE ID
             jTextField1.setText(jTable2.getValueAt(row, 2).toString());
             jTextArea2.setText(jTable2.getValueAt(row, 3).toString());
@@ -484,7 +509,7 @@ public class ServicePanel extends javax.swing.JPanel {
                     + "`profit`='" + jFormattedTextField2.getText() + "', "
                     + "`time_m`='" + jFormattedTextField1.getText() + "' "
                     + "WHERE `id`='" + serviceId + "'");
-            
+
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Service Updated!");
             reset();
         } catch (Exception e) {
