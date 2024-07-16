@@ -11,6 +11,7 @@ import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.EmployeePanel;
+import com.ruzzz.nemo.panel.ReservationListPanel;
 import com.ruzzz.nemo.panel.ReservationPanel;
 import com.ruzzz.nemo.panel.ServicePanel;
 import com.ruzzz.nemo.panel.WelcomePanel;
@@ -33,9 +34,9 @@ import javax.swing.SwingUtilities;
  */
 public class ControlPanel extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Dashboard
-     */
+    public static CustomerPanel cusPanel;
+    public static ReservationPanel resPanel;
+
     public ControlPanel() {
         initComponents();
 
@@ -48,10 +49,13 @@ public class ControlPanel extends javax.swing.JFrame {
 
 //      loadAccessPanelToSideBar();
         loadAccessPanel(new AdminAccessPanel(this));
+
+        cusPanel = new CustomerPanel(this, resPanel);
+        resPanel = new ReservationPanel(this, cusPanel);
     }
 
     public void loadCustomer() {
-        loadPanel(new CustomerPanel(this));
+        loadPanel(cusPanel);
     }
 
     public void loadServices() {
@@ -63,7 +67,7 @@ public class ControlPanel extends javax.swing.JFrame {
     }
 
     public void loadReservation() {
-        loadPanel(new ReservationPanel(this));
+        loadPanel(resPanel);
     }
 
     private void loadPanel(JPanel panel) {
@@ -181,7 +185,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -242,7 +246,7 @@ public class ControlPanel extends javax.swing.JFrame {
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 598, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 627, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jSeparator3)
@@ -265,11 +269,11 @@ public class ControlPanel extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1021, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel5, java.awt.BorderLayout.CENTER);
