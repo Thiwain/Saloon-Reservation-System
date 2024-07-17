@@ -22,7 +22,7 @@ public class ReservationPanel extends javax.swing.JPanel {
 
     private static ControlPanel cpanel;
     private static CustomerPanel cusPanel;
-    private static final String resId = generateRString();
+    private static String resId;
 
     public static ReservationListPanel resLiPanel;
 
@@ -31,19 +31,20 @@ public class ReservationPanel extends javax.swing.JPanel {
     `saloon_nemo`.`reservation` 
     (`id`, `customer_id`, `date`, `start_time`, `end_time`, `status_id`, `employee_user_id`, `cancel_status`)
     VALUES 
-    ('R10000', 1, '2024-07-15', '12:00:00', '14:00:00', 1, 'BA_26142', 2)
+    ('R10000', 1, '2024-07-15', '12:00:00', '14:00:00', 1, 'BA_26142', 2);
+    INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('R1000001', 2, 1);
      */
+    
     public ReservationPanel(JFrame cp, CustomerPanel cusP) {
         initComponents();
         cpanel = (ControlPanel) cp;
         cusPanel = (CustomerPanel) cusP;
         resLiPanel = new ReservationListPanel();
         loadPanel(new CustomerPanel(cp, this));
-//        cusPanel.hideForCaisher();
         timePicker1.setEditor(jFormattedTextField4);
         timePicker2.setEditor(jFormattedTextField5);
         loadPanel2(resLiPanel);
-
+        generateRString();
         jLabel7.setText(resId);
     }
 
@@ -63,10 +64,11 @@ public class ReservationPanel extends javax.swing.JPanel {
         }
     }
 
-    public static String generateRString() {
+    public void generateRString() {
         Random random = new Random();
         int number = random.nextInt(10000000);
-        return String.format("R%07d", number);
+        resId = String.format("R%07d", number);
+        jLabel7.setText(resId);
     }
 
     public void loadCusData() {
@@ -98,6 +100,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -118,10 +121,8 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jFormattedTextField3 = new javax.swing.JFormattedTextField();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
@@ -202,6 +203,9 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel10.add(jLabel5);
 
+        jButton4.setText("Clear");
+        jPanel10.add(jButton4);
+
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Book a reservation");
 
@@ -244,7 +248,6 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel17.setText("End Time");
         jPanel9.add(jLabel17);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel9.add(jComboBox2);
         jPanel9.add(jDateChooser2);
         jPanel9.add(jFormattedTextField4);
@@ -281,9 +284,6 @@ public class ReservationPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jButton1.setText("Cancel");
-
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
@@ -297,15 +297,9 @@ public class ReservationPanel extends javax.swing.JPanel {
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jFormattedTextField3)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-
-        jPanel15Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton3});
-
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
@@ -322,19 +316,13 @@ public class ReservationPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        jPanel15Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton3});
 
         jPanel14.add(jPanel15, java.awt.BorderLayout.LINE_START);
 
         jPanel20.setLayout(new java.awt.BorderLayout());
-
-        jButton4.setText("Clear");
 
         jButton5.setText("Add+");
 
@@ -347,10 +335,8 @@ public class ReservationPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
                 .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
                 .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
@@ -358,7 +344,6 @@ public class ReservationPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5)
                     .addComponent(jLabel7))
                 .addContainerGap())
@@ -417,7 +402,6 @@ public class ReservationPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

@@ -16,8 +16,4 @@ public class PasswordUtil {
         return BCrypt.checkpw(plainPassword, storedHash);
     }
 
-    public static void main(String[] args) {
-
-        System.out.println(new PasswordUtil().hashPassword("123#Password"));
-    }
 }

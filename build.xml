@@ -23,8 +23,11 @@
         <delete dir="${dist.dir}"/>
     </target>
 
-    <target name="compile" depends="init">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+    <target name="compile" depends="init" description="Compile the source">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" fork="true" memoryMaximumSize="1024m">
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:deprecation"/>
+            <compilerarg line="-J-XX:+UseParallelGC -J-XX:ParallelGCThreads=4"/>
             <classpath refid="classpath"/>
         </javac>
     </target>
