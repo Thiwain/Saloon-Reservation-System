@@ -524,6 +524,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                                 + " -> Registered By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
                         clearUserData();
                         customerSort();
+                        Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Registration success !");
                     }
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This mobile number already taken");
@@ -666,7 +667,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                             + " -> Updated By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
 
                     infoLogger.info("Customer Updated by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| Customer :" + "Mobile:" + jTextField1.getText() + "Name :" + jTextField2.getText() + " " + jTextField3.getText());
-
+                    Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Updated !");
                     clearUserData();
                     jTextField1.setEditable(true);
                     jButton5.setEnabled(true);
@@ -715,6 +716,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             String email = jTable1.getValueAt(row, 5).toString();
             CustomerDataBean.setcEmail(email);
             rp.loadCusData();
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Customer details passed !");
         }
 
     }//GEN-LAST:event_jTable1MouseClicked

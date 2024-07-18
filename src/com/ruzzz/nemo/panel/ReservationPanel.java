@@ -5,14 +5,21 @@
 package com.ruzzz.nemo.panel;
 
 import com.formdev.flatlaf.FlatLaf;
+import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
+import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -34,7 +41,6 @@ public class ReservationPanel extends javax.swing.JPanel {
     ('R10000', 1, '2024-07-15', '12:00:00', '14:00:00', 1, 'BA_26142', 2);
     INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('R1000001', 2, 1);
      */
-    
     public ReservationPanel(JFrame cp, CustomerPanel cusP) {
         initComponents();
         cpanel = (ControlPanel) cp;
@@ -46,6 +52,26 @@ public class ReservationPanel extends javax.swing.JPanel {
         loadPanel2(resLiPanel);
         generateRString();
         jLabel7.setText(resId);
+        loademployee();
+    }
+
+    HashMap<String, String> employeeMap = new HashMap<>();
+
+    private void loademployee() {
+        Vector<String> v = new Vector<>();
+        try {
+            v.add("Select Worker");
+            ResultSet rs = MySQL.execute("SELECT * FROM `employee` WHERE `role_id`='3'");
+            while (rs.next()) {
+                v.add(rs.getString("first_name") + " " + rs.getString("last_name"));
+                employeeMap.put(rs.getString("first_name") + " " + rs.getString("last_name"), rs.getString("user_id"));
+            }
+            DefaultComboBoxModel model = new DefaultComboBoxModel(v);
+            jComboBox2.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorLogger.warning("Employee LOADING Exception; Error: " + e);
+        }
     }
 
     private void loadPanel(JPanel panel) {
@@ -76,6 +102,25 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel3.setText(CustomerDataBean.getcFname());
         jLabel4.setText(CustomerDataBean.getcLname());
         jLabel5.setText(CustomerDataBean.getcEmail());
+    }
+
+    private void reset() {
+        jTextField1.setText("");
+        jLabel3.setText("");
+        jLabel4.setText("");
+        jLabel5.setText("");
+        jComboBox2.setSelectedIndex(0);
+        jDateChooser2.setDate(null);
+        jFormattedTextField3.setText("");
+        jFormattedTextField4.setText("");
+        jFormattedTextField5.setText("");
+        CustomerDataBean.setcFname(null);
+        CustomerDataBean.setcLname(null);
+        CustomerDataBean.setcEmail(null);
+        CustomerDataBean.setcMobile(null);
+        generateRString();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        tableModel.setRowCount(0);
     }
 
     @SuppressWarnings("unchecked")
@@ -125,6 +170,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel21 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -188,6 +234,7 @@ public class ReservationPanel extends javax.swing.JPanel {
 
         jPanel10.setLayout(new java.awt.GridLayout(1, 4, 10, 10));
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jPanel10.add(jTextField1);
 
@@ -203,7 +250,12 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel10.add(jLabel5);
 
-        jButton4.setText("Clear");
+        jButton4.setText("reset");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton4);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -307,15 +359,15 @@ public class ReservationPanel extends javax.swing.JPanel {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -324,9 +376,16 @@ public class ReservationPanel extends javax.swing.JPanel {
 
         jPanel20.setLayout(new java.awt.BorderLayout());
 
-        jButton5.setText("Add+");
+        jButton5.setText("Reset");
 
         jLabel7.setText("-");
+
+        jButton6.setText("Add+");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
@@ -335,7 +394,9 @@ public class ReservationPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 402, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 324, Short.MAX_VALUE)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addContainerGap())
         );
@@ -345,7 +406,8 @@ public class ReservationPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jButton6))
                 .addContainerGap())
         );
 
@@ -358,15 +420,20 @@ public class ReservationPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "#", "Title ", "Time(min)", "Total"
+                "#", "Title ", "Description", "Time(min)", "Price(Rs.)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable2KeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -374,6 +441,10 @@ public class ReservationPanel extends javax.swing.JPanel {
             jTable2.getColumnModel().getColumn(0).setMinWidth(50);
             jTable2.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTable2.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTable2.getColumnModel().getColumn(1).setMinWidth(150);
+            jTable2.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTable2.getColumnModel().getColumn(1).setMaxWidth(150);
+            jTable2.getColumnModel().getColumn(2).setPreferredWidth(300);
         }
 
         jPanel22.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -400,11 +471,30 @@ public class ReservationPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyReleased
+        //127=DELETE
+        if (evt.getKeyCode() == 127) {
+            DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+            int x = jTable2.getSelectedRow();
+            tableModel.removeRow(x);
+        }
+    }//GEN-LAST:event_jTable2KeyReleased
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        ServiceDialog sd = new ServiceDialog(cpanel, true, this);
+        sd.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JFormattedTextField jFormattedTextField3;

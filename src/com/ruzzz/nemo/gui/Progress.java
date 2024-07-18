@@ -6,6 +6,7 @@ package com.ruzzz.nemo.gui;
 
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -16,6 +17,8 @@ public class Progress extends javax.swing.JFrame {
     public Progress() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
+        this.setIconImage(icon.getImage());
         progress();
         applyTheme();
     }
