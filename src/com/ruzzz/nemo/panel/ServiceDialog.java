@@ -5,6 +5,7 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.model.ServiceTableBean;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
@@ -156,11 +157,9 @@ public class ServiceDialog extends java.awt.Dialog {
 
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
-            int rowNO = 0;
             while (rs.next()) {
-                rowNO++;
                 Vector<String> employeeList = new Vector<>();
-                employeeList.add(String.valueOf(rowNO));
+                employeeList.add(rs.getString("id"));
                 employeeList.add(rs.getString("service_name"));
                 employeeList.add(rs.getString("description"));
 
@@ -174,7 +173,7 @@ public class ServiceDialog extends java.awt.Dialog {
                     employeeList.add("Invalid cost/profit");
                 }
 
-                employeeList.add(convertMinutesToHHMM(Integer.parseInt(rs.getString("time_m"))));
+                employeeList.add(rs.getString("time_m"));
                 tableModel.addRow(employeeList);
 
             }
@@ -183,19 +182,23 @@ public class ServiceDialog extends java.awt.Dialog {
         }
     }
 
-    private static String convertMinutesToHHMM(int minutes) {
-        int hours = minutes / 60;
-        int remainingMinutes = minutes % 60;
-        return String.format("%02d:%02d", hours, remainingMinutes);
-    }
-
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        int row = jTable1.getSelectedRow();
+        if (evt.getClickCount() == 2) {
 
+            ServiceTableBean.setServiceId(String.valueOf(dtm.getValueAt(row, 0)));
+            ServiceTableBean.setServiceTitle(String.valueOf(dtm.getValueAt(row, 1)));
+            ServiceTableBean.setServiceDescription(String.valueOf(dtm.getValueAt(row, 2)));
+            ServiceTableBean.setServiceCoast(String.valueOf(dtm.getValueAt(row, 3)));
+            ServiceTableBean.setTimeInmin(String.valueOf(dtm.getValueAt(row, 4)));
+            resPnel.addSerivicesToTable();
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

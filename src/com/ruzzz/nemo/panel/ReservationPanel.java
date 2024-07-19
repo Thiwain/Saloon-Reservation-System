@@ -8,18 +8,28 @@ import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
+import com.ruzzz.nemo.model.ServiceTableBean;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import raven.toast.Notifications;
 
 /**
  *
@@ -53,6 +63,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         generateRString();
         jLabel7.setText(resId);
         loademployee();
+        jFormattedTextField3.setText("0.00");
     }
 
     HashMap<String, String> employeeMap = new HashMap<>();
@@ -61,7 +72,9 @@ public class ReservationPanel extends javax.swing.JPanel {
         Vector<String> v = new Vector<>();
         try {
             v.add("Select Worker");
-            ResultSet rs = MySQL.execute("SELECT * FROM `employee` WHERE `role_id`='3'");
+            v.add("**Someone Available**");
+            employeeMap.put("**Someone Available**", "BA_10000");
+            ResultSet rs = MySQL.execute("SELECT * FROM `employee` WHERE `role_id`='3' AND `user_id`!='BA_10000'");
             while (rs.next()) {
                 v.add(rs.getString("first_name") + " " + rs.getString("last_name"));
                 employeeMap.put(rs.getString("first_name") + " " + rs.getString("last_name"), rs.getString("user_id"));
@@ -109,6 +122,8 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel3.setText("");
         jLabel4.setText("");
         jLabel5.setText("");
+        jLabel10.setText("");
+        jLabel13.setText("");
         jComboBox2.setSelectedIndex(0);
         jDateChooser2.setDate(null);
         jFormattedTextField3.setText("");
@@ -121,6 +136,32 @@ public class ReservationPanel extends javax.swing.JPanel {
         generateRString();
         DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
         tableModel.setRowCount(0);
+        timeInMins = 0;
+        totalCost = 0.0;
+    }
+
+    private static String convertMinutesToHHMM(int minutes) {
+        int hours = minutes / 60;
+        int remainingMinutes = minutes % 60;
+        return String.format("%02d:%02d", hours, remainingMinutes);
+    }
+
+    private int timeInMins;
+    private Double totalCost = 0.0;
+
+    public void addSerivicesToTable() {
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        Vector<String> v = new Vector<>();
+        v.add(String.valueOf(ServiceTableBean.getServiceId()));
+        v.add(ServiceTableBean.getServiceTitle());
+        v.add(ServiceTableBean.getServiceDescription());
+        v.add(String.valueOf(ServiceTableBean.getTimeInmin()));
+        v.add(String.valueOf(ServiceTableBean.getServiceCoast()));
+        tableModel.addRow(v);
+        timeInMins += Integer.parseInt(ServiceTableBean.getTimeInmin());
+        jLabel10.setText(convertMinutesToHHMM(timeInMins));
+        totalCost += Double.parseDouble(String.valueOf(ServiceTableBean.getServiceCoast()));
+        jLabel13.setText(String.valueOf(totalCost));
     }
 
     @SuppressWarnings("unchecked")
@@ -250,7 +291,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel10.add(jLabel5);
 
-        jButton4.setText("reset");
+        jButton4.setText("Reset");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -301,6 +342,8 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel9.add(jLabel17);
 
         jPanel9.add(jComboBox2);
+
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
         jPanel9.add(jDateChooser2);
         jPanel9.add(jFormattedTextField4);
         jPanel9.add(jFormattedTextField5);
@@ -314,17 +357,19 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel14.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel9.setText("Estimated Time");
+        jLabel9.setText("Estimated Time(HH:mm)");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
+        jLabel10.setText("00:00");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel12.setText("Service Charge");
+        jLabel12.setText("Service Charge(0.00)");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
+        jLabel13.setText("0.00");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel14.setText("Total");
+        jLabel14.setText("Total(Rs.)");
 
         jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
@@ -377,6 +422,11 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel20.setLayout(new java.awt.BorderLayout());
 
         jButton5.setText("Reset");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("-");
 
@@ -468,8 +518,107 @@ public class ReservationPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+
+        if (validateReservationProcess()) {
+            System.out.println("com.ruzzz.nemo.panel.ReservationPanel.jButton3ActionPerformed()");
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private static String convertDateString(Date dateStr) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return outputFormat.format(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean checkTimeOrder(String time1, String time2) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        try {
+            Date date1 = timeFormat.parse(time1);
+            Date date2 = timeFormat.parse(time2);
+            if (date1.after(date2)) {
+                return false;
+            }
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private static String convertToMySQLTimeFormat(String time12Hour) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = inputFormat.parse(time12Hour);
+        return outputFormat.format(date);
+    }
+
+    private String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
+
+    private boolean checkDateIsOver() {
+        String dateOnChooser = convertDateString(jDateChooser2.getDate());
+        String currentDate = getCurrentDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date chosenDate = sdf.parse(dateOnChooser);
+            Date today = sdf.parse(currentDate);
+
+            return chosenDate.before(today);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            errorLogger.warning("Date Parse Error: " + e);
+            return false;
+        }
+    }
+
+    private boolean validateReservationProcess() {
+        String t1 = "";
+        String t2 = "";
+
+        try {
+            t1 = convertToMySQLTimeFormat(jFormattedTextField4.getText());
+            t2 = convertToMySQLTimeFormat(jFormattedTextField5.getText());
+        } catch (Exception e) {
+        }
+        if (jTextField1.getText().isEmpty()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a Customer");
+            return false;
+        } else if (jComboBox2.getSelectedIndex() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a Employee");
+            return false;
+        } else if (jDateChooser2.getDate() == null) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a Date");
+            return false;
+        } else if (checkDateIsOver()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a a Date in future");
+            return false;
+        } else if (jFormattedTextField4.getText().equals("--:-- --")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Start Time must be selected");
+            return false;
+        } else if (jFormattedTextField5.getText().equals("--:-- --")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "End Time must be selected");
+            return false;
+        } else if (jFormattedTextField3.getText().isEmpty()) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Service charge is required");
+            return false;
+        } else if (!checkTimeOrder(t1, t2)) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Time Selection is invalid");
+            return false;
+        } else if (jTable2.getRowCount() == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Service Table Must not be empty !");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         reset();
@@ -480,6 +629,10 @@ public class ReservationPanel extends javax.swing.JPanel {
         if (evt.getKeyCode() == 127) {
             DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
             int x = jTable2.getSelectedRow();
+            timeInMins -= Integer.parseInt((String) tableModel.getValueAt(x, 3));
+            jLabel10.setText(convertMinutesToHHMM(timeInMins));
+            totalCost -= Double.parseDouble((String) tableModel.getValueAt(x, 4));
+            jLabel13.setText(String.valueOf(totalCost));
             tableModel.removeRow(x);
         }
     }//GEN-LAST:event_jTable2KeyReleased
@@ -488,6 +641,15 @@ public class ReservationPanel extends javax.swing.JPanel {
         ServiceDialog sd = new ServiceDialog(cpanel, true, this);
         sd.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        tableModel.setRowCount(0);
+        timeInMins = 0;
+        totalCost = 0.0;
+        jLabel10.setText("00:00");
+        jLabel13.setText("0.00");
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

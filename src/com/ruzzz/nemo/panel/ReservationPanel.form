@@ -228,7 +228,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="jButton4">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="reset"/>
+                                <Property name="text" type="java.lang.String" value="Reset"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
@@ -285,6 +285,9 @@
                           </AuxValues>
                         </Component>
                         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+                          <Properties>
+                            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+                          </Properties>
                         </Component>
                         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField4">
                         </Component>
@@ -365,7 +368,7 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="15" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Estimated Time"/>
+                                <Property name="text" type="java.lang.String" value="Estimated Time(HH:mm)"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel10">
@@ -373,6 +376,7 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="26" style="1"/>
                                 </Property>
+                                <Property name="text" type="java.lang.String" value="00:00"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel12">
@@ -380,7 +384,7 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="15" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Service Charge"/>
+                                <Property name="text" type="java.lang.String" value="Service Charge(0.00)"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel13">
@@ -388,6 +392,7 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="26" style="1"/>
                                 </Property>
+                                <Property name="text" type="java.lang.String" value="0.00"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel14">
@@ -395,7 +400,7 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="15" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Total"/>
+                                <Property name="text" type="java.lang.String" value="Total(Rs.)"/>
                               </Properties>
                             </Component>
                             <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField3">
@@ -467,6 +472,9 @@
                                   <Properties>
                                     <Property name="text" type="java.lang.String" value="Reset"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                                  </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="jLabel7">
                                   <Properties>
