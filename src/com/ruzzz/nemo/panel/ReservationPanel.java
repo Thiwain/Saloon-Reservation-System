@@ -8,8 +8,10 @@ import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
+import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.ServiceTableBean;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
+import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
@@ -43,14 +45,6 @@ public class ReservationPanel extends javax.swing.JPanel {
 
     public static ReservationListPanel resLiPanel;
 
-    /*Query
-    INSERT INTO 
-    `saloon_nemo`.`reservation` 
-    (`id`, `customer_id`, `date`, `start_time`, `end_time`, `status_id`, `employee_user_id`, `cancel_status`)
-    VALUES 
-    ('R10000', 1, '2024-07-15', '12:00:00', '14:00:00', 1, 'BA_26142', 2);
-    INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('R1000001', 2, 1);
-     */
     public ReservationPanel(JFrame cp, CustomerPanel cusP) {
         initComponents();
         cpanel = (ControlPanel) cp;
@@ -202,10 +196,8 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
         jButton3 = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
@@ -362,16 +354,11 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
         jLabel10.setText("00:00");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        jLabel12.setText("Service Charge(0.00)");
-
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 26)); // NOI18N
         jLabel13.setText("0.00");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel14.setText("Total(Rs.)");
-
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jButton3.setText("Confirm");
@@ -390,29 +377,23 @@ public class ReservationPanel extends javax.swing.JPanel {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextField3)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(42, 42, 42)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -520,7 +501,36 @@ public class ReservationPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (validateReservationProcess()) {
-            System.out.println("com.ruzzz.nemo.panel.ReservationPanel.jButton3ActionPerformed()");
+            try {
+                MySQL.execute("INSERT INTO \n"
+                        + "    `saloon_nemo`.`reservation` \n"
+                        + "    (`id`, `customer_id`, `date`, `start_time`, `end_time`, `status_id`, `employee_user_id`, `cancel_status`)\n"
+                        + "    VALUES \n"
+                        + "    ('" + resId + "',"
+                        + "'" + CustomerDataBean.getcId() + "',"
+                        + "'" + convertDateString(jDateChooser2.getDate()) + "',"
+                        + " '" + convertToMySQLTimeFormat(jFormattedTextField4.getText()) + "',"
+                        + " '" + convertToMySQLTimeFormat(jFormattedTextField5.getText()) + "',"
+                        + " 1,"
+                        + " '" + employeeMap.get(jComboBox2.getSelectedItem().toString()) + "',"
+                        + " 2)");
+
+                for (int i = 0; i < jTable2.getRowCount(); i++) {
+                    DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+                    int row = i;
+                    ServiceTableBean.setServiceId(String.valueOf(dtm.getValueAt(row, 0)));
+                    MySQL.execute("INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('" + resId + "', '" + ServiceTableBean.getServiceId() + "', 1)");
+                }
+
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Booking Success!");
+                infoLogger.info("Reservation(" + resId + ") Added by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
+                MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
+                        + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
+                        + "'Reservation " + resId + " -> Added By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
+                reset();
+            } catch (Exception e) {
+                errorLogger.warning("Reservation-Setup Error ; Error: " + e);
+            }
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -577,6 +587,12 @@ public class ReservationPanel extends javax.swing.JPanel {
             errorLogger.warning("Date Parse Error: " + e);
             return false;
         }
+    }
+
+    private static String getCurrentTime() {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+        Date now = new Date();
+        return timeFormat.format(now);
     }
 
     private boolean validateReservationProcess() {
@@ -659,13 +675,11 @@ public class ReservationPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;

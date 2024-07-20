@@ -628,7 +628,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 rowNO++;
                 Vector<String> customerList = new Vector<>();
-                customerList.add(String.valueOf(rowNO));
+                customerList.add(rs.getString("id"));
                 customerList.add(rs.getString("mobile"));
                 customerList.add(rs.getString("first_name"));
                 customerList.add(rs.getString("last_name"));
@@ -707,6 +707,8 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         if (evt.getClickCount() == 2) {
             int row = jTable1.getSelectedRow();
+            String id = jTable1.getValueAt(row, 0).toString();
+            CustomerDataBean.setcId(id);
             String mobile = jTable1.getValueAt(row, 1).toString();
             CustomerDataBean.setcMobile(mobile);
             String fname = jTable1.getValueAt(row, 2).toString();

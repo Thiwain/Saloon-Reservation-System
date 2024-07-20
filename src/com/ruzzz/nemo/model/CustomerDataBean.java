@@ -6,6 +6,15 @@ public class CustomerDataBean {
     private static String cFname;
     private static String cLname;
     private static String cEmail;
+    private static String cId;
+
+    public static String getcId() {
+        return cId;
+    }
+
+    public static void setcId(String acId) {
+        cId = acId;
+    }
 
     public static String getcMobile() {
         return cMobile;
