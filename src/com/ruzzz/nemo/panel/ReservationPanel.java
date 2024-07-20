@@ -57,7 +57,6 @@ public class ReservationPanel extends javax.swing.JPanel {
         generateRString();
         jLabel7.setText(resId);
         loademployee();
-        jFormattedTextField3.setText("0.00");
     }
 
     HashMap<String, String> employeeMap = new HashMap<>();
@@ -120,7 +119,6 @@ public class ReservationPanel extends javax.swing.JPanel {
         jLabel13.setText("");
         jComboBox2.setSelectedIndex(0);
         jDateChooser2.setDate(null);
-        jFormattedTextField3.setText("");
         jFormattedTextField4.setText("");
         jFormattedTextField5.setText("");
         CustomerDataBean.setcFname(null);
@@ -621,9 +619,6 @@ public class ReservationPanel extends javax.swing.JPanel {
             return false;
         } else if (jFormattedTextField5.getText().equals("--:-- --")) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "End Time must be selected");
-            return false;
-        } else if (jFormattedTextField3.getText().isEmpty()) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Service charge is required");
             return false;
         } else if (!checkTimeOrder(t1, t2)) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Time Selection is invalid");
