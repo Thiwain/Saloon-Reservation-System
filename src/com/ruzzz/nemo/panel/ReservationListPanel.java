@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
@@ -33,11 +34,11 @@ public class ReservationListPanel extends javax.swing.JPanel {
         loadTF();
         loadReservations("");
     }
-
+    
     HashMap<String, String> employeeMap = new HashMap<>();
     HashMap<String, String> statusMap = new HashMap<>();
     HashMap<String, String> tfMap = new HashMap<>();
-
+    
     private void loademployee() {
         Vector<String> v = new Vector<>();
         try {
@@ -56,7 +57,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("Employee LOADING Exception; Error: " + e);
         }
     }
-
+    
     private void loadStatus() {
         Vector<String> v = new Vector<>();
         try {
@@ -73,7 +74,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
         }
     }
-
+    
     private void loadTF() {
         Vector<String> v = new Vector<>();
         try {
@@ -90,32 +91,34 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
         }
     }
-
-    private static boolean querySelection = false;
-    private static boolean querySelection2 = false;
-
+    
     public static boolean isDate1NotLater(Date date1, Date date2) {
         if (date1 == null && date2 == null) {
-            querySelection = true;
+//            querySelection = true;
             return true;
         }
         if (date1 == null && date2 != null) {
             return false;
         }
-
+        
         LocalDate d2 = convertToLocalDate(date2);
         LocalDate d1 = convertToLocalDate(date1);
-
+        
         return !(d1 != null && d1.isAfter(d2));
     }
-
+    
     private static LocalDate convertToLocalDate(Date date) {
         if (date == null) {
             return null;
         }
         return new java.sql.Date(date.getTime()).toLocalDate();
     }
-
+    
+    private String convertDateString(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+    
     private void reset() {
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
@@ -124,16 +127,16 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jComboBox3.setSelectedIndex(0);
         jComboBox4.setSelectedIndex(0);
         jComboBox5.setSelectedIndex(0);
+        jTextField1.setText("");
+        loadReservations("");
     }
-
+    
     private void loadReservations(String searchText) {
         try {
-
+            
             Date date1 = jDateChooser1.getDate();
             Date date2 = jDateChooser2.getDate();
-
-            boolean isNotLater = isDate1NotLater(date1, date2);
-
+            
             String query = "SELECT "
                     + "reservation.id AS resid, "
                     + "reservation.date AS date, "
@@ -166,13 +169,23 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 query += " AND `reservation`.`status_id`='" + jComboBox4.getSelectedIndex() + "'";
             }
             if (jComboBox1.getSelectedIndex() != 0) {
-                query += " AND `reservation`.`employee_user_id`='" + jComboBox1.getSelectedIndex() + "'";
+                query += " AND `reservation`.`employee_user_id`='" + employeeMap.get(jComboBox1.getSelectedItem().toString()) + "'";
             }
-
+            
+            if (date1 != null) {
+                if (date2 != null) {
+                    if (isDate1NotLater(date1, date2)) {
+                        query += " AND reservation.date BETWEEN '" + convertDateString(date1) + "' AND '" + convertDateString(date2) + "'";
+                    }
+                } else {
+                    query += " AND reservation.date >= '" + convertDateString(date1) + "'";
+                }
+            }
+            
             query += " ORDER BY reservation.date " + jComboBox5.getSelectedItem().toString();
-
+            
             ResultSet rs = MySQL.execute(query);
-
+            
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
@@ -191,12 +204,12 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 tableModel.addRow(v);
 //                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
-
+            
         } catch (Exception e) {
             errorLogger.warning("RESERVATION SEARCH ERROR; Error: " + e);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -357,6 +370,11 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox2, jComboBox4, jComboBox5, jTextField1});
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/6127257_multimedia_music_refresh_repeat_song_icon (1).png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -492,32 +510,14 @@ public class ReservationListPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (!jTextField5.getText().isEmpty()) {
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "File Name is Required!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        Date date1 = jDateChooser1.getDate();
-        Date date2 = jDateChooser2.getDate();
-
-        boolean isNotLater = isDate1NotLater(date1, date2);
-
-        if (jDateChooser1 == null) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a Date");
-        } else if (isNotLater) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection");
-        } else {
-            try {
-                /*
-                
-                 */
-            } catch (Exception e) {
-                errorLogger.warning("RESERVATION SEARCH ERROR; Error: " + e);
-            }
-        }
+        loadReservations(jTextField1.getText());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -539,6 +539,10 @@ public class ReservationListPanel extends javax.swing.JPanel {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         loadReservations(jTextField1.getText());
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        reset();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

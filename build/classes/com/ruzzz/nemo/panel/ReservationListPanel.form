@@ -283,6 +283,9 @@
               <Image iconType="3" name="/com/ruzzz/nemo/img/6127257_multimedia_music_refresh_repeat_song_icon (1).png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
