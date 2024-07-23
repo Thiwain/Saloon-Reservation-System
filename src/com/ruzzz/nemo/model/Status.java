@@ -9,5 +9,5 @@ package com.ruzzz.nemo.model;
  * @author Acer
  */
 public enum Status {
-    ACTIVE, INACTIVE;
+    ACTIVE, INACTIVE, TRUE, FALSE;
 }
