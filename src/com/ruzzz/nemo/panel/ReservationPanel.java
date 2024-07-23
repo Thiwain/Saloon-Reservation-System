@@ -49,7 +49,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         initComponents();
         cpanel = (ControlPanel) cp;
         cusPanel = (CustomerPanel) cusP;
-        resLiPanel = new ReservationListPanel();
+        resLiPanel = new ReservationListPanel(cpanel);
         loadPanel(new CustomerPanel(cp, this));
         timePicker1.setEditor(jFormattedTextField4);
         timePicker2.setEditor(jFormattedTextField5);

@@ -5,17 +5,29 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.gui.ControlPanel;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import raven.toast.Notifications;
 
 /**
@@ -24,21 +36,21 @@ import raven.toast.Notifications;
  */
 public class ReservationListPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ReservationListPanel
-     */
-    public ReservationListPanel() {
+    private static ControlPanel cpanel;
+
+    public ReservationListPanel(JFrame cp) {
         initComponents();
         loademployee();
         loadStatus();
         loadTF();
         loadReservations("");
+        cpanel = (ControlPanel) cp;
     }
-    
+
     HashMap<String, String> employeeMap = new HashMap<>();
     HashMap<String, String> statusMap = new HashMap<>();
     HashMap<String, String> tfMap = new HashMap<>();
-    
+
     private void loademployee() {
         Vector<String> v = new Vector<>();
         try {
@@ -57,7 +69,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("Employee LOADING Exception; Error: " + e);
         }
     }
-    
+
     private void loadStatus() {
         Vector<String> v = new Vector<>();
         try {
@@ -74,7 +86,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
         }
     }
-    
+
     private void loadTF() {
         Vector<String> v = new Vector<>();
         try {
@@ -91,7 +103,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
         }
     }
-    
+
     public static boolean isDate1NotLater(Date date1, Date date2) {
         if (date1 == null && date2 == null) {
 //            querySelection = true;
@@ -100,25 +112,25 @@ public class ReservationListPanel extends javax.swing.JPanel {
         if (date1 == null && date2 != null) {
             return false;
         }
-        
+
         LocalDate d2 = convertToLocalDate(date2);
         LocalDate d1 = convertToLocalDate(date1);
-        
+
         return !(d1 != null && d1.isAfter(d2));
     }
-    
+
     private static LocalDate convertToLocalDate(Date date) {
         if (date == null) {
             return null;
         }
         return new java.sql.Date(date.getTime()).toLocalDate();
     }
-    
+
     private String convertDateString(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(date);
     }
-    
+
     private void reset() {
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
@@ -130,13 +142,13 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jTextField1.setText("");
         loadReservations("");
     }
-    
+
     private void loadReservations(String searchText) {
         try {
-            
+
             Date date1 = jDateChooser1.getDate();
             Date date2 = jDateChooser2.getDate();
-            
+
             String query = "SELECT "
                     + "reservation.id AS resid, "
                     + "reservation.date AS date, "
@@ -165,13 +177,15 @@ public class ReservationListPanel extends javax.swing.JPanel {
             if (jComboBox2.getSelectedIndex() != 0) {
                 query += " AND `reservation`.`cancel_status`='" + jComboBox2.getSelectedIndex() + "'";
             }
-            if (jComboBox4.getSelectedIndex() != 0) {
+            if (jComboBox4.getSelectedIndex() == 0) {
+                query += " AND `reservation`.`status_id`='1'";
+            } else {
                 query += " AND `reservation`.`status_id`='" + jComboBox4.getSelectedIndex() + "'";
             }
             if (jComboBox1.getSelectedIndex() != 0) {
                 query += " AND `reservation`.`employee_user_id`='" + employeeMap.get(jComboBox1.getSelectedItem().toString()) + "'";
             }
-            
+
             if (date1 != null) {
                 if (date2 != null) {
                     if (isDate1NotLater(date1, date2)) {
@@ -181,11 +195,11 @@ public class ReservationListPanel extends javax.swing.JPanel {
                     query += " AND reservation.date >= '" + convertDateString(date1) + "'";
                 }
             }
-            
+
             query += " ORDER BY reservation.date " + jComboBox5.getSelectedItem().toString();
-            
+
             ResultSet rs = MySQL.execute(query);
-            
+
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
@@ -204,12 +218,65 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 tableModel.addRow(v);
 //                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
-            
+
         } catch (Exception e) {
             errorLogger.warning("RESERVATION SEARCH ERROR; Error: " + e);
         }
     }
-    
+
+    private void printExcel() {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
+            XSSFRow row;
+
+            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
+
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                studentData.put(String.valueOf(i),
+                        new Object[]{
+                            jTable1.getValueAt(i, 0),
+                            jTable1.getValueAt(i, 1),
+                            jTable1.getValueAt(i, 2),
+                            jTable1.getValueAt(i, 3),
+                            jTable1.getValueAt(i, 4),
+                            jTable1.getValueAt(i, 5),
+                            jTable1.getValueAt(i, 6),
+                            jTable1.getValueAt(i, 7),
+                            jTable1.getValueAt(i, 8),
+                            jTable1.getValueAt(i, 9)
+                        });
+            }
+
+            Set<String> keyid = studentData.keySet();
+
+            int rowid = 0;
+            for (String key : keyid) {
+                row = spreadsheet.createRow(rowid++);
+                Object[] objectArr = studentData.get(key);
+                int cellid = 0;
+                for (Object obj : objectArr) {
+                    Cell cell = row.createCell(cellid++);
+                    cell.setCellValue((String) obj);
+                }
+            }
+
+            FileOutputStream out = new FileOutputStream(
+                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox3.getSelectedItem().toString()));
+
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
+        }
+    }
+
+    private static String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -474,6 +541,11 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(50);
@@ -497,8 +569,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE))
         );
 
         add(jPanel12, java.awt.BorderLayout.CENTER);
@@ -510,7 +581,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (!jTextField5.getText().isEmpty()) {
-            
+            printExcel();
         } else {
             JOptionPane.showMessageDialog(null, "File Name is Required!");
         }
@@ -543,6 +614,16 @@ public class ReservationListPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         reset();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+
+        int row = jTable1.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            ReservationDeatailDialog rdd = new ReservationDeatailDialog(cpanel, true, dtm.getValueAt(row, 1).toString());
+            rdd.setVisible(true);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

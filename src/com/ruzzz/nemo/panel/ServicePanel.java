@@ -490,7 +490,7 @@ public class ServicePanel extends javax.swing.JPanel {
             jTextArea2.setText(jTable2.getValueAt(row, 3).toString());
             jFormattedTextField3.setText(jTable2.getValueAt(row, 4).toString());
             jFormattedTextField2.setText(jTable2.getValueAt(row, 5).toString());
-            jFormattedTextField1.setText(jTable2.getValueAt(row, 6).toString());
+            jFormattedTextField1.setText(jTable2.getValueAt(row, 7).toString());
         }
     }//GEN-LAST:event_jTable2MouseClicked
 

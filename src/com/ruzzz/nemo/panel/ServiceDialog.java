@@ -18,15 +18,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Acer
  */
 public class ServiceDialog extends java.awt.Dialog {
-
+    
     private static ReservationPanel resPnel;
-
+    
     public ServiceDialog(java.awt.Frame parent, boolean modal, ReservationPanel rp) {
         super(parent, modal);
         initComponents();
         applyTheme();
         resPnel = rp;
         loadServices("");
+        this.setTitle("Services");
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -152,9 +153,9 @@ public class ServiceDialog extends java.awt.Dialog {
 
     private void loadServices(String searchText) {
         try {
-
+            
             ResultSet rs = MySQL.execute("SELECT * FROM `service` WHERE `service_name` LIKE '%" + searchText + "%' OR `description` LIKE '%" + searchText + "%'");
-
+            
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
             while (rs.next()) {
@@ -162,7 +163,7 @@ public class ServiceDialog extends java.awt.Dialog {
                 employeeList.add(rs.getString("id"));
                 employeeList.add(rs.getString("service_name"));
                 employeeList.add(rs.getString("description"));
-
+                
                 String costStr = rs.getString("cost");
                 String profitStr = rs.getString("profit");
                 try {
@@ -172,10 +173,10 @@ public class ServiceDialog extends java.awt.Dialog {
                 } catch (NumberFormatException nfe) {
                     employeeList.add("Invalid cost/profit");
                 }
-
+                
                 employeeList.add(rs.getString("time_m"));
                 tableModel.addRow(employeeList);
-
+                
             }
         } catch (Exception e) {
             errorLogger.warning("SERVICE TABLE LOADING Exception; Error: " + e);
@@ -191,7 +192,7 @@ public class ServiceDialog extends java.awt.Dialog {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         int row = jTable1.getSelectedRow();
         if (evt.getClickCount() == 2) {
-
+            
             ServiceTableBean.setServiceId(String.valueOf(dtm.getValueAt(row, 0)));
             ServiceTableBean.setServiceTitle(String.valueOf(dtm.getValueAt(row, 1)));
             ServiceTableBean.setServiceDescription(String.valueOf(dtm.getValueAt(row, 2)));
