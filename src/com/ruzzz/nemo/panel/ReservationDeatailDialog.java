@@ -6,6 +6,7 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.EmailSender;
+import com.ruzzz.nemo.model.ShopBill;
 import com.ruzzz.nemo.model.Status;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.sql.ResultSet;
@@ -18,6 +19,18 @@ import java.util.Random;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import raven.toast.Notifications;
+
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
 
 /**
  *
@@ -309,6 +322,11 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/8665756_print_icon (2) (1).png"))); // NOI18N
         jButton3.setText("Print Invoice");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/1564504_email_letter_mail_message_icon.png"))); // NOI18N
@@ -641,6 +659,41 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
             errorLogger.warning("INVOICE UPDATE ERROR ; Error: " + e);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            // Sample data
+
+            Vector<ShopBill> v = new Stack<>();
+            v.add(new ShopBill("Shave", "500.00"));
+            v.add(new ShopBill("Shave", "500.00"));
+            v.add(new ShopBill("Shave", "500.00"));
+
+            // Parameters
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("Parameter1", "INV-1001");
+            parameters.put("Parameter2", "2024-07-24");
+            parameters.put("Parameter3", "3000.00");
+            parameters.put("Parameter4", "150.00");
+            parameters.put("Parameter5", "3150.00");
+
+            // Data source
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
+
+            // Load the Jasper report
+            String reportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parameters, dataSource);
+
+            // View the report
+            JasperViewer.viewReport(jasperPrint, false);
+
+            // Export to PDF (optional)
+//            String pdfFilePath = "src/reports/output/invoice.pdf";
+//            JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
