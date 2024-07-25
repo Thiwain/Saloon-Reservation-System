@@ -123,7 +123,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="ScriptC" size="36" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Saloon"/>
+            <Property name="text" type="java.lang.String" value="Salon"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>

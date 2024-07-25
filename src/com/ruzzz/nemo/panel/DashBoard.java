@@ -20,24 +20,27 @@ public class DashBoard extends javax.swing.JPanel {
     public DashBoard() {
         initComponents();
         loadData();
-        
+
     }
-    
+
     private void loadData() {
         try {
-            jLabel3.setText("Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
-            jLabel4.setText("Role:" + LoggedUserData.getUserRole());
+            jLabel3.setText("Name : " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
+            jLabel4.setText("Role : " + LoggedUserData.getUserRole());
             ResultSet rs = MySQL.execute("SELECT COUNT(reservation.id) AS rescount\n"
                     + "FROM reservation\n"
                     + "WHERE reservation.date=CURDATE() AND reservation.cancel_status=2 AND reservation.status_id=1");
             ResultSet rs2 = MySQL.execute("SELECT COUNT(reservation.id) AS rescount\n"
                     + "FROM reservation \n"
                     + "WHERE  reservation.cancel_status=2 AND reservation.status_id=1");
-            
+
             ResultSet rs3 = MySQL.execute("SELECT COUNT(reservation.id) AS rescount\n"
                     + "FROM reservation \n"
                     + "WHERE reservation.date=CURDATE() AND reservation.cancel_status=2 AND reservation.status_id=2");
-            
+            ResultSet rs4 = MySQL.execute("SELECT COUNT(reservation.id) AS rescount\n"
+                    + "FROM reservation \n"
+                    + "WHERE reservation.date=CURDATE() AND reservation.cancel_status=1 AND reservation.status_id=2");
+
             if (rs2.next()) {
                 jLabel19.setText(rs2.getString("rescount"));
             }
@@ -46,6 +49,9 @@ public class DashBoard extends javax.swing.JPanel {
             }
             if (rs3.next()) {
                 jLabel26.setText(rs3.getString("rescount"));
+            }
+            if (rs4.next()) {
+                jLabel22.setText(rs4.getString("rescount"));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -55,7 +55,7 @@ public class SignIn extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("ScriptC", 1, 36)); // NOI18N
-        jLabel1.setText("Saloon");
+        jLabel1.setText("Salon");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N

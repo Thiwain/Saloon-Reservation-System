@@ -44,7 +44,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     public CustomerPanel(JFrame cp, ReservationPanel rP) {
         initComponents();
         loadGenders();
-        customerSort();
+        customerSort(jTextField6.getText());
         cP = (ControlPanel) cp;
         jButton4.setEnabled(false);
         rp = rP;
@@ -505,7 +505,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jComboBox1.setSelectedIndex(0);
         jDateChooser1.setDate(null);
         jDateChooser2.setDate(null);
-        customerSort();
+        customerSort(jTextField6.getText());
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -527,7 +527,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                                 + "'CUSTOMER:" + jTextField1.getText() + "," + jTextField2.getText() + " " + jTextField3.getText() + " "
                                 + " -> Registered By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
                         clearUserData();
-                        customerSort();
+                        customerSort(jTextField6.getText());
                         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Registration success !");
                     }
                 } else {
@@ -576,6 +576,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             return true;
         }
         if (date1 == null && date2 != null) {
+            System.out.println("d1 is empty");
             return false;
         }
 
@@ -592,45 +593,45 @@ public class CustomerPanel extends javax.swing.JPanel {
         return new java.sql.Date(date.getTime()).toLocalDate();
     }
 
-    private void customerSort() {
+    private void customerSort(String searchTxt) {
         try {
-            ResultSet rs;
-            String query;
-
             Date date1 = jDateChooser1.getDate();
             Date date2 = jDateChooser2.getDate();
-
             boolean isNotLater = isDate1NotLater(date1, date2);
 
-            if (!isNotLater) {
-                rs = null;
-                JOptionPane.showMessageDialog(null, "Invalid Date Selection");
-            } else {
-                if (querySelection) {
-                    query = "SELECT * FROM `customer` INNER JOIN `gender` ON `customer`.`gender_id`=`gender`.`id`";
-                    if (jComboBox3.getSelectedIndex() != 0) {
-                        query += "AND customer.gender_id='" + genderMap.get(jComboBox3.getSelectedItem().toString()) + "' ";
-                    }
-                    query += "ORDER BY time_stamp " + jComboBox1.getSelectedItem().toString() + "";
-                    rs = MySQL.execute(query);
-                } else {
-                    query = "SELECT * FROM customer INNER JOIN gender ON customer.gender_id = gender.id"
-                            + " WHERE customer.time_stamp BETWEEN '" + convertDateString(jDateChooser1.getDate().toString()) + " 00:00:00' "
-                            + "AND '" + getCurrentDate() + " 23:59:59' ";
-                    if (jComboBox3.getSelectedIndex() != 0) {
-                        query += "AND customer.gender_id='" + genderMap.get(jComboBox3.getSelectedItem().toString()) + "' ";
-                    }
-                    query += "ORDER BY time_stamp " + jComboBox1.getSelectedItem().toString() + "";
-                    rs = MySQL.execute(query);
-                }
+            StringBuilder query = new StringBuilder("SELECT * FROM customer ");
+            query.append("INNER JOIN gender ON customer.gender_id=gender.id ");
+            query.append("WHERE (");
+            query.append("customer.first_name LIKE '%").append(searchTxt).append("%' ");
+            query.append("OR customer.last_name LIKE '%").append(searchTxt).append("%' ");
+            query.append("OR customer.mobile LIKE '%").append(searchTxt).append("%' ");
+            query.append("OR customer.email LIKE '%").append(searchTxt).append("%')");
 
+            if (jComboBox3.getSelectedIndex() != 0) {
+                query.append(" AND customer.gender_id='").append(jComboBox3.getSelectedIndex()).append("'");
             }
 
+            if (date1 != null || date2 != null) {
+                if (isNotLater) {
+                    if (date2 == null) {
+                        query.append(" AND customer.time_stamp >= '").append(convertDateString(date1.toString())).append("'");
+                    } else {
+                        query.append(" AND customer.time_stamp BETWEEN '")
+                                .append(convertDateString(date1.toString())).append("' AND '")
+                                .append(convertDateString(date2.toString())).append("'");
+                    }
+                } else {
+                    System.out.println("com.ruzzz.nemo.panel.CustomerPanel.customerSort()");
+                }
+            }
+
+            query.append(" ORDER BY customer.time_stamp ").append(jComboBox1.getSelectedItem().toString());
+
+            ResultSet rs = MySQL.execute(query.toString());
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
-            int rowNO = 0;
+
             while (rs.next()) {
-                rowNO++;
                 Vector<String> customerList = new Vector<>();
                 customerList.add(rs.getString("id"));
                 customerList.add(rs.getString("mobile"));
@@ -640,7 +641,6 @@ public class CustomerPanel extends javax.swing.JPanel {
                 customerList.add(rs.getString("email"));
                 customerList.add(rs.getString("time_stamp"));
                 tableModel.addRow(customerList);
-//                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
 
         } catch (Exception e) {
@@ -648,12 +648,13 @@ public class CustomerPanel extends javax.swing.JPanel {
         }
     }
 
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        customerSort();
+        customerSort(jTextField6.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        customerSort();
+        customerSort(jTextField6.getText());
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -677,7 +678,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                     jButton5.setEnabled(true);
                     jButton4.setEnabled(false);
                     jComboBox4.setEnabled(true);
-                    customerSort();
+                    customerSort(jTextField6.getText());
                 }
             } catch (Exception e) {
                 errorLogger.warning("CUSTOMER DATA UPDATE Exception; Error: " + e);
@@ -736,48 +737,11 @@ public class CustomerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
-        searchCustomer();
+        customerSort(jTextField6.getText());
     }//GEN-LAST:event_jTextField6KeyReleased
 
-    private void searchCustomer() {
-        String searchText = jTextField6.getText();
-        jComboBox3.setSelectedIndex(0);
-
-        try {
-            ResultSet rs = MySQL.execute("SELECT *\n"
-                    + "FROM customer INNER JOIN gender ON customer.gender_id = gender.id\n"
-                    + "WHERE mobile LIKE '" + searchText + "%'\n"
-                    + "   OR first_name LIKE '%" + searchText + "%'\n"
-                    + "   OR last_name LIKE '%" + searchText + "%'\n"
-                    + "   OR email LIKE '%" + searchText + "%'");
-
-            jComboBox3.setSelectedIndex(0);
-
-            DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
-            tableModel.setRowCount(0);
-            int rowNO = 0;
-            while (rs.next()) {
-                rowNO++;
-                Vector<String> customerList = new Vector<>();
-                customerList.add(String.valueOf(rowNO));
-                customerList.add(rs.getString("mobile"));
-                customerList.add(rs.getString("first_name"));
-                customerList.add(rs.getString("last_name"));
-                customerList.add(rs.getString("gender"));
-                customerList.add(rs.getString("email"));
-                customerList.add(rs.getString("time_stamp"));
-                tableModel.addRow(customerList);
-//                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
-            }
-
-        } catch (Exception e) {
-            errorLogger.warning("Customer Loading error from search; Error: " + e);
-        }
-
-    }
-
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
-        customerSort();
+        customerSort(jTextField6.getText());
     }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased

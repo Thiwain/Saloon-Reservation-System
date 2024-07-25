@@ -53,6 +53,9 @@ public class ControlPanel extends javax.swing.JFrame {
         
         cusPanel = new CustomerPanel(this, resPanel);
         resPanel = new ReservationPanel(this, cusPanel);
+        
+        jLabel2.setText(LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
+        jLabel4.setText(LoggedUserData.getUserRole());
     }
     
     public void loadCustomer() {
@@ -141,7 +144,7 @@ public class ControlPanel extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("ScriptS", 3, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Saloon");
+        jLabel1.setText("Salon");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel2.setText("Jhon Doe");

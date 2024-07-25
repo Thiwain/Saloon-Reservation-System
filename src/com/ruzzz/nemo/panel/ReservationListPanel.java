@@ -189,15 +189,16 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 query += " AND `reservation`.`employee_user_id`='" + employeeMap.get(jComboBox1.getSelectedItem().toString()) + "'";
             }
 
-            if (date1 != null) {
-                if (date2 != null) {
-                    if (isDate1NotLater(date1, date2)) {
-                        query += " AND reservation.date BETWEEN '" + convertDateString(date1) + "' AND '" + convertDateString(date2) + "'";
+                if (date1 != null) {
+                    if (date2 != null) {
+                        if (isDate1NotLater(date1, date2)) {
+                            query += " AND reservation.date BETWEEN '" + convertDateString(date1) + "' AND '" + convertDateString(date2) + "'";
+                        }
+                    } else {
+                        query += " AND reservation.date >= '" + convertDateString(date1) + "'";
                     }
-                } else {
-                    query += " AND reservation.date >= '" + convertDateString(date1) + "'";
                 }
-            }
+            
 
             query += " ORDER BY reservation.date " + jComboBox5.getSelectedItem().toString();
 

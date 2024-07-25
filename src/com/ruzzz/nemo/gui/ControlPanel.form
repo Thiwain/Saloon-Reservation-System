@@ -110,7 +110,7 @@
                   <Font name="ScriptS" size="32" style="3"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="11"/>
-                <Property name="text" type="java.lang.String" value="Saloon"/>
+                <Property name="text" type="java.lang.String" value="Salon"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
             </Component>

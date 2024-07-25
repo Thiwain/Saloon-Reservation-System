@@ -7,9 +7,11 @@ package com.ruzzz.nemo.panel;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.EmailSender;
+import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.ShopBill;
 import com.ruzzz.nemo.model.Status;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
+import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -561,6 +563,13 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(true);
                 jButton4.setEnabled(true);
+
+                infoLogger.info("RESERVATION fullfilled: --> fullfilled By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
+                MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
+                        + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
+                        + "'RESERVATION fullfilled:"
+                        + " -> fullfilled By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
+
             } catch (Exception e) {
                 errorLogger.warning("RESERVATION STATUS UPDATE ERROR ; Error: " + e);
             }
@@ -668,6 +677,10 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 EmailSender es = new EmailSender();
                 if (es.sendEmail("Saloon Nemo INVOICE:" + rs.getString("invoice_id"), htmlEmailBody, jLabel8.getText()).equals("OK")) {
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Email sent successfully !");
+                    infoLogger.info("INVOICE EMAIL SENT: --> SENT BY" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
+                    MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
+                            + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
+                            + "'INVOICE EMAIL SENT: --> SENT BY" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Email sending failed !");
                 }
@@ -713,8 +726,11 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
-            String reportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parameters, dataSource);
+            String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
+
+            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlReportPath);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
             JasperViewer.viewReport(jasperPrint, false);
 
@@ -726,7 +742,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int jop = JOptionPane.showConfirmDialog(cpanel, "Do you want to fulfill?", "", JOptionPane.YES_NO_OPTION);
+        int jop = JOptionPane.showConfirmDialog(cpanel, "Do you want to Cancel?", "", JOptionPane.YES_NO_OPTION);
 
         if (jop == JOptionPane.YES_OPTION) {
             try {

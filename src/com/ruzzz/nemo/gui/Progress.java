@@ -100,7 +100,7 @@ public class Progress extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("ScriptC", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Saloon");
+        jLabel1.setText("Saloo");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/753894_hairdresser_beauty_hair_salon_scissors_icon.png"))); // NOI18N
@@ -119,7 +119,6 @@ public class Progress extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 51, 51));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("0");
 
         javax.swing.GroupLayout background1Layout = new javax.swing.GroupLayout(background1);
         background1.setLayout(background1Layout);
@@ -134,7 +133,7 @@ public class Progress extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, 0)
                         .addComponent(jLabel3)
-                        .addGap(100, 100, 100))
+                        .addGap(109, 109, 109))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, background1Layout.createSequentialGroup()
                         .addGroup(background1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
