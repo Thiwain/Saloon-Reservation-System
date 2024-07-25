@@ -184,7 +184,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             } else {
                 query += " AND `reservation`.`status_id`='" + jComboBox4.getSelectedIndex() + "'";
             }
-            
+
             if (jComboBox1.getSelectedIndex() != 0) {
                 query += " AND `reservation`.`employee_user_id`='" + employeeMap.get(jComboBox1.getSelectedItem().toString()) + "'";
             }
@@ -607,7 +607,12 @@ public class ReservationListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-        loadReservations(jTextField1.getText());
+        if (jComboBox2.getSelectedIndex() == 1) {
+            jComboBox4.setSelectedIndex(2);
+            loadReservations(jTextField1.getText());
+        } else {
+            loadReservations(jTextField1.getText());
+        }
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
@@ -631,7 +636,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
 
         int row = jTable1.getSelectedRow();
         if (evt.getClickCount() == 2) {
-            ReservationDeatailDialog rdd = new ReservationDeatailDialog(cpanel, true, dtm.getValueAt(row, 1).toString());
+            ReservationDeatailDialog rdd = new ReservationDeatailDialog(cpanel, false, dtm.getValueAt(row, 1).toString());
             rdd.setVisible(true);
         }
     }//GEN-LAST:event_jTable1MouseClicked

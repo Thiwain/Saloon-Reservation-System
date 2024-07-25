@@ -5,6 +5,7 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.ShopBill;
 import com.ruzzz.nemo.model.Status;
@@ -31,6 +32,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
+import javax.swing.JOptionPane;
+import org.apache.commons.dbcp2.SQLExceptionList;
 
 /**
  *
@@ -43,8 +46,11 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
     private Double serviceToal = 00.0;
     private final String invoiceId = generateID();
 
+    private static ControlPanel cpanel;
+
     public ReservationDeatailDialog(java.awt.Frame parent, boolean modal, String resId) {
         super(parent, modal);
+        cpanel = (ControlPanel) parent;
         initComponents();
         this.setTitle("Reservation");
         reservationId = resId;
@@ -93,12 +99,6 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 jLabel13.setText(convertTo12HourFormat(rs.getString("etime")));
                 jLabel20.setText(rs.getString("efname") + " " + rs.getString("elname"));
                 loadServicesToTable(resId);
-
-                if (rs.getString("cancel_sts").equals(Status.TRUE.name())) {
-                    jButton1.setEnabled(false);
-                    jButton3.setEnabled(false);
-                    jButton4.setEnabled(false);
-                }
                 if (rs.getString("pending_sts").equals(Status.INACTIVE.name())) {
                     jButton1.setEnabled(false);
                     jButton2.setEnabled(false);
@@ -106,8 +106,14 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                     jButton4.setEnabled(true);
                     jFormattedTextField1.setEditable(false);
                 }
-                if (rs.getString("pending_sts").equals(Status.ACTIVE.name())) {
+                if (rs.getString("cancel_sts").equals(Status.TRUE.name())) {
+                    jButton1.setEnabled(false);
                     jButton2.setEnabled(false);
+                    jButton3.setEnabled(false);
+                    jButton4.setEnabled(false);
+                }
+                if (rs.getString("pending_sts").equals(Status.ACTIVE.name())) {
+                    jButton2.setEnabled(true);
                     jButton3.setEnabled(false);
                     jButton4.setEnabled(false);
                 }
@@ -318,6 +324,11 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Cancel Reservation");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/8665756_print_icon (2) (1).png"))); // NOI18N
@@ -526,27 +537,33 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2 WHERE  `id`='" + reservationId + "'");
 
-            MySQL.execute("INSERT INTO"
-                    + " `saloon_nemo`.`invoice`"
-                    + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
-                    + " VALUES "
-                    + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + serviceToal + "', '" + jFormattedTextField1.getText() + "')");
+        int jop = JOptionPane.showConfirmDialog(cpanel, "Do you want to fulfill?", "", JOptionPane.YES_NO_OPTION);
 
-            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-            for (int i = 0; i < jTable1.getRowCount(); i++) {
-                MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`) VALUES ('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "');");
+        if (jop == JOptionPane.YES_OPTION) {
+            try {
+                MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2 WHERE  `id`='" + reservationId + "'");
+
+                MySQL.execute("INSERT INTO"
+                        + " `saloon_nemo`.`invoice`"
+                        + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
+                        + " VALUES "
+                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + serviceToal + "', '" + jFormattedTextField1.getText() + "')");
+
+                DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+                    MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`) VALUES ('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "');");
+                }
+
+                MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
+
+                jButton1.setEnabled(false);
+                jButton2.setEnabled(false);
+                jButton3.setEnabled(true);
+                jButton4.setEnabled(true);
+            } catch (Exception e) {
+                errorLogger.warning("RESERVATION STATUS UPDATE ERROR ; Error: " + e);
             }
-
-            MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
-
-            jButton1.setEnabled(false);
-            jButton3.setEnabled(true);
-            jButton4.setEnabled(true);
-        } catch (Exception e) {
-            errorLogger.warning("RESERVATION STATUS UPDATE ERROR ; Error: " + e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -573,6 +590,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 }
 
                 double grandTotal = Double.parseDouble(rs.getString("total")) + Double.parseDouble(rs.getString("service_charge"));
+
                 String htmlEmailBody = "<!DOCTYPE html>\n"
                         + "<html lang=\"en\">\n"
                         + "<head>\n"
@@ -662,38 +680,68 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            // Sample data
 
             Vector<ShopBill> v = new Stack<>();
-            v.add(new ShopBill("Shave", "500.00"));
-            v.add(new ShopBill("Shave", "500.00"));
-            v.add(new ShopBill("Shave", "500.00"));
-
-            // Parameters
             HashMap<String, Object> parameters = new HashMap<>();
-            parameters.put("Parameter1", "INV-1001");
-            parameters.put("Parameter2", "2024-07-24");
-            parameters.put("Parameter3", "3000.00");
-            parameters.put("Parameter4", "150.00");
-            parameters.put("Parameter5", "3150.00");
 
-            // Data source
+            ResultSet rs = MySQL.execute("SELECT * FROM invoice WHERE invoice.reservation_id='" + reservationId + "'");
+
+            if (rs.next()) {
+                double grandTotal = Double.parseDouble(rs.getString("total")) + Double.parseDouble(rs.getString("service_charge"));
+                parameters.put("Parameter1", rs.getString("invoice_id"));
+                parameters.put("Parameter2", rs.getString("date_time_issued"));
+                parameters.put("Parameter3", rs.getString("total"));
+                parameters.put("Parameter4", rs.getString("service_charge"));
+                parameters.put("Parameter5", String.valueOf(grandTotal));
+                parameters.put("Parameter6", jLabel9.getText());
+                parameters.put("Parameter7", jLabel12.getText());
+                parameters.put("Parameter8", jLabel13.getText());
+
+                ResultSet rs2 = MySQL.execute("SELECT\n"
+                        + "invoice_service.invoice_invoice_id AS in_id,\n"
+                        + "invoice_service.price AS price,\n"
+                        + "service.service_name AS title\n"
+                        + "FROM invoice_service\n"
+                        + "INNER JOIN service ON invoice_service.service_id=service.id\n"
+                        + "WHERE invoice_service.invoice_invoice_id='" + rs.getString("invoice_id") + "'");
+
+                while (rs2.next()) {
+                    v.add(new ShopBill(rs2.getString("title"), rs2.getString("price")));
+                }
+
+            }
+
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
-            // Load the Jasper report
             String reportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
             JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parameters, dataSource);
 
-            // View the report
             JasperViewer.viewReport(jasperPrint, false);
 
-            // Export to PDF (optional)
 //            String pdfFilePath = "src/reports/output/invoice.pdf";
 //            JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
-        } catch (JRException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int jop = JOptionPane.showConfirmDialog(cpanel, "Do you want to fulfill?", "", JOptionPane.YES_NO_OPTION);
+
+        if (jop == JOptionPane.YES_OPTION) {
+            try {
+                MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2, `cancel_status`='1' WHERE  `id`='" + reservationId + "'");
+                MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
+                jButton1.setEnabled(false);
+                jButton2.setEnabled(false);
+                jButton3.setEnabled(false);
+                jButton4.setEnabled(false);
+                loadData(reservationId);
+            } catch (Exception e) {
+                errorLogger.warning("RESERVATION STATUS UPDATE ERROR ; Error: " + e);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

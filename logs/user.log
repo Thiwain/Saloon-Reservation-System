@@ -708,3 +708,63 @@ Jul 24, 2024 4:37:46 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:null null
 Jul 24, 2024 4:41:30 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 11:57:32 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:02:52 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:16:42 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:26:47 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+INFO: Reservation(R8463045) Added by Name:null null
+Jul 24, 2024 12:28:23 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:29:33 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:36:11 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 24, 2024 12:37:27 PM com.ruzzz.nemo.panel.ServicePanel jButton1ActionPerformed
+INFO: Service Added by Name:Thiwian Medagama
+Jul 24, 2024 12:38:22 PM com.ruzzz.nemo.panel.CustomerPanel jButton5ActionPerformed
+INFO: Customer Registered by Name:Thiwian Medagama| Customer :Mobile:0769964123Name :Kyle West
+Jul 24, 2024 12:40:12 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+INFO: Reservation(R1641684) Added by Name:Thiwian Medagama
+Jul 24, 2024 12:41:33 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 24, 2024 12:42:55 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 12:44:55 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 24, 2024 12:48:12 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+INFO: Reservation(R6379113) Added by Name:Thiwian Medagama
+Jul 24, 2024 12:54:35 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 24, 2024 3:17:02 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 3:38:25 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 3:38:41 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 3:54:11 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 3:55:13 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 3:56:28 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 5:45:24 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 5:47:20 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 5:47:45 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 6:04:50 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 6:05:14 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 6:07:30 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 24, 2024 6:09:50 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 25, 2024 10:50:38 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 25, 2024 10:56:55 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
