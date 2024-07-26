@@ -12,6 +12,7 @@ import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.DashBoard;
 import com.ruzzz.nemo.panel.EmployeePanel;
+import com.ruzzz.nemo.panel.IncomePanel;
 import com.ruzzz.nemo.panel.ReservationListPanel;
 import com.ruzzz.nemo.panel.ReservationPanel;
 import com.ruzzz.nemo.panel.ServicePanel;
@@ -76,6 +77,10 @@ public class ControlPanel extends javax.swing.JFrame {
     
     public void loadReservation() {
         loadPanel(resPanel);
+    }
+    
+    public void loadIncome() {
+        loadPanel(new IncomePanel());
     }
     
     private void loadPanel(JPanel panel) {
