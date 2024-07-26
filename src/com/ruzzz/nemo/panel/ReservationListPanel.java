@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.panel;
 
+import com.ruzzz.nemo.dialog.ReservationDeatailDialog;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;

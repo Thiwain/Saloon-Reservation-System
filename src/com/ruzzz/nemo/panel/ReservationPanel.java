@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.panel;
 
+import com.ruzzz.nemo.dialog.ServiceDialog;
 import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;

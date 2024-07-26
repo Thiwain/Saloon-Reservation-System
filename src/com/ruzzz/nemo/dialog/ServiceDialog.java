@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Dialog.java to edit this template
  */
-package com.ruzzz.nemo.panel;
+package com.ruzzz.nemo.dialog;
 
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.ServiceTableBean;
+import com.ruzzz.nemo.panel.ReservationPanel;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
