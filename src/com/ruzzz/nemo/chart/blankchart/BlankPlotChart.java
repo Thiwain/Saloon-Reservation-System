@@ -1,4 +1,4 @@
-package com.raven.chart.blankchart;
+package com.ruzzz.nemo.chart.blankchart;
 
 import java.awt.Color;
 import java.awt.FontMetrics;

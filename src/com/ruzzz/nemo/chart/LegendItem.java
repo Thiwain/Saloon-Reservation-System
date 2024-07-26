@@ -1,4 +1,4 @@
-package com.raven.chart;
+package com.ruzzz.nemo.chart;
 
 public class LegendItem extends javax.swing.JPanel {
 
@@ -13,7 +13,7 @@ public class LegendItem extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbColor = new com.raven.chart.LabelColor();
+        lbColor = new com.ruzzz.nemo.chart.LabelColor();
         lbName = new javax.swing.JLabel();
 
         lbColor.setText("labelColor1");
@@ -47,7 +47,7 @@ public class LegendItem extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.chart.LabelColor lbColor;
+    private com.ruzzz.nemo.chart.LabelColor lbColor;
     private javax.swing.JLabel lbName;
     // End of variables declaration//GEN-END:variables
 }

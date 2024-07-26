@@ -5,7 +5,7 @@
  */
 package com.raven.main;
 
-import com.raven.chart.ModelChart;
+import com.ruzzz.nemo.chart.ModelChart;
 import java.awt.Color;
 
 /**
@@ -41,7 +41,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        chart = new com.raven.chart.Chart();
+        chart = new com.ruzzz.nemo.chart.Chart();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +102,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.chart.Chart chart;
+    private com.ruzzz.nemo.chart.Chart chart;
     // End of variables declaration//GEN-END:variables
 }

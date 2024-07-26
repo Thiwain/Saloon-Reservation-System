@@ -41,7 +41,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.raven.chart.Chart" name="chart">
+    <Component class="com.ruzzz.nemo.chart.Chart" name="chart">
     </Component>
   </SubComponents>
 </Form>

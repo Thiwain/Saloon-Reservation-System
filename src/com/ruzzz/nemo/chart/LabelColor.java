@@ -1,4 +1,4 @@
-package com.raven.chart;
+package com.ruzzz.nemo.chart;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

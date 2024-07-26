@@ -44,7 +44,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="com.raven.chart.blankchart.BlankPlotChart" name="blankPlotChart">
+    <Container class="com.ruzzz.nemo.chart.blankchart.BlankPlotChart" name="blankPlotChart">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>

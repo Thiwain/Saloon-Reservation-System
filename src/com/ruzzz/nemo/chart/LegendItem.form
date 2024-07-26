@@ -42,7 +42,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="com.raven.chart.LabelColor" name="lbColor">
+    <Component class="com.ruzzz.nemo.chart.LabelColor" name="lbColor">
       <Properties>
         <Property name="text" type="java.lang.String" value="labelColor1"/>
       </Properties>

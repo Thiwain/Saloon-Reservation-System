@@ -1,4 +1,4 @@
-package com.raven.chart;
+package com.ruzzz.nemo.chart;
 
 import java.awt.Color;
 
