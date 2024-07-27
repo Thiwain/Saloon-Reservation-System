@@ -133,7 +133,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                     + "service.id AS sid,\n"
                     + "service.service_name AS title,\n"
                     + "service.`description` AS des,\n"
-                    + "service.cost + service.profit AS cost \n"
+                    + "service.cost + service.profit AS cost, service.profit AS profit \n"
                     + "FROM\n"
                     + "reservation_has_service\n"
                     + "INNER JOIN service ON reservation_has_service.service_id=service.id\n"
@@ -150,6 +150,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 v.add(rs.getString("title"));
                 v.add(rs.getString("des"));
                 v.add(rs.getString("cost"));
+                v.add(rs.getString("profit"));
                 total += Double.parseDouble(rs.getString("cost"));
                 serviceToal += total;
                 tableModel.addRow(v);
@@ -275,17 +276,17 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "#", "Title ", "Description", "Coast(Rs.)"
+                "#", "Title ", "Description", "Coast(Rs.)", "profit"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -300,6 +301,9 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
             jTable1.getColumnModel().getColumn(3).setMinWidth(80);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(80);
             jTable1.getColumnModel().getColumn(3).setMaxWidth(80);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -554,7 +558,9 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
-                    MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`) VALUES ('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "');");
+                    MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`,`profit`) "
+                            + "VALUES "
+                            + "('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "','" + dtm.getValueAt(i, 4) + "')");
                 }
 
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");

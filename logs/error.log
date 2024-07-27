@@ -1,292 +1,174 @@
-Jul 24, 2024 5:47:25 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 5:47:26 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 5:47:45 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:05:43 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 24, 2024 6:02:03 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:05:59 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:02:04 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:05:59 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:04:50 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:07:10 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:07:11 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:10:08 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:10:09 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:13:02 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:13:02 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 11:13:15 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 24, 2024 6:04:56 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:13:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:04:57 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:13:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:05:14 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:13:46 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 24, 2024 6:06:07 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:20:13 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:06:07 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:20:13 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:07:30 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:23:19 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 24, 2024 6:08:46 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:24:51 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:08:46 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:24:51 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 24, 2024 6:09:50 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:25:05 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 10:50:26 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:30:24 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 10:50:26 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:30:25 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 10:50:39 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:30:56 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 10:56:06 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:31:18 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 10:56:06 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 11:31:18 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 10:56:55 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 11:31:41 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 11:04:15 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:14:15 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:22:25 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect date value: 'null' for column 'date' at row 1
+Jul 27, 2024 12:22:29 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect date value: 'null' for column 'date' at row 1
+Jul 27, 2024 12:22:29 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect date value: 'null' for column 'date' at row 1
+Jul 27, 2024 12:23:35 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:24:55 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:27:35 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:31:41 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:33:13 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:35:05 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:35:06 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:38:04 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:39:41 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+WARNING: Reservation-Setup Error ; Error: java.text.ParseException: Unparseable date: "--:-- --"
+Jul 27, 2024 12:45:30 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 11:04:16 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:45:31 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 11:05:26 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 11:20:50 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:47:25 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 11:20:50 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:47:26 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 11:22:42 AM com.ruzzz.nemo.panel.ReservationDeatailDialog jButton1ActionPerformed
+Jul 27, 2024 12:47:51 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
 WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 12:39:41 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 12:48:00 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:09 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:18 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:27 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:37 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:45 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:52 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:48:59 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:05 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:12 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:20 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:26 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:37 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:44 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:51 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:49:58 PM com.ruzzz.nemo.dialog.ReservationDeatailDialog jButton1ActionPerformed
+WARNING: RESERVATION STATUS UPDATE ERROR ; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Jul 27, 2024 12:51:31 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 12:51:32 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Jul 27, 2024 12:55:22 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 12:44:10 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:44:16 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:44:38 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:45:15 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:55:44 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 12:45:16 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 12:55:44 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 12:45:37 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:45:40 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:45:40 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:48:29 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 12:48:29 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 12:48:38 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.lang.NullPointerException: Cannot invoke "java.time.chrono.ChronoLocalDate.toEpochDay()" because "other" is null
-Jul 25, 2024 12:50:14 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 1:03:03 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 1:17:44 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:17:44 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:03:11 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:17:44 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:17:44 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:03:11 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:17:54 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:17:54 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:17:56 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:17:56 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nullSELECT * FROM customer
-INNER JOIN gender ON customer.gender_id=gender.id
-WHE' at line 1
-Jul 25, 2024 1:18:55 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:18:55 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:19:11 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 1:03:42 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 1:20:55 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:07:27 PM com.ruzzz.nemo.panel.ServicePanel jButton3ActionPerformed
+WARNING: SERVICE UPDATE ERROR; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's preference.', `cost`='3000.00', `profit`='2000.0', `time_m`='45' WHERE `id`='1' at line 1
+Jul 27, 2024 1:23:56 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:20:56 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:23:56 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:21:12 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 27, 2024 1:35:54 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 1:23:09 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:38:17 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:23:09 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 27, 2024 1:38:17 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:26:42 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:26:42 PM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:29:08 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 28, 2024 12:45:57 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 1:30:21 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:30:21 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 12:46:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:30:21 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:30:21 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 12:46:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:30:29 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:30:29 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:30:30 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:30:30 PM com.ruzzz.nemo.panel.CustomerPanel customerSort
-WARNING: CUSTOMER LOADING loadCustomer() Exception; Error: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? OR customer.last_name LIKE ? OR customer.mobile LIKE ? OR customer.email LIKE ' at line 1
-Jul 25, 2024 1:36:11 PM com.ruzzz.nemo.gui.ControlPanel jButton3ActionPerformed
+Jul 28, 2024 12:47:16 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 25, 2024 1:36:17 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 12:47:28 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:36:17 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 12:47:28 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 25, 2024 1:37:17 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 28, 2024 12:47:38 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 12:45:58 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 1:42:47 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:45:58 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 1:42:48 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:46:11 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 28, 2024 1:43:08 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 12:57:56 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 1:44:07 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:57:56 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+Jul 28, 2024 1:44:07 AM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:58:35 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 12:59:34 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:59:34 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 12:59:45 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:00:04 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:00:05 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:00:17 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:00:30 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:00:30 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:00:50 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:03:45 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:03:46 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:04:04 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:04:39 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:04:39 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:04:50 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:05:14 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:05:14 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:05:40 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:09:48 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:09:49 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:10:17 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:13:13 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:13:13 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:20:23 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:22:26 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:22:26 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:22:37 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:24:57 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:24:58 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:25:24 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:25:52 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:25:53 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:26:10 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:26:54 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:26:54 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:27:46 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:31:34 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:31:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:39:25 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:39:35 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:39:36 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:40:02 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:48:00 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:48:00 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:49:35 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:50:16 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:50:17 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:56:02 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 1:56:17 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:56:18 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 1:56:45 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 2:03:20 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:03:21 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:03:31 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 2:09:08 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:09:09 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:10:00 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 2:10:26 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:10:27 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:10:51 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
-WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
-Jul 27, 2024 2:13:04 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:13:04 AM com.ruzzz.nemo.panel.CustomerPanel <init>
-WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
-Jul 27, 2024 2:13:11 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+Jul 28, 2024 1:45:05 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))

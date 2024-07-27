@@ -112,12 +112,11 @@ public class ReservationPanel extends javax.swing.JPanel {
     }
 
     private void reset() {
-        jTextField1.setText("");
+        /*jTextField1.setText("");
         jLabel3.setText("");
         jLabel4.setText("");
         jLabel5.setText("");
         jLabel10.setText("");
-        jLabel13.setText("");
         jComboBox2.setSelectedIndex(0);
         jDateChooser2.setDate(null);
         jFormattedTextField4.setText("");
@@ -125,7 +124,8 @@ public class ReservationPanel extends javax.swing.JPanel {
         CustomerDataBean.setcFname(null);
         CustomerDataBean.setcLname(null);
         CustomerDataBean.setcEmail(null);
-        CustomerDataBean.setcMobile(null);
+        CustomerDataBean.setcMobile(null);*/
+        jLabel13.setText("0.00");
         generateRString();
         DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
         tableModel.setRowCount(0);
@@ -499,7 +499,8 @@ public class ReservationPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        if (validateReservationProcess()) {
+//        if (validateReservationProcess()) {
+        if (true) {
             try {
                 MySQL.execute("INSERT INTO \n"
                         + "    `saloon_nemo`.`reservation` \n"
