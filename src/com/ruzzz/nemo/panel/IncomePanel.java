@@ -6,14 +6,27 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.chart.ModelChart;
 import com.ruzzz.nemo.connection.MySQL;
+import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.Vector;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JPanel;
+import raven.toast.Notifications;
+import static test.JPanelToImage.exportPanelAsImage;
 
 /**
  *
@@ -30,6 +43,7 @@ public class IncomePanel extends javax.swing.JPanel {
         loadIncomeChartData();
         loadReservationChartData();
         calculateIncomeAndProfitCombo();
+        calculateReservationsCombo();
     }
 
     private void loadIncomeChartData() {
@@ -91,7 +105,6 @@ public class IncomePanel extends javax.swing.JPanel {
             chart2.setBackground(new Color(250, 250, 250));
             chart2.addLegend("Completed", new Color(122, 89, 255));
             chart2.addLegend("Canceled", new Color(255, 69, 249));
-            chart2.addLegend("Pending", new Color(171, 255, 69));
 
             String year = jComboBox1.getSelectedItem().toString();
             DecimalFormat df = new DecimalFormat("00");
@@ -110,12 +123,6 @@ public class IncomePanel extends javax.swing.JPanel {
                         + "AND reservation.status_id = 2 "
                         + "AND reservation.date LIKE '" + year + "-" + month + "%'";
 
-                String pendingreservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
-                        + "FROM reservation "
-                        + "WHERE reservation.cancel_status = 2 "
-                        + "AND reservation.status_id = 1 "
-                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
-
                 String canceledreservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
                         + "FROM reservation "
                         + "WHERE reservation.cancel_status = 1 "
@@ -123,7 +130,6 @@ public class IncomePanel extends javax.swing.JPanel {
                         + "AND reservation.date LIKE '" + year + "-" + month + "%'";
 
                 ResultSet reservation = MySQL.execute(reservationQuery);
-                ResultSet pendingreservation = MySQL.execute(pendingreservationQuery);
                 ResultSet canceledreservation = MySQL.execute(canceledreservationQuery);
 
                 double monthlyReservation = 0.0;
@@ -135,11 +141,6 @@ public class IncomePanel extends javax.swing.JPanel {
                     monthlyReservation = (monthlyReservationStr != null) ? Double.parseDouble(monthlyReservationStr) : 0.0;
                 }
 
-                if (pendingreservation.next()) {
-                    String monthlyPendingReservationStr = pendingreservation.getString("total_reservations");
-                    monthlyPendingReservation = (monthlyPendingReservationStr != null) ? Double.parseDouble(monthlyPendingReservationStr) : 0.0;
-                }
-
                 if (canceledreservation.next()) {
                     String monthlyCanceledReservationStr = canceledreservation.getString("total_reservations");
                     monthlyCanceledReservation = (monthlyCanceledReservationStr != null) ? Double.parseDouble(monthlyCanceledReservationStr) : 0.0;
@@ -148,7 +149,6 @@ public class IncomePanel extends javax.swing.JPanel {
                 chart2.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyReservation, monthlyCanceledReservation, monthlyPendingReservation}));
 
                 reservation.close();
-                pendingreservation.close();
                 canceledreservation.close();
             }
 
@@ -182,30 +182,11 @@ public class IncomePanel extends javax.swing.JPanel {
         return Month.of(monthNumber).getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
     }
 
-    /*
-   SELECT 
-    SUM(itotal) AS total_sum,
-    SUM(profit) AS profit_sum
-FROM (
-    SELECT 
-        (invoice.total + invoice.service_charge) AS itotal,
-        SUM(invoice_service.profit) AS profit
-    FROM 
-        invoice
-    INNER JOIN 
-        reservation ON invoice.reservation_id = reservation.id
-    INNER JOIN 
-        invoice_service ON invoice_service.invoice_invoice_id = invoice.invoice_id
-        WHERE reservation.date BETWEEN '2024-01-09' AND '2024-05-09'
-    GROUP BY 
-        invoice.invoice_id, invoice.reservation_id, reservation.date, invoice.total, invoice.service_charge
-    ORDER BY reservation.date DESC
-) AS subquery;
-
-     */
     private void calculateIncomeAndProfitCombo() {
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
         try {
-            ResultSet rs = MySQL.execute("SELECT \n"
+            String query = "SELECT \n"
                     + "    SUM(itotal) AS total_sum,\n"
                     + "    SUM(profit) AS profit_sum\n"
                     + "FROM (\n"
@@ -220,15 +201,228 @@ FROM (
                     + "        invoice_service ON invoice_service.invoice_invoice_id = invoice.invoice_id\n"
                     + "    GROUP BY \n"
                     + "        invoice.invoice_id, invoice.reservation_id, reservation.date, invoice.total, invoice.service_charge\n"
-                    + "    ORDER BY reservation.date DESC\n"
-                    + "    LIMIT " + jComboBox2.getSelectedItem().toString() + "\n"
-                    + ") AS subquery");
+                    + "    ORDER BY reservation.date DESC";
+
+            if (jComboBox2.getSelectedIndex() != 7) {
+                query += " LIMIT " + jComboBox2.getSelectedItem().toString();
+            }
+
+            query += ") AS subquery";
+
+            ResultSet rs = MySQL.execute(query);
+
             if (rs.next()) {
-                jLabel10.setText(rs.getString("total_sum"));
+                double total = Double.parseDouble(rs.getString("total_sum"));
+                double profit = Double.parseDouble(rs.getString("profit_sum"));
+                jLabel10.setText(String.valueOf(total - profit));
                 jLabel9.setText(rs.getString("profit_sum"));
+                jLabel7.setText(rs.getString("total_sum"));
             }
         } catch (Exception e) {
         }
+    }
+
+    private void calculateReservationsCombo() {
+        jDateChooser3.setDate(null);
+        jDateChooser4.setDate(null);
+        try {
+            String query = "SELECT \n"
+                    + "    COUNT(*) AS total_count,\n"
+                    + "    SUM(CASE WHEN status_id = 2 AND cancel_status = 2 THEN 1 ELSE 0 END) AS finished_count,\n"
+                    + "    SUM(CASE WHEN status_id = 1 AND cancel_status = 0 THEN 1 ELSE 0 END) AS pending_count\n"
+                    + "FROM \n"
+                    + "    reservation \n"
+                    + "WHERE \n"
+                    + "    reservation.date >= CURDATE() - INTERVAL " + jComboBox5.getSelectedItem().toString() + " DAY";
+
+            ResultSet rs = MySQL.execute(query);
+
+            if (rs.next()) {
+                jLabel17.setText(rs.getString("total_count"));
+                jLabel16.setText(rs.getString("finished_count"));
+                jLabel15.setText(rs.getString("pending_count"));
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private static boolean querySelection = false;
+    private static boolean querySelection2 = false;
+
+    public static boolean isDate1NotLater(Date date1, Date date2) {
+        if (date1 == null && date2 == null) {
+            querySelection = true;
+            return true;
+        }
+        if (date1 == null && date2 != null) {
+            System.out.println("d1 is empty");
+            return false;
+        }
+
+        LocalDate d2 = convertToLocalDate(date2);
+        LocalDate d1 = convertToLocalDate(date1);
+
+        return !(d1 != null && d1.isAfter(d2));
+    }
+
+    private static LocalDate convertToLocalDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+        return new java.sql.Date(date.getTime()).toLocalDate();
+    }
+
+    private static String convertDateString(String dateStr) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            Date date = inputFormat.parse(dateStr);
+            return outputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void calculateIncomeAndProfitBtn() {
+        try {
+            Date date1 = jDateChooser1.getDate();
+            Date date2 = jDateChooser2.getDate();
+            boolean isNotLater = isDate1NotLater(date1, date2);
+
+            String query = "SELECT \n"
+                    + "    SUM(itotal) AS total_sum,\n"
+                    + "    SUM(profit) AS profit_sum\n"
+                    + "FROM (\n"
+                    + "    SELECT \n"
+                    + "        (invoice.total + invoice.service_charge) AS itotal,\n"
+                    + "        SUM(invoice_service.profit) AS profit\n"
+                    + "    FROM \n"
+                    + "        invoice\n"
+                    + "    INNER JOIN \n"
+                    + "        reservation ON invoice.reservation_id = reservation.id\n"
+                    + "    INNER JOIN \n"
+                    + "        invoice_service ON invoice_service.invoice_invoice_id = invoice.invoice_id\n";
+
+            if (date1 != null || date2 != null) {
+                if (isNotLater) {
+                    if (date2 == null) {
+                        query += " WHERE reservation.date >='" + convertDateString(jDateChooser1.getDate().toString()) + "'";
+                    } else {
+                        query += " WHERE reservation.date BETWEEN '" + convertDateString(jDateChooser1.getDate().toString()) + "' AND '" + convertDateString(jDateChooser2.getDate().toString()) + "'\n";
+                    }
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
+                    return; // Exit the method if dates are invalid
+                }
+            } else {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a date !");
+                return; // Exit the method if no dates are selected
+            }
+
+            query += "    GROUP BY \n"
+                    + "        invoice.invoice_id, invoice.reservation_id, reservation.date, invoice.total, invoice.service_charge\n"
+                    + "    ORDER BY reservation.date DESC\n"
+                    + ") AS subquery";
+
+            // Use executeQuery instead of executeUpdate
+            ResultSet rs = MySQL.execute(query);
+
+            if (rs.next()) {
+                double total = rs.getDouble("total_sum");
+                double profit = rs.getDouble("profit_sum");
+                jLabel10.setText(String.valueOf(total - profit));
+                jLabel9.setText(String.valueOf(profit));
+                jLabel7.setText(String.valueOf(total));
+            }
+
+            rs.close(); // Close the ResultSet
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void calculateReservationsBtn() {
+        try {
+            Date date1 = jDateChooser3.getDate();
+            Date date2 = jDateChooser4.getDate();
+            boolean isNotLater = isDate1NotLater(date1, date2);
+
+            if (date1 == null || date2 == null) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a date !");
+                return;
+            }
+
+            if (!isNotLater) {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
+                return;
+            }
+
+            String query = "SELECT \n"
+                    + "    COUNT(*) AS total_count, \n"
+                    + "    SUM(CASE WHEN status_id = 2 AND cancel_status = 2 THEN 1 ELSE 0 END) AS finished_count, \n"
+                    + "    SUM(CASE WHEN status_id = 1 AND cancel_status = 0 THEN 1 ELSE 0 END) AS pending_count \n"
+                    + "FROM \n"
+                    + "    reservation ";
+
+            if (date1 != null || date2 != null) {
+                if (isNotLater) {
+                    if (date2 == null) {
+                        query += " WHERE reservation.date >='" + convertDateString(jDateChooser3.getDate().toString()) + "'";
+                    } else {
+                        query += " WHERE reservation.date BETWEEN '" + convertDateString(jDateChooser3.getDate().toString()) + "' AND '" + convertDateString(jDateChooser4.getDate().toString()) + "'\n";
+                    }
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
+                    return;
+                }
+            } else {
+                Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a date !");
+                return;
+            }
+
+            ResultSet rs = MySQL.execute(query);
+
+            if (rs.next()) {
+                jLabel17.setText(rs.getString("total_count"));
+                jLabel16.setText(rs.getString("finished_count"));
+                jLabel15.setText(rs.getString("pending_count"));
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void exportPanelAsImage(JPanel panel, String filePath) {
+        int width = panel.getWidth();
+        int height = panel.getHeight();
+
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = image.createGraphics();
+        panel.paint(g2d);
+        g2d.dispose();
+
+        try {
+            File file = new File(filePath);
+            ImageIO.write(image, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+     public static String generateFileName(String prefix) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateAndTime = sdf.format(new Date());
+
+        String uniqueId = UUID.randomUUID().toString();
+
+        String fileName = prefix + "_" + currentDateAndTime + "_" + uniqueId;
+
+        return fileName;
     }
 
     /**
@@ -290,6 +484,11 @@ FROM (
         jSeparator1 = new javax.swing.JSeparator();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jDateChooser5 = new com.toedter.calendar.JDateChooser();
@@ -348,7 +547,7 @@ FROM (
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jLabel3.setText("Income & Reservations(LKR)");
+        jLabel3.setText("Income(LKR) & Reservations");
 
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -406,7 +605,7 @@ FROM (
 
         jLabel4.setText("Income & Profit On Last");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "10", "30", "60", "90", "365" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "10", "30", "60", "90", "365", "*" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
@@ -459,19 +658,38 @@ FROM (
 
         jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+
         jLabel19.setText("To");
+
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
 
         jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jButton2.setText(".");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel20.setText("To");
 
         jButton3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jButton3.setText(".");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel22.setText("Days");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "30", "60", "90", "365" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "10", "30", "60", "90", "365" }));
+        jComboBox5.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox5ItemStateChanged(evt);
+            }
+        });
 
         jLabel23.setText("Days");
 
@@ -635,16 +853,57 @@ FROM (
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel24.setText("Total:");
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel25.setText("0.00");
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel26.setText("Profit:");
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel27.setText("0.00");
+
+        jButton6.setText("Reset");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 270, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 427, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
+
+        jPanel8Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel24, jLabel25, jLabel26, jLabel27});
 
         jPanel5.add(jPanel8, java.awt.BorderLayout.LINE_END);
 
@@ -696,15 +955,20 @@ FROM (
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jPanel9.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -751,12 +1015,24 @@ FROM (
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        loadIncomeChartData();
+        exportPanelAsImage(jPanel6, "C:\\Users\\Acer\\Documents\\NetBeansProjects\\SaloonNemo\\chart_img\\"+generateFileName("ChartImage")+".png");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
         calculateIncomeAndProfitCombo();
     }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        calculateIncomeAndProfitBtn();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox5ItemStateChanged
+        calculateReservationsCombo();
+    }//GEN-LAST:event_jComboBox5ItemStateChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        calculateReservationsBtn();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.ruzzz.nemo.chart.Chart chart2;
@@ -766,6 +1042,7 @@ FROM (
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -792,6 +1069,10 @@ FROM (
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

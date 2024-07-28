@@ -621,7 +621,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                                 .append(convertDateString(date2.toString())).append("'");
                     }
                 } else {
-                    System.out.println("com.ruzzz.nemo.panel.CustomerPanel.customerSort()");
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
                 }
             }
 

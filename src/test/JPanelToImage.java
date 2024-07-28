@@ -48,6 +48,6 @@ public class JPanelToImage {
         frame.setVisible(true);
 
         // Export the panel as an image
-        exportPanelAsImage(panel, "C:\\Users\\Acer\\Downloads\\panel_image.png");
+        exportPanelAsImage(panel, "C:\\Users\\Acer\\Documents\\NetBeansProjects\\SaloonNemo\\chart_img\\panel_image.png");
     }
 }
