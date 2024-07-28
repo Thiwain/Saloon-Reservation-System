@@ -26,22 +26,18 @@ public class IncomePanel extends javax.swing.JPanel {
      */
     public IncomePanel() {
         initComponents();
-        init();
         loadYears();
         loadIncomeChartData();
-
-    }
-
-    private void init() {
-        chart3.setBackground(new Color(250, 250, 250));
-        chart3.addLegend("Income", new Color(66, 167, 245));
-        chart3.addLegend("Profit", new Color(66, 245, 212));
+        loadReservationChartData();
     }
 
     private void loadIncomeChartData() {
-
         try {
             chart3.removeAll();
+            chart3.setBackground(new Color(250, 250, 250));
+            chart3.addLegend("Income", new Color(66, 167, 245));
+            chart3.addLegend("Profit", new Color(66, 245, 212));
+
             String year = jComboBox1.getSelectedItem().toString();
             DecimalFormat df = new DecimalFormat("00");
 
@@ -53,25 +49,106 @@ public class IncomePanel extends javax.swing.JPanel {
             while (rs.next()) {
                 String month = df.format(rs.getInt("month"));
 
-                String query = "SELECT SUM(total + service_charge - profit) AS monthly_income, "
-                        + "SUM(invoice_service.profit) AS monthly_profit "
-                        + "FROM invoice "
-                        + "INNER JOIN invoice_service ON invoice.invoice_id = invoice_service.invoice_invoice_id "
-                        + "WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
+                String incomeQuery = "SELECT SUM(total + service_charge) AS monthly_income "
+                        + "FROM invoice WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
 
-                ResultSet income = MySQL.execute(query);
+                ResultSet income = MySQL.execute(incomeQuery);
 
                 if (income.next()) {
                     String monthlyIncomeStr = income.getString("monthly_income");
                     double monthlyIncome = (monthlyIncomeStr != null) ? Double.parseDouble(monthlyIncomeStr) : 0.0;
 
-                    String monthlyProfitStr = income.getString("monthly_profit");
-                    double monthlyProfit = (monthlyProfitStr != null) ? Double.parseDouble(monthlyProfitStr) : 0.0;
+                    String profitQuery = "SELECT SUM(invoice_service.profit) AS monthly_profit "
+                            + "FROM invoice "
+                            + "INNER JOIN invoice_service ON invoice.invoice_id = invoice_service.invoice_invoice_id "
+                            + "WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
 
-                    chart3.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyIncome - monthlyProfit, monthlyProfit}));
+                    ResultSet rs2 = MySQL.execute(profitQuery);
+
+                    if (rs2.next()) {
+                        String monthlyProfitStr = rs2.getString("monthly_profit");
+                        double monthlyProfit = (monthlyProfitStr != null) ? Double.parseDouble(monthlyProfitStr) : 0.0;
+
+                        chart3.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyIncome - monthlyProfit, monthlyProfit}));
+                    }
+
+                    rs2.close();
                 }
 
                 income.close();
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadReservationChartData() {
+        try {
+            chart2.removeAll();
+            chart2.setBackground(new Color(250, 250, 250));
+            chart2.addLegend("Completed", new Color(122, 89, 255));
+            chart2.addLegend("Pending", new Color(171, 255, 69));
+            chart2.addLegend("Canceled", new Color(255, 69, 249));
+            
+            String year = jComboBox1.getSelectedItem().toString();
+            DecimalFormat df = new DecimalFormat("00");
+
+            ResultSet rs = MySQL.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
+                    + "FROM reservation "
+                    + "WHERE YEAR(reservation.date) = '" + year + "' "
+                    + "ORDER BY month");
+
+            while (rs.next()) {
+                String month = df.format(rs.getInt("month"));
+
+                String reservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
+                        + "FROM reservation "
+                        + "WHERE reservation.cancel_status = 2 "
+                        + "AND reservation.status_id = 2 "
+                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
+
+                String pendingreservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
+                        + "FROM reservation "
+                        + "WHERE reservation.cancel_status = 2 "
+                        + "AND reservation.status_id = 1 "
+                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
+
+                String canceledreservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
+                        + "FROM reservation "
+                        + "WHERE reservation.cancel_status = 1 "
+                        + "AND reservation.status_id = 2 "
+                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
+
+                ResultSet reservation = MySQL.execute(reservationQuery);
+                ResultSet pendingreservation = MySQL.execute(pendingreservationQuery);
+                ResultSet canceledreservation = MySQL.execute(canceledreservationQuery);
+
+                double monthlyReservation = 0.0;
+                double monthlyPendingReservation = 0.0;
+                double monthlyCanceledReservation = 0.0;
+
+                if (reservation.next()) {
+                    String monthlyReservationStr = reservation.getString("total_reservations");
+                    monthlyReservation = (monthlyReservationStr != null) ? Double.parseDouble(monthlyReservationStr) : 0.0;
+                }
+
+                if (pendingreservation.next()) {
+                    String monthlyPendingReservationStr = pendingreservation.getString("total_reservations");
+                    monthlyPendingReservation = (monthlyPendingReservationStr != null) ? Double.parseDouble(monthlyPendingReservationStr) : 0.0;
+                }
+
+                if (canceledreservation.next()) {
+                    String monthlyCanceledReservationStr = canceledreservation.getString("total_reservations");
+                    monthlyCanceledReservation = (monthlyCanceledReservationStr != null) ? Double.parseDouble(monthlyCanceledReservationStr) : 0.0;
+                }
+
+                chart2.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyReservation, monthlyPendingReservation, monthlyCanceledReservation}));
+
+                reservation.close();
+                pendingreservation.close();
+                canceledreservation.close();
             }
 
             rs.close();
