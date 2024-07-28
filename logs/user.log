@@ -326,3 +326,17 @@ Jul 28, 2024 12:43:09 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPer
 INFO: Reservation(R7379408) Added by Name:null null
 Jul 28, 2024 12:50:09 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:null null
+Jul 28, 2024 1:40:49 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 28, 2024 1:41:42 PM com.ruzzz.nemo.panel.ReservationPanel jButton3ActionPerformed
+INFO: Reservation(R6442645) Added by Name:Thiwian Medagama
+Jul 28, 2024 1:42:58 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Jul 28, 2024 1:47:08 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 28, 2024 1:50:32 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Jul 28, 2024 3:18:50 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
+Jul 28, 2024 3:25:47 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:null null
