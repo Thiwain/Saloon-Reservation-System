@@ -112,7 +112,7 @@ public class ReservationPanel extends javax.swing.JPanel {
     }
 
     private void reset() {
-        /*jTextField1.setText("");
+        jTextField1.setText("");
         jLabel3.setText("");
         jLabel4.setText("");
         jLabel5.setText("");
@@ -124,7 +124,7 @@ public class ReservationPanel extends javax.swing.JPanel {
         CustomerDataBean.setcFname(null);
         CustomerDataBean.setcLname(null);
         CustomerDataBean.setcEmail(null);
-        CustomerDataBean.setcMobile(null);*/
+        CustomerDataBean.setcMobile(null);
         jLabel13.setText("0.00");
         generateRString();
         DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
@@ -522,12 +522,15 @@ public class ReservationPanel extends javax.swing.JPanel {
                     MySQL.execute("INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('" + resId + "', '" + ServiceTableBean.getServiceId() + "', 1)");
                 }
 
+//                Remove this
+                generateRString();
+
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Booking Success!");
                 infoLogger.info("Reservation(" + resId + ") Added by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
                 MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                         + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
                         + "'Reservation " + resId + " -> Added By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
-                reset();
+//                reset();
             } catch (Exception e) {
                 errorLogger.warning("Reservation-Setup Error ; Error: " + e);
             }
