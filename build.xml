@@ -1,55 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="SaloonNemo" default="run" basedir=".">
-    <description>Builds, tests, and runs the project SaloonNemo.</description>
-
+<project name="SaloonNemo" default="jar" basedir=".">
+    <!-- Initialize properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
-    <property name="lib.dir" value="lib"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="${dist.dir}/lib"/>
+    <property name="jar.name" value="${dist.dir}/SaloonNemo.jar"/>
 
-    <path id="classpath">
-        <fileset dir="${lib.dir}">
-            <include name="**/*.jar"/>
-        </fileset>
-    </path>
-
-    <target name="init">
-        <mkdir dir="${build.dir}"/>
-        <mkdir dir="${dist.dir}"/>
-    </target>
-
+    <!-- Clean the build directory -->
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
     </target>
 
-    <target name="compile" depends="init" description="Compile the source">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" fork="true" memoryMaximumSize="1024m">
-            <compilerarg value="-Xlint:unchecked"/>
-            <compilerarg value="-Xlint:deprecation"/>
-            <compilerarg line="-J-XX:+UseParallelGC -J-XX:ParallelGCThreads=4"/>
-            <classpath refid="classpath"/>
-        </javac>
+    <!-- Compile the source code -->
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
+    <!-- Create the JAR file -->
     <target name="jar" depends="compile">
-        <mkdir dir="${dist.dir}/lib"/>
-        <jar destfile="${dist.dir}/SaloonNemo.jar" basedir="${build.dir}">
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+        <jar destfile="${jar.name}" basedir="${classes.dir}">
             <manifest>
-                <attribute name="Main-Class" value="com.ruzzz.nemo.gui.Progress"/>
+                <attribute name="Main-Class" value="com.ruzzz.nemo.MainClassName"/>
+                <attribute name="Class-Path" value="lib/dependency1.jar lib/dependency2.jar"/>
             </manifest>
+            <fileset dir="${src.dir}">
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.properties"/>
+            </fileset>
         </jar>
     </target>
 
-    <target name="javadoc" description="Generate Javadoc">
-        <mkdir dir="${dist}/javadoc"/>
-        <javadoc destdir="${dist}/javadoc" sourcepath="src" packagenames="com.ruzzz.nemo.**">
-            <doctitle><![CDATA[SaloonNemo API Documentation]]></doctitle>
-            <bottom><![CDATA[&copy; 2024 Your Company. All rights reserved.]]></bottom>
-        </javadoc>
-    </target>
-
-    <target name="run" depends="jar">
-        <java jar="${dist.dir}/SaloonNemo.jar" fork="true"/>
-    </target>
+    <!-- Default target -->
+    <target name="default" depends="clean, jar"/>
 </project>

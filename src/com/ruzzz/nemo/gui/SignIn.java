@@ -29,15 +29,8 @@ public class SignIn extends javax.swing.JFrame {
 
         this.setTitle("Log In");
 
-        URL location = getClass().getResource("com/ruzzz/nemo/img/scissors_icon.png");
-        if (location != null) {
-            ImageIcon icon = new ImageIcon(location);
-            // Use the icon as needed, for example:
-            JLabel label = new JLabel(icon);
-            add(label);
-        } else {
-            System.err.println("Resource not found: /resources/yourImage.png");
-        }
+        ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
+        this.setIconImage(icon.getImage());
 
         applyTheme();
     }
