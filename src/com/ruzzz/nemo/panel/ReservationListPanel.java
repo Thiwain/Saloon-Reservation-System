@@ -346,13 +346,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel4.setText("Barber/Hairdresser");
         jPanel1.add(jLabel4);
-
-        jDateChooser1.setDateFormatString("yyyy-MM-dd");
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.add(jDateChooser1);
-
-        jDateChooser2.setDateFormatString("yyyy-MM-dd");
-        jDateChooser2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.add(jDateChooser2);
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N

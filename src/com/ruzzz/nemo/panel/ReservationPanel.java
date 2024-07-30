@@ -335,8 +335,6 @@ public class ReservationPanel extends javax.swing.JPanel {
         jPanel9.add(jLabel17);
 
         jPanel9.add(jComboBox2);
-
-        jDateChooser2.setDateFormatString("yyyy-MM-dd");
         jPanel9.add(jDateChooser2);
         jPanel9.add(jFormattedTextField4);
         jPanel9.add(jFormattedTextField5);

@@ -382,12 +382,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel7" linkSize="18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jDateChooser1" min="-2" pref="167" max="-2" attributes="0"/>
+                      <Component id="jDateChooser1" linkSize="21" min="-2" pref="167" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel6" linkSize="18" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jDateChooser2" min="-2" pref="155" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Component id="jDateChooser2" linkSize="21" min="-2" pref="156" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jComboBox1" min="-2" pref="82" max="-2" attributes="0"/>
@@ -398,7 +398,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel11" pref="202" max="32767" attributes="0"/>
+                          <Component id="jLabel11" pref="191" max="32767" attributes="0"/>
                           <Component id="jTextField6" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -411,8 +411,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -424,16 +423,16 @@
                                   <Component id="jTextField6" linkSize="19" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jLabel7" linkSize="20" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="jLabel7" linkSize="22" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                               <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                                   <Component id="jComboBox1" linkSize="19" alignment="3" max="32767" attributes="0"/>
                                   <Component id="jButton1" linkSize="19" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jDateChooser2" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jLabel6" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jDateChooser1" linkSize="20" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jLabel6" linkSize="22" alignment="1" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="jDateChooser1" linkSize="22" min="-2" max="-2" attributes="0"/>
+                          <Component id="jDateChooser2" linkSize="22" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="3" max="-2" attributes="0"/>

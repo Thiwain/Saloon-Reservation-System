@@ -19,6 +19,8 @@
         <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
     </target>
 
+    
+
     <!-- Create the JAR file -->
     <target name="jar" depends="compile">
         <mkdir dir="${dist.dir}"/>
