@@ -468,6 +468,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             DefaultComboBoxModel model2 = new DefaultComboBoxModel(v);
             jComboBox4.setModel(model);
             jComboBox3.setModel(model2);
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("GENDER LOADING Exception; Error: " + e);
@@ -530,9 +531,11 @@ public class CustomerPanel extends javax.swing.JPanel {
                         customerSort(jTextField6.getText());
                         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Registration success !");
                     }
+                    checkNo.close();
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This mobile number already taken");
                     jTextField1.setText("");
+                    checkNo.close();
                 }
 
             } catch (Exception e) {
@@ -642,6 +645,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                 customerList.add(rs.getString("time_stamp"));
                 tableModel.addRow(customerList);
             }
+            rs.close();
 
         } catch (Exception e) {
             errorLogger.warning("CUSTOMER LOADING loadCustomer() Exception; Error: " + e);
@@ -770,7 +774,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                 tableModel.addRow(customerList);
 //                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
-
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("Customer Loading error from search; Error: " + e);
         }

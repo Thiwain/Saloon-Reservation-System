@@ -65,6 +65,8 @@ public class ReservationListPanel extends javax.swing.JPanel {
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(v);
             jComboBox1.setModel(model);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("Employee LOADING Exception; Error: " + e);
@@ -82,6 +84,8 @@ public class ReservationListPanel extends javax.swing.JPanel {
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(v);
             jComboBox4.setModel(model);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
@@ -99,6 +103,8 @@ public class ReservationListPanel extends javax.swing.JPanel {
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(v);
             jComboBox2.setModel(model);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
@@ -190,16 +196,15 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 query += " AND `reservation`.`employee_user_id`='" + employeeMap.get(jComboBox1.getSelectedItem().toString()) + "'";
             }
 
-                if (date1 != null) {
-                    if (date2 != null) {
-                        if (isDate1NotLater(date1, date2)) {
-                            query += " AND reservation.date BETWEEN '" + convertDateString(date1) + "' AND '" + convertDateString(date2) + "'";
-                        }
-                    } else {
-                        query += " AND reservation.date >= '" + convertDateString(date1) + "'";
+            if (date1 != null) {
+                if (date2 != null) {
+                    if (isDate1NotLater(date1, date2)) {
+                        query += " AND reservation.date BETWEEN '" + convertDateString(date1) + "' AND '" + convertDateString(date2) + "'";
                     }
+                } else {
+                    query += " AND reservation.date >= '" + convertDateString(date1) + "'";
                 }
-            
+            }
 
             query += " ORDER BY reservation.date " + jComboBox5.getSelectedItem().toString();
 
@@ -224,6 +229,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
 //                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
 
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("RESERVATION SEARCH ERROR; Error: " + e);
         }
@@ -471,9 +477,9 @@ public class ReservationListPanel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jButton1))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel6))
                 .addGap(5, 5, 5)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

@@ -183,6 +183,8 @@ public class ServiceDialog extends java.awt.Dialog {
                 tableModel.addRow(employeeList);
                 
             }
+            
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("SERVICE TABLE LOADING Exception; Error: " + e);
         }

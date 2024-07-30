@@ -75,6 +75,8 @@ public class ReservationPanel extends javax.swing.JPanel {
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(v);
             jComboBox2.setModel(model);
+            
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("Employee LOADING Exception; Error: " + e);

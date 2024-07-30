@@ -6,6 +6,9 @@ package com.ruzzz.nemo.gui;
 
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -19,6 +22,17 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
     public ProgressToControlePanel() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
+
+        URL location = getClass().getResource("com/ruzzz/nemo/img/scissors_icon.png");
+        if (location != null) {
+            ImageIcon icon = new ImageIcon(location);
+            // Use the icon as needed, for example:
+            JLabel label = new JLabel(icon);
+            add(label);
+        } else {
+            System.err.println("Resource not found: /resources/yourImage.png");
+        }
+
         progress();
         applyTheme();
     }

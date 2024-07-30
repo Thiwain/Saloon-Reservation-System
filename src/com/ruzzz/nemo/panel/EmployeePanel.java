@@ -39,28 +39,28 @@ import raven.toast.Notifications;
  * @author Acer
  */
 public class EmployeePanel extends javax.swing.JPanel {
-    
+
     private static ControlPanel controlPanel;
-    
+
     HashMap<String, String> genderMap = new HashMap<>();
     HashMap<String, String> roleMap = new HashMap<>();
     HashMap<String, String> statusMap = new HashMap<>();
-    
+
     public EmployeePanel(Frame cp) {
         initComponents();
         controlPanel = (ControlPanel) cp;
-        
+
         loadGenders();
         loadRole();
         loadStatus();
-        
+
         jPanel23.setVisible(false);
-        
+
         loadEmployees("");
-        
+
         reset();
     }
-    
+
     private Boolean validatedUpdate() {
         if (!ValidationProcess.validateEmail(jTextField2.getText())) {
             return false;
@@ -78,7 +78,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             return true;
         }
     }
-    
+
     private void reset() {
         jButton3.setEnabled(false);
         jComboBox7.setEnabled(false);
@@ -100,7 +100,7 @@ public class EmployeePanel extends javax.swing.JPanel {
         jButton5.setEnabled(false);
         loadEmployees("");
     }
-    
+
     private void loadGenders() {
         Vector<String> v = new Vector<>();
         try {
@@ -112,15 +112,17 @@ public class EmployeePanel extends javax.swing.JPanel {
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(v);
             DefaultComboBoxModel model2 = new DefaultComboBoxModel(v);
-            
+
             jComboBox4.setModel(model2);
             jComboBox1.setModel(model);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("GENDER LOADING Exception; Error: " + e);
         }
     }
-    
+
     private void loadStatus() {
         Vector<String> v = new Vector<>();
         try {
@@ -134,12 +136,14 @@ public class EmployeePanel extends javax.swing.JPanel {
             DefaultComboBoxModel model2 = new DefaultComboBoxModel(v);
             jComboBox7.setModel(model);
             jComboBox8.setModel(model2);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("STATUS LOADING Exception; Error: " + e);
         }
     }
-    
+
     private void loadRole() {
         Vector<String> v = new Vector<>();
         try {
@@ -155,18 +159,19 @@ public class EmployeePanel extends javax.swing.JPanel {
             jComboBox5.setModel(model);
             jComboBox3.setModel(model2);
             jComboBox9.setModel(model3);
-            
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("ROLE LOADING Exception; Error: " + e);
         }
     }
-    
+
     private void loadEmployees(String searchText) {
         try {
-            
+
             String query;
-            
+
             if (jComboBox4.getSelectedIndex() == 0 && jComboBox5.getSelectedIndex() == 0 && jComboBox8.getSelectedIndex() == 0) {
                 query = "SELECT * FROM `employee` \n"
                         + "INNER JOIN `gender` ON `employee`.`gender_id`=`gender`.`id`\n"
@@ -189,14 +194,14 @@ public class EmployeePanel extends javax.swing.JPanel {
                         + "INNER JOIN `status` ON `login_data`.`status_id`=`status`.`id`\n"
                         + "WHERE ";
             }
-            
+
             if (jComboBox4.getSelectedIndex() != 0) {
                 query += "`employee`.`gender_id`='" + genderMap.get(jComboBox4.getSelectedItem().toString()) + "'";
             }
             if (jComboBox5.getSelectedIndex() != 0) {
                 query += "`employee`.`role_id`='" + roleMap.get(jComboBox5.getSelectedItem().toString()) + "'";
             }
-            
+
             if (jComboBox8.getSelectedIndex() != 0) {
                 query = "SELECT * FROM login_data \n"
                         + "INNER JOIN `employee` ON `login_data`.`employee_user_id`=`employee`.`user_id` \n"
@@ -206,9 +211,9 @@ public class EmployeePanel extends javax.swing.JPanel {
                         + "WHERE\n"
                         + "login_data.status_id='" + statusMap.get(jComboBox8.getSelectedItem().toString()) + "'";
             }
-            
+
             ResultSet rs = MySQL.execute(query);
-            
+
             DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
@@ -225,29 +230,29 @@ public class EmployeePanel extends javax.swing.JPanel {
                 employeeList.add(rs.getString("role"));
                 employeeList.add(rs.getString("status"));
                 tableModel.addRow(employeeList);
-//                System.out.println("com.ruzzz.nemo.panel.CustomerPanel.loadCustomer()");
             }
-            
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
             errorLogger.warning("EMPLOYEE LOADING TABLE Exception; Error: " + e);
         }
     }
-    
+
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentDate.format(formatter);
     }
-    
+
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
             XSSFRow row;
-            
+
             Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
-            
+
             for (int i = 0; i < jTable2.getRowCount(); i++) {
                 studentData.put(String.valueOf(i),
                         new Object[]{jTable2.getValueAt(i, 0),
@@ -260,9 +265,9 @@ public class EmployeePanel extends javax.swing.JPanel {
                             jTable2.getValueAt(i, 7),
                             jTable2.getValueAt(i, 8)});
             }
-            
+
             Set<String> keyid = studentData.keySet();
-            
+
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
@@ -273,17 +278,17 @@ public class EmployeePanel extends javax.swing.JPanel {
                     cell.setCellValue((String) obj);
                 }
             }
-            
+
             FileOutputStream out = new FileOutputStream(
                     new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox6.getSelectedItem().toString()));
-            
+
             workbook.write(out);
             out.close();
         } catch (Exception e) {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
-    
+
     private Boolean validateInsert() {
         if (!ValidationProcess.validateMobile(jTextField6.getText())) {
             return false;
@@ -305,13 +310,13 @@ public class EmployeePanel extends javax.swing.JPanel {
             return true;
         }
     }
-    
+
     public static int generateRandomFiveDigitNumber() {
         Random random = new Random();
         int randomNumber = 10000 + random.nextInt(90000);
         return randomNumber;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -979,13 +984,13 @@ public class EmployeePanel extends javax.swing.JPanel {
         jComboBox5.setSelectedIndex(0);
         loadEmployees("");
     }//GEN-LAST:event_jComboBox8ItemStateChanged
-    
+
     private String userIdNo = String.valueOf(generateRandomFiveDigitNumber());
     private String userIDStart = "";
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (validateInsert()) {
-            
+
             if (jComboBox9.getSelectedItem().equals(Role.ADMIN.name())) {
                 userIDStart = "AD_";
             } else if (jComboBox9.getSelectedItem().equals(Role.CAISHER.name())) {
@@ -993,23 +998,23 @@ public class EmployeePanel extends javax.swing.JPanel {
             } else if (jComboBox9.getSelectedItem().equals(Role.BARBER.name())) {
                 userIDStart = "BA_";
             }
-            
+
             PasswordUtil pwu = new PasswordUtil();
-            
+
             try {
                 ResultSet rs = MySQL.execute("SELECT `email` FROM `login_data` WHERE `email`='" + jTextField9.getText() + "'");
-                
+
                 if (!rs.next()) {
                     jPanel23.setVisible(true);
-                    
+
                     EmailSender es = new EmailSender();
-                    
+
                     new Thread(() -> {
                         for (int i = 0; i <= 100; i++) {
                             jProgressBar1.setValue(i);
-                            
+
                             jLabel12.setText(i + "%");
-                            
+
                             switch (i) {
                                 case 1:
                                     jLabel11.setText("Processing...");
@@ -1056,7 +1061,7 @@ public class EmployeePanel extends javax.swing.JPanel {
                                                     + "(`employee_user_id`, `email`, `password`, `status_id`) "
                                                     + "VALUES "
                                                     + "('" + userIDStart + userIdNo + "', '" + jTextField9.getText() + "', '" + pwu.hashPassword(jTextField10.getText()) + "', 1)");
-                                            
+
                                         } catch (Exception e) {
                                             errorLogger.warning("EMPLOYEE REGISTRATION ERROR; Error: " + e);
                                         }
@@ -1094,11 +1099,13 @@ public class EmployeePanel extends javax.swing.JPanel {
                         jPanel23.setVisible(false);
                         Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Registered");
                     }).start();
-                    
+
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This Email is already taken");
                 }
-                
+
+                rs.close();
+
                 infoLogger.info("EMPLOYEE(" + jTextField9.getText() + ", " + jTextField7.getText() + " " + jTextField8.getText() + ") REGISTERED BY " + LoggedUserData.getUserEmail() + "");
             } catch (Exception e) {
                 errorLogger.warning("EMPLOYEE REGISTRATION ERROR; Error: " + e);
@@ -1109,16 +1116,16 @@ public class EmployeePanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (validatedUpdate()) {
             try {
-                
+
                 MySQL.execute("UPDATE `saloon_nemo`.`employee` SET `first_name`='" + jTextField3.getText() + "', `last_name`='" + jTextField4.getText() + "',`role_id`='" + roleMap.get(jComboBox3.getSelectedItem().toString()) + "' WHERE  `user_id`='" + jLabel17.getText() + "'");
-                
+
                 ResultSet rs = MySQL.execute("SELECT * FROM login_data WHERE email='" + jTextField2.getText() + "' AND employee_user_id != '" + jLabel17.getText() + "'");
                 if (!rs.next()) {
                     MySQL.execute("UPDATE `saloon_nemo`.`login_data` SET `email`='" + jTextField2.getText() + "', status_id='" + statusMap.get(jComboBox7.getSelectedItem().toString()) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This Email was already taken!");
                 }
-                
+
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Updated!");
                 infoLogger.info("EMPLYOYEE DETAILS UPDATED" + "BY " + "Email:" + LoggedUserData.getUserEmail() + " OF " + "EMPLOYEE:" + jLabel17.getText());
                 MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` "
@@ -1127,6 +1134,8 @@ public class EmployeePanel extends javax.swing.JPanel {
                         + "('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, '" + "EMPLYOYEE DETAILS UPDATED" + "BY " + "Email:" + LoggedUserData.getUserEmail() + " OF " + "EMPLOYEE:" + jLabel17.getText() + "')");
                 loadEmployees("");
                 reset();
+
+                rs.close();
             } catch (Exception e) {
                 errorLogger.warning("EMPLOYEE DATA UPDATE Exception; Error: " + e);
             }
@@ -1140,9 +1149,9 @@ public class EmployeePanel extends javax.swing.JPanel {
             jComboBox3.setEnabled(true);
             jButton5.setEnabled(true);
             int row = jTable2.getSelectedRow();
-            
+
             jLabel17.setText(jTable2.getValueAt(row, 1).toString());
-            
+
             jTextField2.setText(jTable2.getValueAt(row, 5).toString());
             jTextField3.setText(jTable2.getValueAt(row, 2).toString());
             jTextField4.setText(jTable2.getValueAt(row, 3).toString());

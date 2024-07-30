@@ -78,13 +78,13 @@ public class Chart extends javax.swing.JPanel {
         }
     }
 
-    public void clear(){
-        animate=0;
+    public void clear() {
+        animate = 0;
         blankPlotChart.setLabelCount(0);
         model.clear();
         repaint();
-    } 
-    
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

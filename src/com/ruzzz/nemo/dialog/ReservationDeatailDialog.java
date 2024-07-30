@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import org.apache.commons.dbcp2.SQLExceptionList;
 
 /**
@@ -122,6 +123,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             }
 
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("RESERVATION DETAIL LOADING ERROR ; Error: " + e);
         }
@@ -158,6 +160,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             jLabel16.setText(String.valueOf(total));
 
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("RESERVATION SERVICES LOADING ERROR ; Error: " + e);
         }
@@ -554,7 +557,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                         + " `saloon_nemo`.`invoice`"
                         + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
                         + " VALUES "
-                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + serviceToal + "', '" + jFormattedTextField1.getText() + "')");
+                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -690,7 +693,10 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Email sending failed !");
                 }
+                rs2.close();
             }
+
+            rs.close();
 
         } catch (Exception e) {
             errorLogger.warning("INVOICE UPDATE ERROR ; Error: " + e);
@@ -728,6 +734,8 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                     v.add(new ShopBill(rs2.getString("title"), rs2.getString("price")));
                 }
 
+                rs2.close();
+
             }
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
@@ -740,6 +748,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             JasperViewer.viewReport(jasperPrint, false);
 
+            rs.close();
 //            String pdfFilePath = "src/reports/output/invoice.pdf";
 //            JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
         } catch (Exception e) {

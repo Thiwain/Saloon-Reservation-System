@@ -362,6 +362,8 @@ public class ServicePanel extends javax.swing.JPanel {
                 employeeList.add(convertMinutesToHHMM(Integer.parseInt(rs.getString("time_m"))));
                 tableModel.addRow(employeeList);
             }
+
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("SERVICE TABLE LOADING Exception; Error: " + e);
         }
@@ -474,7 +476,8 @@ public class ServicePanel extends javax.swing.JPanel {
                     infoLogger.info("Service Added by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
                     MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                             + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
-                            + "'SERVICE ADD BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
+                            + "'SERVICE ADD BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
+
                 }
             } catch (Exception e) {
                 errorLogger.warning("SERVICE INSERT ERROR; Error: " + e);

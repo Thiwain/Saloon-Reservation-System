@@ -14,9 +14,11 @@ import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.properties.ThemeManager;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import com.ruzzz.nemo.validation.ValidationProcess;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import java.sql.ResultSet;
 import java.util.Random;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import raven.toast.Notifications;
 
@@ -27,8 +29,15 @@ public class SignIn extends javax.swing.JFrame {
 
         this.setTitle("Log In");
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
-        this.setIconImage(icon.getImage());
+        URL location = getClass().getResource("com/ruzzz/nemo/img/scissors_icon.png");
+        if (location != null) {
+            ImageIcon icon = new ImageIcon(location);
+            // Use the icon as needed, for example:
+            JLabel label = new JLabel(icon);
+            add(label);
+        } else {
+            System.err.println("Resource not found: /resources/yourImage.png");
+        }
 
         applyTheme();
     }
@@ -317,8 +326,8 @@ public class SignIn extends javax.swing.JFrame {
                                 MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) VALUES ('" + userData.getString("user_id") + "', CURRENT_TIMESTAMP, '" + userData.getString("first_name") + " " + userData.getString("last_name") + " Logged in into the system')");
 
                                 new ProgressToControlePanel().setVisible(true);
+                                userData.close();
                                 this.dispose();
-
                             }
                         } else {
                             JOptionPane.showMessageDialog(null, "Deactivated Account !", "", JOptionPane.WARNING_MESSAGE);
@@ -332,6 +341,7 @@ public class SignIn extends javax.swing.JFrame {
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Email !");
                 }
+                rs.close();
             } catch (Exception e) {
                 e.printStackTrace();
                 errorLogger.warning("Login Exception; Error: " + e);

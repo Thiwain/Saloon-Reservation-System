@@ -6,6 +6,8 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.chart.ModelChart;
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.dialog.ReservationDeatailDialog;
+import com.ruzzz.nemo.gui.ControlPanel;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.Color;
@@ -30,6 +32,7 @@ import java.util.UUID;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -49,9 +52,13 @@ public class IncomePanel extends javax.swing.JPanel {
     /**
      * Creates new form IncomePanel
      */
-    public IncomePanel() {
+    private final ControlPanel cpanel;
+    
+    public IncomePanel(JFrame cp) {
         initComponents();
         loadYears();
+        
+        cpanel=(ControlPanel) cp;
 
         chart2.setBackground(new Color(250, 250, 250));
         chart2.addLegend("Completed", new Color(122, 89, 255));
@@ -464,7 +471,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     + "    reservation.id AS rsid,\n"
                     + "    invoice.invoice_id AS inid,\n"
                     + "    CONCAT(customer.first_name, ' ', customer.last_name) AS cusname,\n"
-                    + "    (invoice.total + invoice.service_charge) AS intotal,\n"
+                    + "    invoice.total AS intotal,\n"
                     + "    invoice.date_time_issued AS date,\n"
                     + "    (SELECT SUM(profit) FROM invoice_service WHERE invoice_service.invoice_invoice_id = invoice.invoice_id) AS total_profit\n"
                     + "FROM reservation \n"
@@ -511,7 +518,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 jLabel28.setText(String.valueOf(tableModel.getRowCount()));
                 tableModel.addRow(v);
             }
-
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("ERROR WHILE LOADING INCOME TABLE" + e);
         }
@@ -1203,6 +1210,11 @@ public class IncomePanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jPanel9.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -1289,7 +1301,6 @@ public class IncomePanel extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         loadIncomeTable(jTextField1.getText());
-//        System.out.println(convertDateString(jDateChooser5.getDate().toString()));
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -1299,6 +1310,16 @@ public class IncomePanel extends javax.swing.JPanel {
     private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
         loadIncomeTable(jTextField1.getText());
     }//GEN-LAST:event_jComboBox4ItemStateChanged
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+
+        int row = jTable2.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            ReservationDeatailDialog rdd = new ReservationDeatailDialog(cpanel, false, dtm.getValueAt(row, 1).toString());
+            rdd.setVisible(true);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.ruzzz.nemo.chart.Chart chart2;

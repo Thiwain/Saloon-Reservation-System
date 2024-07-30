@@ -53,6 +53,11 @@ public class DashBoard extends javax.swing.JPanel {
             if (rs4.next()) {
                 jLabel22.setText(rs4.getString("rescount"));
             }
+
+            rs.close();
+            rs2.close();
+            rs3.close();
+            rs4.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

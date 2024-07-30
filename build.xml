@@ -41,6 +41,14 @@
         </jar>
     </target>
 
+    <target name="javadoc" description="Generate Javadoc">
+        <mkdir dir="${dist}/javadoc"/>
+        <javadoc destdir="${dist}/javadoc" sourcepath="src" packagenames="com.ruzzz.nemo.**">
+            <doctitle><![CDATA[SaloonNemo API Documentation]]></doctitle>
+            <bottom><![CDATA[&copy; 2024 Your Company. All rights reserved.]]></bottom>
+        </javadoc>
+    </target>
+
     <target name="run" depends="jar">
         <java jar="${dist.dir}/SaloonNemo.jar" fork="true"/>
     </target>
