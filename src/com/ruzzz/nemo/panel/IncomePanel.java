@@ -7,25 +7,36 @@ package com.ruzzz.nemo.panel;
 import com.ruzzz.nemo.chart.ModelChart;
 import com.ruzzz.nemo.connection.MySQL;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
+import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import raven.toast.Notifications;
 import static test.JPanelToImage.exportPanelAsImage;
 
@@ -54,6 +65,7 @@ public class IncomePanel extends javax.swing.JPanel {
         loadReservationChartData();
         calculateIncomeAndProfitCombo();
         calculateReservationsCombo();
+        loadIncomeTable("");
     }
 
     private void loadIncomeChartData() {
@@ -104,6 +116,7 @@ public class IncomePanel extends javax.swing.JPanel {
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
+            errorLogger.warning("ERROR WHILELOADING INCOME CHART" + e);
         }
     }
 
@@ -160,6 +173,7 @@ public class IncomePanel extends javax.swing.JPanel {
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
+            errorLogger.warning("ERROR WHILELOADING RESERVATION CHART" + e);
         }
     }
 
@@ -177,6 +191,7 @@ public class IncomePanel extends javax.swing.JPanel {
             jComboBox1.setModel(dcm);
 
         } catch (Exception e) {
+            errorLogger.warning("ERROR WHILELOADING YEAR COMBOBOX" + e);
         }
     }
 
@@ -224,6 +239,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 jLabel7.setText(rs.getString("total_sum"));
             }
         } catch (Exception e) {
+            errorLogger.warning("ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOX" + e);
         }
     }
 
@@ -248,6 +264,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 jLabel15.setText(rs.getString("pending_count"));
             }
         } catch (Exception e) {
+            errorLogger.warning("ERROR WHILE CALCULATING RESERVATIONS BY COMBO BOX" + e);
         }
     }
 
@@ -345,6 +362,7 @@ public class IncomePanel extends javax.swing.JPanel {
             rs.close(); // Close the ResultSet
         } catch (Exception e) {
             e.printStackTrace();
+            errorLogger.warning("ERROR WHILE LOADING INCOME " + e);
         }
     }
 
@@ -428,6 +446,123 @@ public class IncomePanel extends javax.swing.JPanel {
         String fileName = prefix + "_" + currentDateAndTime + "_" + uniqueId;
 
         return fileName;
+    }
+
+    double totalIncomeLabel = 00.0;
+    double totalProfitLabel = 00.0;
+
+    private void loadIncomeTable(String searchTxt) {
+        totalIncomeLabel = 00.0;
+        totalProfitLabel = 00.0;
+        jLabel28.setText("");
+        try {
+            Date date1 = jDateChooser5.getDate();
+            Date date2 = jDateChooser6.getDate();
+            boolean isNotLater = isDate1NotLater(date1, date2);
+
+            String query = "SELECT \n"
+                    + "    reservation.id AS rsid,\n"
+                    + "    invoice.invoice_id AS inid,\n"
+                    + "    CONCAT(customer.first_name, ' ', customer.last_name) AS cusname,\n"
+                    + "    (invoice.total + invoice.service_charge) AS intotal,\n"
+                    + "    invoice.date_time_issued AS date,\n"
+                    + "    (SELECT SUM(profit) FROM invoice_service WHERE invoice_service.invoice_invoice_id = invoice.invoice_id) AS total_profit\n"
+                    + "FROM reservation \n"
+                    + "INNER JOIN invoice ON invoice.reservation_id = reservation.id\n"
+                    + "INNER JOIN customer ON reservation.customer_id = customer.id\n"
+                    + "WHERE reservation.cancel_status != 1\n";
+
+            if (date1 != null || date2 != null) {
+                if (isNotLater) {
+                    if (date2 == null) {
+                        query += " AND reservation.date >='" + convertDateString(jDateChooser5.getDate().toString()) + "'";
+                    } else {
+                        query += " AND reservation.date BETWEEN '" + convertDateString(jDateChooser5.getDate().toString()) + "' AND '" + convertDateString(jDateChooser6.getDate().toString()) + "'\n";
+                    }
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
+                    return;
+                }
+            }
+
+            query += " AND (customer.first_name LIKE '%" + searchTxt + "%' OR customer.last_name LIKE '%" + searchTxt + "%'"
+                    + " OR customer.mobile LIKE '%" + searchTxt + "%' OR customer.email LIKE '%" + searchTxt + "%')\n"
+                    + "ORDER BY invoice.date_time_issued " + jComboBox4.getSelectedItem().toString() + "";
+
+            ResultSet rs = MySQL.execute(query);
+
+            DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+            tableModel.setRowCount(0);
+            int rowId = 0;
+            while (rs.next()) {
+                rowId++;
+                Vector<String> v = new Vector<>();
+                v.add(String.valueOf(rowId));
+                v.add(rs.getString("rsid"));
+                v.add(rs.getString("inid"));
+                v.add(rs.getString("cusname"));
+                v.add(rs.getString("intotal"));
+                totalIncomeLabel += Double.parseDouble(rs.getString("intotal"));
+                jLabel25.setText(String.valueOf(totalIncomeLabel));
+                v.add(rs.getString("total_profit"));
+                totalProfitLabel += Double.parseDouble(rs.getString("total_profit"));
+                jLabel27.setText(String.valueOf(totalProfitLabel));
+                v.add(rs.getString("date"));
+                jLabel28.setText(String.valueOf(tableModel.getRowCount()));
+                tableModel.addRow(v);
+            }
+
+        } catch (Exception e) {
+            errorLogger.warning("ERROR WHILE LOADING INCOME TABLE" + e);
+        }
+    }
+
+    private static String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
+
+    private void printExcel() {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(" Customer Data ");
+            XSSFRow row;
+
+            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
+
+            for (int i = 0; i < jTable2.getRowCount(); i++) {
+                studentData.put(String.valueOf(i),
+                        new Object[]{jTable2.getValueAt(i, 0),
+                            jTable2.getValueAt(i, 1),
+                            jTable2.getValueAt(i, 2),
+                            jTable2.getValueAt(i, 3),
+                            jTable2.getValueAt(i, 4),
+                            jTable2.getValueAt(i, 5),
+                            jTable2.getValueAt(i, 6),});
+            }
+
+            Set<String> keyid = studentData.keySet();
+
+            int rowid = 0;
+            for (String key : keyid) {
+                row = spreadsheet.createRow(rowid++);
+                Object[] objectArr = studentData.get(key);
+                int cellid = 0;
+                for (Object obj : objectArr) {
+                    Cell cell = row.createCell(cellid++);
+                    cell.setCellValue((String) obj);
+                }
+            }
+
+            FileOutputStream out = new FileOutputStream(
+                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
+
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
+        }
     }
 
     /**
@@ -880,13 +1015,18 @@ public class IncomePanel extends javax.swing.JPanel {
         jLabel27.setText("0.00");
 
         jButton6.setText("Reset");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel28.setText("0");
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel29.setText("Reser:");
+        jLabel29.setText("Reservations:");
 
         jLabel30.setText("File Name");
 
@@ -925,14 +1065,16 @@ public class IncomePanel extends javax.swing.JPanel {
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
-                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -972,11 +1114,31 @@ public class IncomePanel extends javax.swing.JPanel {
 
         jPanel9.setLayout(new java.awt.BorderLayout());
 
+        jDateChooser5.setDateFormatString("yyyy-MM-dd");
+
         jLabel21.setText("TO");
 
+        jDateChooser6.setDateFormatString("yyyy-MM-dd");
+
         jButton5.setText("Sort");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ASC", "DESC" }));
+        jComboBox4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox4ItemStateChanged(evt);
+            }
+        });
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jLabel31.setText("Search By Customer.....");
 
@@ -1030,11 +1192,11 @@ public class IncomePanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "#", "Reser(Id)", "Invoice(Id)", "Customer", "serv charge", "Profit", "Total"
+                "#", "Reser(Id)", "Invoice(Id)", "Customer", "Total", "Profit", "DateIssued"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1115,11 +1277,28 @@ public class IncomePanel extends javax.swing.JPanel {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (!jTextField5.getText().isEmpty()) {
-//            printExcel();
+            printExcel();
         } else {
             JOptionPane.showMessageDialog(null, "File Name is Required!");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        loadIncomeTable(jTextField1.getText());
+//        System.out.println(convertDateString(jDateChooser5.getDate().toString()));
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        loadIncomeTable(jTextField1.getText());
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jComboBox4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox4ItemStateChanged
+        loadIncomeTable(jTextField1.getText());
+    }//GEN-LAST:event_jComboBox4ItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.ruzzz.nemo.chart.Chart chart2;

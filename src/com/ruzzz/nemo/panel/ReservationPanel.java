@@ -499,8 +499,7 @@ public class ReservationPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-//        if (validateReservationProcess()) {
-        if (true) {
+        if (validateReservationProcess()) {
             try {
                 MySQL.execute("INSERT INTO \n"
                         + "    `saloon_nemo`.`reservation` \n"
@@ -522,15 +521,12 @@ public class ReservationPanel extends javax.swing.JPanel {
                     MySQL.execute("INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('" + resId + "', '" + ServiceTableBean.getServiceId() + "', 1)");
                 }
 
-//                Remove this
-                generateRString();
-
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Booking Success!");
                 infoLogger.info("Reservation(" + resId + ") Added by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "");
                 MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                         + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
                         + "'Reservation " + resId + " -> Added By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
-//                reset();
+                reset();
             } catch (Exception e) {
                 errorLogger.warning("Reservation-Setup Error ; Error: " + e);
             }

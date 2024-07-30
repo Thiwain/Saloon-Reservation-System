@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.panel;
 
+import com.ruzzz.nemo.panel.*;
 import com.ruzzz.nemo.gui.ControlPanel;
 import javax.swing.JFrame;
 
@@ -11,11 +12,11 @@ import javax.swing.JFrame;
  *
  * @author Acer
  */
-public class AdminAccessPanel extends javax.swing.JPanel {
+public class CaisherAccessPanel extends javax.swing.JPanel {
 
     private static ControlPanel cpanel;
 
-    public AdminAccessPanel(JFrame accessPanel) {
+    public CaisherAccessPanel(JFrame accessPanel) {
         initComponents();
         cpanel = (ControlPanel) accessPanel;
     }
@@ -31,18 +32,10 @@ public class AdminAccessPanel extends javax.swing.JPanel {
 
         jLabel10 = new javax.swing.JLabel();
         jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
-        jLabel11 = new javax.swing.JLabel();
-        jSeparator8 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
-        jButton29 = new javax.swing.JButton();
 
         jLabel10.setText("Caisher");
 
@@ -56,28 +49,6 @@ public class AdminAccessPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton22.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/9004671_calendar_date_schedule_event_icon.png"))); // NOI18N
-        jButton22.setText("Schedule");
-        jButton22.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton22ActionPerformed(evt);
-            }
-        });
-
-        jButton23.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/7791667_necktie_businessman_suit_manager_employee_icon.png"))); // NOI18N
-        jButton23.setText("Employee");
-        jButton23.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton23ActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setText("Barber/Hairdresser");
-
         jLabel12.setText("Admin");
 
         jButton24.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -87,36 +58,6 @@ public class AdminAccessPanel extends javax.swing.JPanel {
         jButton24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton24ActionPerformed(evt);
-            }
-        });
-
-        jButton25.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/753944_hairdresser_beauty_hair_salon_scissors_icon.png"))); // NOI18N
-        jButton25.setText("Services");
-        jButton25.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton25ActionPerformed(evt);
-            }
-        });
-
-        jButton26.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/1564504_email_letter_mail_message_icon.png"))); // NOI18N
-        jButton26.setText("Send Emails");
-        jButton26.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
-            }
-        });
-
-        jButton27.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/1564501_business_chart_dashboard_graph_icon.png"))); // NOI18N
-        jButton27.setText("Income");
-        jButton27.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton27ActionPerformed(evt);
             }
         });
 
@@ -130,16 +71,6 @@ public class AdminAccessPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton29.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jButton29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/8673687_ic_fluent_shifts_activity_filled_icon.png"))); // NOI18N
-        jButton29.setText("Activity");
-        jButton29.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        jButton29.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton29ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,17 +81,9 @@ public class AdminAccessPanel extends javax.swing.JPanel {
                     .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton23, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator8)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton24, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton25, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton26, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton27, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                    .addComponent(jButton29, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
+                    .addComponent(jButton28, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -172,29 +95,13 @@ public class AdminAccessPanel extends javax.swing.JPanel {
                 .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addGap(5, 5, 5)
-                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
-                .addGap(8, 8, 8)
-                .addComponent(jButton23, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton24, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jButton25, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton27, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
                 .addComponent(jButton28, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton26, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(593, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,53 +109,21 @@ public class AdminAccessPanel extends javax.swing.JPanel {
         cpanel.loadDashboard();
     }//GEN-LAST:event_jButton21ActionPerformed
 
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton22ActionPerformed
-
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        cpanel.loadEmployee();
-    }//GEN-LAST:event_jButton23ActionPerformed
-
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
         cpanel.loadReservation();
     }//GEN-LAST:event_jButton24ActionPerformed
-
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
-        cpanel.loadServices();
-    }//GEN-LAST:event_jButton25ActionPerformed
-
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton26ActionPerformed
-
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
-        cpanel.loadIncome();
-    }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         cpanel.loadCustomer();
     }//GEN-LAST:event_jButton28ActionPerformed
 
-    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-
-    }//GEN-LAST:event_jButton29ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
     // End of variables declaration//GEN-END:variables
 }

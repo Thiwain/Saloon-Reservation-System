@@ -666,16 +666,19 @@
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jLabel24" max="32767" attributes="0"/>
                                               <Component id="jLabel26" pref="68" max="32767" attributes="0"/>
-                                              <Component id="jLabel29" pref="68" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="jLabel27" pref="184" max="32767" attributes="0"/>
                                               <Component id="jLabel25" max="32767" attributes="0"/>
-                                              <Component id="jLabel28" pref="184" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jButton6" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel29" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jLabel28" min="-2" pref="102" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <Component id="jButton7" alignment="1" min="-2" pref="95" max="-2" attributes="0"/>
@@ -757,6 +760,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Reset"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel28">
                   <Properties>
@@ -772,7 +778,7 @@
                       <Font name="Segoe UI" size="20" style="1"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="Reser:"/>
+                    <Property name="text" type="java.lang.String" value="Reservations:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField5">
@@ -879,6 +885,9 @@
                   </Layout>
                   <SubComponents>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser5">
+                      <Properties>
+                        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+                      </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel21">
                       <Properties>
@@ -886,11 +895,17 @@
                       </Properties>
                     </Component>
                     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser6">
+                      <Properties>
+                        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+                      </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton5">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Sort"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="jComboBox4">
                       <Properties>
@@ -901,11 +916,17 @@
                           </StringArray>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox4ItemStateChanged"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField1">
+                      <Events>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyReleased"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel31">
                       <Properties>
@@ -934,9 +955,9 @@
                             <Column editable="false" title="Reser(Id)" type="java.lang.Object"/>
                             <Column editable="false" title="Invoice(Id)" type="java.lang.Object"/>
                             <Column editable="false" title="Customer" type="java.lang.Object"/>
-                            <Column editable="false" title="serv charge" type="java.lang.Object"/>
-                            <Column editable="true" title="Profit" type="java.lang.Object"/>
                             <Column editable="false" title="Total" type="java.lang.Object"/>
+                            <Column editable="false" title="Profit" type="java.lang.Object"/>
+                            <Column editable="false" title="DateIssued" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

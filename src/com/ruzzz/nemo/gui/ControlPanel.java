@@ -9,6 +9,7 @@ import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.Role;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
+import com.ruzzz.nemo.panel.CaisherAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
 import com.ruzzz.nemo.panel.DashBoard;
 import com.ruzzz.nemo.panel.EmployeePanel;
@@ -48,10 +49,10 @@ public class ControlPanel extends javax.swing.JFrame {
         applyTheme();
         
         loadPanel(new WelcomePanel());
-
-//      loadAccessPanelToSideBar();
-        loadAccessPanel(new AdminAccessPanel(this));
         
+        loadAccessPanelToSideBar();
+//        loadAccessPanel(new AdminAccessPanel(this));
+
         cusPanel = new CustomerPanel(this, resPanel);
         resPanel = new ReservationPanel(this, cusPanel);
         
@@ -103,6 +104,8 @@ public class ControlPanel extends javax.swing.JFrame {
     private void loadAccessPanelToSideBar() {
         if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
             loadAccessPanel(new AdminAccessPanel(this));
+        } else {
+            loadAccessPanel(new CaisherAccessPanel(this));
         }
     }
     
