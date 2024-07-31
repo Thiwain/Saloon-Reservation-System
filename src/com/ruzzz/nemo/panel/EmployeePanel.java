@@ -5,6 +5,7 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -1057,7 +1058,16 @@ public class EmployeePanel extends javax.swing.JPanel {
                                                     + "(`user_id`, `first_name`, `last_name`, `mobile`, `gender_id`, `role_id`) "
                                                     + "VALUES"
                                                     + " ('" + userIDStart + userIdNo + "', '" + jTextField7.getText() + "', '" + jTextField8.getText() + "', '" + jTextField6.getText() + "', '" + genderMap.get(jComboBox1.getSelectedItem().toString()) + "', '" + roleMap.get(jComboBox9.getSelectedItem().toString()) + "')");
+                                            MySQLTwo.execute("INSERT INTO `saloon_nemo`.`employee` "
+                                                    + "(`user_id`, `first_name`, `last_name`, `mobile`, `gender_id`, `role_id`) "
+                                                    + "VALUES"
+                                                    + " ('" + userIDStart + userIdNo + "', '" + jTextField7.getText() + "', '" + jTextField8.getText() + "', '" + jTextField6.getText() + "', '" + genderMap.get(jComboBox1.getSelectedItem().toString()) + "', '" + roleMap.get(jComboBox9.getSelectedItem().toString()) + "')");                                           
+                                            
                                             MySQL.execute("INSERT INTO `saloon_nemo`.`login_data` "
+                                                    + "(`employee_user_id`, `email`, `password`, `status_id`) "
+                                                    + "VALUES "
+                                                    + "('" + userIDStart + userIdNo + "', '" + jTextField9.getText() + "', '" + pwu.hashPassword(jTextField10.getText()) + "', 1)");
+                                            MySQLTwo.execute("INSERT INTO `saloon_nemo`.`login_data` "
                                                     + "(`employee_user_id`, `email`, `password`, `status_id`) "
                                                     + "VALUES "
                                                     + "('" + userIDStart + userIdNo + "', '" + jTextField9.getText() + "', '" + pwu.hashPassword(jTextField10.getText()) + "', 1)");
@@ -1118,10 +1128,12 @@ public class EmployeePanel extends javax.swing.JPanel {
             try {
 
                 MySQL.execute("UPDATE `saloon_nemo`.`employee` SET `first_name`='" + jTextField3.getText() + "', `last_name`='" + jTextField4.getText() + "',`role_id`='" + roleMap.get(jComboBox3.getSelectedItem().toString()) + "' WHERE  `user_id`='" + jLabel17.getText() + "'");
+                MySQLTwo.execute("UPDATE `saloon_nemo`.`employee` SET `first_name`='" + jTextField3.getText() + "', `last_name`='" + jTextField4.getText() + "',`role_id`='" + roleMap.get(jComboBox3.getSelectedItem().toString()) + "' WHERE  `user_id`='" + jLabel17.getText() + "'");
 
                 ResultSet rs = MySQL.execute("SELECT * FROM login_data WHERE email='" + jTextField2.getText() + "' AND employee_user_id != '" + jLabel17.getText() + "'");
                 if (!rs.next()) {
                     MySQL.execute("UPDATE `saloon_nemo`.`login_data` SET `email`='" + jTextField2.getText() + "', status_id='" + statusMap.get(jComboBox7.getSelectedItem().toString()) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
+                    MySQLTwo.execute("UPDATE `saloon_nemo`.`login_data` SET `email`='" + jTextField2.getText() + "', status_id='" + statusMap.get(jComboBox7.getSelectedItem().toString()) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "This Email was already taken!");
                 }
@@ -1166,6 +1178,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             PasswordUtil pwu = new PasswordUtil();
             try {
                 MySQL.execute("UPDATE `saloon_nemo`.`login_data` SET `password`='" + pwu.hashPassword(password) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
+                MySQLTwo.execute("UPDATE `saloon_nemo`.`login_data` SET `password`='" + pwu.hashPassword(password) + "' WHERE  `employee_user_id`='" + jLabel17.getText() + "'");
                 infoLogger.info("EMPLYOYEE PASSWORD UPDATED" + "BY " + "Email:" + LoggedUserData.getUserEmail() + " OF " + "EMPLOYEE:" + jLabel17.getText());
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Password Updated!");
             } catch (Exception e) {

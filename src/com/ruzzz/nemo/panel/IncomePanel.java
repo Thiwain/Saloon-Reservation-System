@@ -6,6 +6,7 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.chart.ModelChart;
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.dialog.ReservationDeatailDialog;
 import com.ruzzz.nemo.gui.ControlPanel;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
@@ -53,12 +54,12 @@ public class IncomePanel extends javax.swing.JPanel {
      * Creates new form IncomePanel
      */
     private final ControlPanel cpanel;
-    
+
     public IncomePanel(JFrame cp) {
         initComponents();
         loadYears();
-        
-        cpanel=(ControlPanel) cp;
+
+        cpanel = (ControlPanel) cp;
 
         chart2.setBackground(new Color(250, 250, 250));
         chart2.addLegend("Completed", new Color(122, 89, 255));
@@ -76,14 +77,14 @@ public class IncomePanel extends javax.swing.JPanel {
     }
 
     private void loadIncomeChartData() {
+        chart3.start();
         try {
 //            chart3.removeAll();
-            chart3.start();
 
             String year = jComboBox1.getSelectedItem().toString();
             DecimalFormat df = new DecimalFormat("00");
 
-            ResultSet rs = MySQL.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
+            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
                     + "FROM reservation "
                     + "WHERE YEAR(reservation.date) = '" + year + "' "
                     + "ORDER BY month");
@@ -94,7 +95,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 String incomeQuery = "SELECT SUM(total + service_charge) AS monthly_income "
                         + "FROM invoice WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
 
-                ResultSet income = MySQL.execute(incomeQuery);
+                ResultSet income = MySQLTwo.execute(incomeQuery);
 
                 if (income.next()) {
                     String monthlyIncomeStr = income.getString("monthly_income");
@@ -105,7 +106,7 @@ public class IncomePanel extends javax.swing.JPanel {
                             + "INNER JOIN invoice_service ON invoice.invoice_id = invoice_service.invoice_invoice_id "
                             + "WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
 
-                    ResultSet rs2 = MySQL.execute(profitQuery);
+                    ResultSet rs2 = MySQLTwo.execute(profitQuery);
 
                     if (rs2.next()) {
                         String monthlyProfitStr = rs2.getString("monthly_profit");
@@ -128,13 +129,15 @@ public class IncomePanel extends javax.swing.JPanel {
     }
 
     private void loadReservationChartData() {
+
+        chart2.start();
+
         try {
-            chart2.start();
 
             String year = jComboBox1.getSelectedItem().toString();
             DecimalFormat df = new DecimalFormat("00");
 
-            ResultSet rs = MySQL.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
+            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
                     + "FROM reservation "
                     + "WHERE YEAR(reservation.date) = '" + year + "' "
                     + "ORDER BY month");
@@ -154,8 +157,8 @@ public class IncomePanel extends javax.swing.JPanel {
                         + "AND reservation.status_id = 2 "
                         + "AND reservation.date LIKE '" + year + "-" + month + "%'";
 
-                ResultSet reservation = MySQL.execute(reservationQuery);
-                ResultSet canceledreservation = MySQL.execute(canceledreservationQuery);
+                ResultSet reservation = MySQLTwo.execute(reservationQuery);
+                ResultSet canceledreservation = MySQLTwo.execute(canceledreservationQuery);
 
                 double monthlyReservation = 0.0;
                 double monthlyPendingReservation = 0.0;
@@ -186,7 +189,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
     private void loadYears() {
         try {
-            ResultSet rs = MySQL.execute("SELECT DISTINCT YEAR(reservation.date) AS year\n"
+            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT YEAR(reservation.date) AS year\n"
                     + "FROM reservation\n"
                     + "ORDER BY year DESC");
             Vector<String> v = new Vector<>();
@@ -236,7 +239,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
             query += ") AS subquery";
 
-            ResultSet rs = MySQL.execute(query);
+            ResultSet rs = MySQLTwo.execute(query);
 
             if (rs.next()) {
                 double total = Double.parseDouble(rs.getString("total_sum"));
@@ -245,6 +248,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 jLabel9.setText(rs.getString("profit_sum"));
                 jLabel7.setText(rs.getString("total_sum"));
             }
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOX" + e);
         }
@@ -263,13 +267,15 @@ public class IncomePanel extends javax.swing.JPanel {
                     + "WHERE \n"
                     + "    reservation.date >= CURDATE() - INTERVAL " + jComboBox5.getSelectedItem().toString() + " DAY";
 
-            ResultSet rs = MySQL.execute(query);
+            ResultSet rs = MySQLTwo.execute(query);
 
             if (rs.next()) {
                 jLabel17.setText(rs.getString("total_count"));
                 jLabel16.setText(rs.getString("finished_count"));
                 jLabel15.setText(rs.getString("pending_count"));
             }
+
+            rs.close();
         } catch (Exception e) {
             errorLogger.warning("ERROR WHILE CALCULATING RESERVATIONS BY COMBO BOX" + e);
         }
@@ -343,11 +349,11 @@ public class IncomePanel extends javax.swing.JPanel {
                     }
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
-                    return; // Exit the method if dates are invalid
+                    return; 
                 }
             } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a date !");
-                return; // Exit the method if no dates are selected
+                return; 
             }
 
             query += "    GROUP BY \n"
@@ -355,8 +361,8 @@ public class IncomePanel extends javax.swing.JPanel {
                     + "    ORDER BY reservation.date DESC\n"
                     + ") AS subquery";
 
-            // Use executeQuery instead of executeUpdate
-            ResultSet rs = MySQL.execute(query);
+
+            ResultSet rs = MySQLTwo.execute(query);
 
             if (rs.next()) {
                 double total = rs.getDouble("total_sum");
@@ -412,7 +418,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 return;
             }
 
-            ResultSet rs = MySQL.execute(query);
+            ResultSet rs = MySQLTwo.execute(query);
 
             if (rs.next()) {
                 jLabel17.setText(rs.getString("total_count"));
@@ -496,7 +502,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     + " OR customer.mobile LIKE '%" + searchTxt + "%' OR customer.email LIKE '%" + searchTxt + "%')\n"
                     + "ORDER BY invoice.date_time_issued " + jComboBox4.getSelectedItem().toString() + "";
 
-            ResultSet rs = MySQL.execute(query);
+            ResultSet rs = MySQLTwo.execute(query);
 
             DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
             tableModel.setRowCount(0);
@@ -732,7 +738,7 @@ public class IncomePanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
@@ -760,7 +766,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
         jLabel4.setText("Income & Profit On Last");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "10", "30", "60", "90", "365", "*" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "5", "10", "30", "60", "90", "365", "*" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
@@ -835,7 +841,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
         jLabel22.setText("Days");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "10", "30", "60", "90", "365" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "5", "10", "30", "60", "90", "365" }));
         jComboBox5.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox5ItemStateChanged(evt);
@@ -843,6 +849,14 @@ public class IncomePanel extends javax.swing.JPanel {
         });
 
         jLabel23.setText("Days");
+
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser3.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser4.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1142,6 +1156,10 @@ public class IncomePanel extends javax.swing.JPanel {
 
         jLabel31.setText("Search By Customer.....");
 
+        jDateChooser6.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser5.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1237,7 +1255,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
         );
 
         add(jPanel3, java.awt.BorderLayout.CENTER);

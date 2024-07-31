@@ -5,6 +5,7 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -343,6 +344,10 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         jLabel11.setText("Search by Mobile, Name or Email");
 
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+
+        jDateChooser2.setDateFormatString("yyyy-MM-dd");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -392,11 +397,10 @@ public class CustomerPanel extends javax.swing.JPanel {
                             .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -521,6 +525,8 @@ public class CustomerPanel extends javax.swing.JPanel {
                     int n = JOptionPane.showConfirmDialog(null, "Confirm Registration?", "", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_NO_OPTION) {
                         MySQL.execute("INSERT INTO `saloon_nemo`.`customer` (`mobile`, `first_name`, `last_name`, `email`, `gender_id`, `time_stamp`) "
+                                + "VALUES ('" + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" + jTextField3.getText() + "', '" + jTextField4.getText() + "', " + genderMap.get(jComboBox4.getSelectedItem()) + ",  CURRENT_TIMESTAMP)");
+                        MySQLTwo.execute("INSERT INTO `saloon_nemo`.`customer` (`mobile`, `first_name`, `last_name`, `email`, `gender_id`, `time_stamp`) "
                                 + "VALUES ('" + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" + jTextField3.getText() + "', '" + jTextField4.getText() + "', " + genderMap.get(jComboBox4.getSelectedItem()) + ",  CURRENT_TIMESTAMP)");
 
                         infoLogger.info("Customer Registered by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| Customer :" + "Mobile:" + jTextField1.getText() + "Name :" + jTextField2.getText() + " " + jTextField3.getText());
@@ -668,6 +674,9 @@ public class CustomerPanel extends javax.swing.JPanel {
                 int i = JOptionPane.showConfirmDialog(null, "Do You Want To Update This Customer?", "", JOptionPane.YES_NO_OPTION);
                 if (i == JOptionPane.YES_OPTION) {
                     MySQL.execute("UPDATE `saloon_nemo`.`customer` "
+                            + "SET `first_name`='" + jTextField2.getText() + "', `last_name`='" + jTextField3.getText() + "',  `email`='" + jTextField4.getText() + "' "
+                            + "WHERE  `mobile`='" + jTextField1.getText() + "'");
+                    MySQLTwo.execute("UPDATE `saloon_nemo`.`customer` "
                             + "SET `first_name`='" + jTextField2.getText() + "', `last_name`='" + jTextField3.getText() + "',  `email`='" + jTextField4.getText() + "' "
                             + "WHERE  `mobile`='" + jTextField1.getText() + "'");
 

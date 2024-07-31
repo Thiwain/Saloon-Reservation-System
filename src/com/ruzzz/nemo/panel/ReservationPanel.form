@@ -285,6 +285,9 @@
                           </AuxValues>
                         </Component>
                         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+                          <Properties>
+                            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+                          </Properties>
                         </Component>
                         <Component class="javax.swing.JFormattedTextField" name="jFormattedTextField4">
                         </Component>

@@ -5,6 +5,7 @@
 package com.ruzzz.nemo.dialog;
 
 import com.ruzzz.nemo.connection.MySQL;
+import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -557,15 +558,24 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                         + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
                         + " VALUES "
                         + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
+                MySQLTwo.execute("INSERT INTO"
+                        + " `saloon_nemo`.`invoice`"
+                        + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
+                        + " VALUES "
+                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
                     MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`,`profit`) "
                             + "VALUES "
                             + "('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "','" + dtm.getValueAt(i, 4) + "')");
+                    MySQLTwo.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`,`profit`) "
+                            + "VALUES "
+                            + "('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "','" + dtm.getValueAt(i, 4) + "')");
                 }
 
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
+                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
 
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
@@ -740,16 +750,20 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
             String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
+            String path = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
 
             JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlReportPath);
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameters, dataSource);
 
             JasperViewer.viewReport(jasperPrint, false);
 
-            rs.close();
-//            String pdfFilePath = "src/reports/output/invoice.pdf";
+            JasperPrintManager.printReport(jasperPrint, false);
+
+//            String pdfFilePath = "src/invoice.pdf";
 //            JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
+
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -761,7 +775,9 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
         if (jop == JOptionPane.YES_OPTION) {
             try {
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2, `cancel_status`='1' WHERE  `id`='" + reservationId + "'");
+                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2, `cancel_status`='1' WHERE  `id`='" + reservationId + "'");
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
+                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);

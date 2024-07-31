@@ -424,13 +424,11 @@
                               </Group>
                           </Group>
                           <Component id="jLabel7" linkSize="22" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                  <Component id="jComboBox1" linkSize="19" alignment="3" max="32767" attributes="0"/>
-                                  <Component id="jButton1" linkSize="19" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jLabel6" linkSize="22" alignment="1" max="32767" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="jComboBox1" linkSize="19" alignment="3" max="32767" attributes="0"/>
+                              <Component id="jButton1" linkSize="19" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jLabel6" linkSize="22" alignment="1" max="32767" attributes="0"/>
                           <Component id="jDateChooser1" linkSize="22" min="-2" max="-2" attributes="0"/>
                           <Component id="jDateChooser2" linkSize="22" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -518,8 +516,14 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+              </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
