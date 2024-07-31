@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.model.LoggedUserData;
 import com.ruzzz.nemo.model.Role;
+import com.ruzzz.nemo.panel.ActivityPanel;
 import com.ruzzz.nemo.panel.AdminAccessPanel;
 import com.ruzzz.nemo.panel.CaisherAccessPanel;
 import com.ruzzz.nemo.panel.CustomerPanel;
@@ -36,54 +37,58 @@ import javax.swing.SwingUtilities;
  * @author Acer
  */
 public class ControlPanel extends javax.swing.JFrame {
-    
+
     public static CustomerPanel cusPanel;
     public static ReservationPanel resPanel;
-    
+
     public ControlPanel() {
         initComponents();
-        
+
         ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
         this.setIconImage(icon.getImage());
-        
+
         applyTheme();
-        
+
         loadPanel(new WelcomePanel());
-        
+
         loadAccessPanelToSideBar();
 //        loadAccessPanel(new AdminAccessPanel(this));
 
         cusPanel = new CustomerPanel(this, resPanel);
         resPanel = new ReservationPanel(this, cusPanel);
-        
+
         jLabel2.setText(LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
         jLabel4.setText(LoggedUserData.getUserRole());
     }
-    
+
     public void loadCustomer() {
         loadPanel(cusPanel);
     }
-    
+
     public void loadServices() {
         loadPanel(new ServicePanel(this));
     }
-    
+
     public void loadEmployee() {
         loadPanel(new EmployeePanel(this));
     }
-    
+
     public void loadDashboard() {
         loadPanel(new DashBoard());
     }
-    
+
     public void loadReservation() {
         loadPanel(resPanel);
     }
-    
+
     public void loadIncome() {
         loadPanel(new IncomePanel(this));
     }
-    
+
+    public void loadActivity() {
+        loadPanel(new ActivityPanel());
+    }
+
     private void loadPanel(JPanel panel) {
         if (!panel.isShowing()) {
             jPanel7.removeAll();
@@ -92,7 +97,7 @@ public class ControlPanel extends javax.swing.JFrame {
 //            SwingUtilities.updateComponentTreeUI(background1);
         }
     }
-    
+
     private void loadAccessPanel(JPanel panel) {
         if (!panel.isShowing()) {
             jPanel3.removeAll();
@@ -100,7 +105,7 @@ public class ControlPanel extends javax.swing.JFrame {
             FlatLaf.updateUI();
         }
     }
-    
+
     private void loadAccessPanelToSideBar() {
         if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
             loadAccessPanel(new AdminAccessPanel(this));
@@ -108,7 +113,7 @@ public class ControlPanel extends javax.swing.JFrame {
             loadAccessPanel(new CaisherAccessPanel(this));
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -316,16 +321,16 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int x = JOptionPane.showConfirmDialog(null, "Do you want to exit?", "Saloon Nemo", JOptionPane.YES_NO_OPTION);
-        
+
         if (x == JOptionPane.YES_OPTION) {
-            
+
             infoLogger.info("SYSTEM CLOSED by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
             try {
-                
+
                 MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                         + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
                         + "'SYSTEM CLOSED BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
-                
+
             } catch (Exception e) {
                 errorLogger.warning("SYSTEM CLOSE LOG UPDATE ERROR; Error: " + e);
             }
@@ -335,14 +340,14 @@ public class ControlPanel extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         JOptionPane.showMessageDialog(null, "System is closing?");
-        
+
         infoLogger.info("SYSTEM CLOSED by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName());
         try {
-            
+
             MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                     + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
                     + "'SYSTEM CLOSED BY " + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
-            
+
         } catch (Exception e) {
             errorLogger.warning("SYSTEM CLOSE LOG UPDATE ERROR; Error: " + e);
         }

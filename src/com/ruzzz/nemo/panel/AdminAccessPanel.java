@@ -203,7 +203,7 @@ public class AdminAccessPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton28ActionPerformed
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
-
+        cpanel.loadActivity();
     }//GEN-LAST:event_jButton29ActionPerformed
 
 

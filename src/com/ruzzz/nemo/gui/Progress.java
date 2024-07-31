@@ -114,7 +114,7 @@ public class Progress extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("ScriptC", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Saloo");
+        jLabel1.setText("Salon");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 3, 54)); // NOI18N
@@ -136,9 +136,9 @@ public class Progress extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addGap(0, 0, 0)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(88, 88, 88))
         );
