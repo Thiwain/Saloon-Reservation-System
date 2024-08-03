@@ -4,11 +4,15 @@
  */
 package com.ruzzz.nemo.gui;
 
+import com.ruzzz.nemo.model.LoggedUserData;
+import com.ruzzz.nemo.model.Role;
+import com.ruzzz.nemo.model.SaveData;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import raven.toast.Notifications;
 
 /**
  *
@@ -48,7 +52,13 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
                         jLabel3.setText("Loading...");
                         break;
                     case 40:
-                        jLabel3.setText("Loading........");
+                        if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
+                            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Please wait a while.....");
+                            SaveData.SaveData();
+                            jLabel3.setText("Loading Finantial Data........");
+                        } else {
+                            jLabel3.setText("Loading........");
+                        }
                         break;
                     case 50:
                         jLabel3.setText("Loading...");

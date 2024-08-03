@@ -6,9 +6,10 @@ package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.chart.ModelChart;
 import com.ruzzz.nemo.connection.MySQL;
-import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.dialog.ReservationDeatailDialog;
 import com.ruzzz.nemo.gui.ControlPanel;
+import static com.ruzzz.nemo.model.SaveIncomeData.saveDataToXML;
+import static com.ruzzz.nemo.model.SaveReservation.saveReservationDataToXML;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.Color;
@@ -43,6 +44,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import raven.toast.Notifications;
 import static test.JPanelToImage.exportPanelAsImage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import java.io.File;
 
 /**
  *
@@ -78,118 +85,82 @@ public class IncomePanel extends javax.swing.JPanel {
 
     private void loadIncomeChartData() {
         chart3.start();
+        String year = jComboBox1.getSelectedItem().toString();
+        File xmlFile = new File("incomeData_" + year + ".xml");
+
         try {
-//            chart3.removeAll();
+            if (xmlFile.exists()) {
+                // Read from XML file
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(xmlFile);
+                NodeList monthNodes = document.getElementsByTagName("Month");
 
-            String year = jComboBox1.getSelectedItem().toString();
-            DecimalFormat df = new DecimalFormat("00");
+                for (int i = 0; i < monthNodes.getLength(); i++) {
+                    Element monthElement = (Element) monthNodes.item(i);
+                    String monthName = monthElement.getAttribute("name");
 
-            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
-                    + "FROM reservation "
-                    + "WHERE YEAR(reservation.date) = '" + year + "' "
-                    + "ORDER BY month");
+                    NodeList dataNodes = monthElement.getElementsByTagName("Data");
+                    if (dataNodes.getLength() > 0) {
+                        Element dataElement = (Element) dataNodes.item(0);
+                        double income = Double.parseDouble(dataElement.getAttribute("income"));
+                        double profit = Double.parseDouble(dataElement.getAttribute("profit"));
 
-            while (rs.next()) {
-                String month = df.format(rs.getInt("month"));
-
-                String incomeQuery = "SELECT SUM(total + service_charge) AS monthly_income "
-                        + "FROM invoice WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
-
-                ResultSet income = MySQLTwo.execute(incomeQuery);
-
-                if (income.next()) {
-                    String monthlyIncomeStr = income.getString("monthly_income");
-                    double monthlyIncome = (monthlyIncomeStr != null) ? Double.parseDouble(monthlyIncomeStr) : 0.0;
-
-                    String profitQuery = "SELECT SUM(invoice_service.profit) AS monthly_profit "
-                            + "FROM invoice "
-                            + "INNER JOIN invoice_service ON invoice.invoice_id = invoice_service.invoice_invoice_id "
-                            + "WHERE date_time_issued LIKE '" + year + "-" + month + "%'";
-
-                    ResultSet rs2 = MySQLTwo.execute(profitQuery);
-
-                    if (rs2.next()) {
-                        String monthlyProfitStr = rs2.getString("monthly_profit");
-                        double monthlyProfit = (monthlyProfitStr != null) ? Double.parseDouble(monthlyProfitStr) : 0.0;
-
-                        chart3.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyIncome - monthlyProfit, monthlyProfit}));
+                        chart3.addData(new ModelChart(monthName, new double[]{income, profit}));
                     }
-
-                    rs2.close();
                 }
-
-                income.close();
+            } else {
+                // XML file does not exist, query the database and save to XML
+                saveDataToXML(year, xmlFile);
+                loadIncomeChartData(); // Call method again to load from newly created XML
             }
-
-            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            errorLogger.warning("ERROR WHILELOADING INCOME CHART" + e);
+            errorLogger.warning("ERROR WHILE LOADING INCOME CHART: " + e);
         }
     }
 
     private void loadReservationChartData() {
-
         chart2.start();
+        String year = jComboBox1.getSelectedItem().toString();
+        File xmlFile = new File("reservationData_" + year + ".xml");
 
         try {
+            if (xmlFile.exists()) {
+                // Read from XML file
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(xmlFile);
+                NodeList monthNodes = document.getElementsByTagName("Month");
 
-            String year = jComboBox1.getSelectedItem().toString();
-            DecimalFormat df = new DecimalFormat("00");
+                for (int i = 0; i < monthNodes.getLength(); i++) {
+                    Element monthElement = (Element) monthNodes.item(i);
+                    String monthName = monthElement.getAttribute("name");
 
-            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT MONTH(reservation.date) AS month "
-                    + "FROM reservation "
-                    + "WHERE YEAR(reservation.date) = '" + year + "' "
-                    + "ORDER BY month");
+                    NodeList dataNodes = monthElement.getElementsByTagName("Data");
+                    if (dataNodes.getLength() > 0) {
+                        Element dataElement = (Element) dataNodes.item(0);
+                        double reservations = Double.parseDouble(dataElement.getAttribute("reservations"));
+                        double canceled = Double.parseDouble(dataElement.getAttribute("canceled"));
+                        double pending = Double.parseDouble(dataElement.getAttribute("pending"));
 
-            while (rs.next()) {
-                String month = df.format(rs.getInt("month"));
-
-                String reservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
-                        + "FROM reservation "
-                        + "WHERE reservation.cancel_status = 2 "
-                        + "AND reservation.status_id = 2 "
-                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
-
-                String canceledreservationQuery = "SELECT COUNT(reservation.id) AS total_reservations "
-                        + "FROM reservation "
-                        + "WHERE reservation.cancel_status = 1 "
-                        + "AND reservation.status_id = 2 "
-                        + "AND reservation.date LIKE '" + year + "-" + month + "%'";
-
-                ResultSet reservation = MySQLTwo.execute(reservationQuery);
-                ResultSet canceledreservation = MySQLTwo.execute(canceledreservationQuery);
-
-                double monthlyReservation = 0.0;
-                double monthlyPendingReservation = 0.0;
-                double monthlyCanceledReservation = 0.0;
-
-                if (reservation.next()) {
-                    String monthlyReservationStr = reservation.getString("total_reservations");
-                    monthlyReservation = (monthlyReservationStr != null) ? Double.parseDouble(monthlyReservationStr) : 0.0;
+                        chart2.addData(new ModelChart(monthName, new double[]{reservations, canceled, pending}));
+                    }
                 }
-
-                if (canceledreservation.next()) {
-                    String monthlyCanceledReservationStr = canceledreservation.getString("total_reservations");
-                    monthlyCanceledReservation = (monthlyCanceledReservationStr != null) ? Double.parseDouble(monthlyCanceledReservationStr) : 0.0;
-                }
-
-                chart2.addData(new ModelChart(getMonthNameShort(Integer.parseInt(month)), new double[]{monthlyReservation, monthlyCanceledReservation, monthlyPendingReservation}));
-
-                reservation.close();
-                canceledreservation.close();
+            } else {
+                // XML file does not exist, query the database and save to XML
+                saveReservationDataToXML(year, xmlFile);
+                loadReservationChartData(); // Call method again to load from newly created XML
             }
-
-            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
-            errorLogger.warning("ERROR WHILELOADING RESERVATION CHART" + e);
+            errorLogger.warning("ERROR WHILE LOADING RESERVATION CHART: " + e);
         }
     }
 
     private void loadYears() {
         try {
-            ResultSet rs = MySQLTwo.execute("SELECT DISTINCT YEAR(reservation.date) AS year\n"
+            ResultSet rs = MySQL.execute("SELECT DISTINCT YEAR(reservation.date) AS year\n"
                     + "FROM reservation\n"
                     + "ORDER BY year DESC");
             Vector<String> v = new Vector<>();
@@ -239,7 +210,7 @@ public class IncomePanel extends javax.swing.JPanel {
 
             query += ") AS subquery";
 
-            ResultSet rs = MySQLTwo.execute(query);
+            ResultSet rs = MySQL.execute(query);
 
             if (rs.next()) {
                 double total = Double.parseDouble(rs.getString("total_sum"));
@@ -267,7 +238,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     + "WHERE \n"
                     + "    reservation.date >= CURDATE() - INTERVAL " + jComboBox5.getSelectedItem().toString() + " DAY";
 
-            ResultSet rs = MySQLTwo.execute(query);
+            ResultSet rs = MySQL.execute(query);
 
             if (rs.next()) {
                 jLabel17.setText(rs.getString("total_count"));
@@ -349,11 +320,11 @@ public class IncomePanel extends javax.swing.JPanel {
                     }
                 } else {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
-                    return; 
+                    return;
                 }
             } else {
                 Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Must Select a date !");
-                return; 
+                return;
             }
 
             query += "    GROUP BY \n"
@@ -361,8 +332,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     + "    ORDER BY reservation.date DESC\n"
                     + ") AS subquery";
 
-
-            ResultSet rs = MySQLTwo.execute(query);
+            ResultSet rs = MySQL.execute(query);
 
             if (rs.next()) {
                 double total = rs.getDouble("total_sum");
@@ -418,7 +388,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 return;
             }
 
-            ResultSet rs = MySQLTwo.execute(query);
+            ResultSet rs = MySQL.execute(query);
 
             if (rs.next()) {
                 jLabel17.setText(rs.getString("total_count"));
@@ -502,7 +472,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     + " OR customer.mobile LIKE '%" + searchTxt + "%' OR customer.email LIKE '%" + searchTxt + "%')\n"
                     + "ORDER BY invoice.date_time_issued " + jComboBox4.getSelectedItem().toString() + "";
 
-            ResultSet rs = MySQLTwo.execute(query);
+            ResultSet rs = MySQL.execute(query);
 
             DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
             tableModel.setRowCount(0);
@@ -569,7 +539,7 @@ public class IncomePanel extends javax.swing.JPanel {
             }
 
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
+                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
 
             workbook.write(out);
             out.close();
@@ -1121,7 +1091,7 @@ public class IncomePanel extends javax.swing.JPanel {
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel8Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel24, jLabel25, jLabel26, jLabel27});
@@ -1273,7 +1243,7 @@ public class IncomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        exportPanelAsImage(jPanel6, "C:\\Users\\Acer\\Documents\\NetBeansProjects\\SaloonNemo\\chart_img\\" + generateFileName("ChartImage") + ".png");
+        exportPanelAsImage(jPanel6, "chart_img/" + String.valueOf(System.currentTimeMillis()) + ".png");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged

@@ -5,7 +5,6 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
-import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.LoggedUserData;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
@@ -410,7 +409,7 @@ public class ServicePanel extends javax.swing.JPanel {
             }
 
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField7.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox6.getSelectedItem().toString()));
+                    new File("excel/" + jTextField7.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox6.getSelectedItem().toString()));
             workbook.write(out);
             out.close();
         } catch (Exception e) {
@@ -472,10 +471,6 @@ public class ServicePanel extends javax.swing.JPanel {
                             + "VALUES "
                             + "('" + jTextField1.getText() + "', '" + jTextArea2.getText() + "', '" + jFormattedTextField3.getText() + "', '" + jFormattedTextField2.getText() + "', '" + jFormattedTextField1.getText() + "')");
                     loadServices("");
-                    MySQLTwo.execute("INSERT INTO `saloon_nemo`.`service` "
-                            + "(`service_name`, `description`, `cost`, `profit`, `time_m`) "
-                            + "VALUES "
-                            + "('" + jTextField1.getText() + "', '" + jTextArea2.getText() + "', '" + jFormattedTextField3.getText() + "', '" + jFormattedTextField2.getText() + "', '" + jFormattedTextField1.getText() + "')");
                     loadServices("");
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Service added successfully!");
                     reset();
@@ -524,16 +519,6 @@ public class ServicePanel extends javax.swing.JPanel {
                     + "`profit`='" + jFormattedTextField2.getText() + "', "
                     + "`time_m`='" + jFormattedTextField1.getText() + "' "
                     + "WHERE `id`='" + serviceId + "'");
-            MySQLTwo.execute("UPDATE "
-                    + "`saloon_nemo`.`service` "
-                    + "SET "
-                    + "`service_name`='" + jTextField1.getText() + "', "
-                    + "`description`='" + jTextArea2.getText() + "', "
-                    + "`cost`='" + jFormattedTextField3.getText() + "', "
-                    + "`profit`='" + jFormattedTextField2.getText() + "', "
-                    + "`time_m`='" + jFormattedTextField1.getText() + "' "
-                    + "WHERE `id`='" + serviceId + "'");
-
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Service Updated!");
             reset();
         } catch (Exception e) {

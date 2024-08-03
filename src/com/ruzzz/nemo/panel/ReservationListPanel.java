@@ -254,8 +254,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
                             jTable1.getValueAt(i, 5),
                             jTable1.getValueAt(i, 6),
                             jTable1.getValueAt(i, 7),
-                            jTable1.getValueAt(i, 8),
-                            jTable1.getValueAt(i, 9)
+                            jTable1.getValueAt(i, 8)
                         });
             }
 
@@ -273,7 +272,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
             }
 
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox3.getSelectedItem().toString()));
+                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox3.getSelectedItem().toString()));
 
             workbook.write(out);
             out.close();

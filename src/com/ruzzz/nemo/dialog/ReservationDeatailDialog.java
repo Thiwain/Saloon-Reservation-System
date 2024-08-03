@@ -5,7 +5,6 @@
 package com.ruzzz.nemo.dialog;
 
 import com.ruzzz.nemo.connection.MySQL;
-import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.EmailSender;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -30,6 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -558,24 +558,15 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                         + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
                         + " VALUES "
                         + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
-                MySQLTwo.execute("INSERT INTO"
-                        + " `saloon_nemo`.`invoice`"
-                        + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
-                        + " VALUES "
-                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
                     MySQL.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`,`profit`) "
                             + "VALUES "
                             + "('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "','" + dtm.getValueAt(i, 4) + "')");
-                    MySQLTwo.execute("INSERT INTO `saloon_nemo`.`invoice_service` (`invoice_invoice_id`, `service_id`, `price`,`profit`) "
-                            + "VALUES "
-                            + "('" + invoiceId + "', '" + dtm.getValueAt(i, 0) + "', '" + dtm.getValueAt(i, 3) + "','" + dtm.getValueAt(i, 4) + "')");
                 }
 
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
-                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
 
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
@@ -714,8 +705,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-
-            Vector<ShopBill> v = new Stack<>();
+            Vector<ShopBill> v = new Vector<>();
             HashMap<String, Object> parameters = new HashMap<>();
 
             ResultSet rs = MySQL.execute("SELECT * FROM invoice WHERE invoice.reservation_id='" + reservationId + "'");
@@ -731,42 +721,48 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
                 parameters.put("Parameter7", jLabel12.getText());
                 parameters.put("Parameter8", jLabel13.getText());
 
-                ResultSet rs2 = MySQL.execute("SELECT\n"
-                        + "invoice_service.invoice_invoice_id AS in_id,\n"
-                        + "invoice_service.price AS price,\n"
-                        + "service.service_name AS title\n"
-                        + "FROM invoice_service\n"
-                        + "INNER JOIN service ON invoice_service.service_id=service.id\n"
-                        + "WHERE invoice_service.invoice_invoice_id='" + rs.getString("invoice_id") + "'");
+                ResultSet rs2 = MySQL.execute("SELECT invoice_service.invoice_invoice_id AS in_id, invoice_service.price AS price, service.service_name AS title FROM invoice_service INNER JOIN service ON invoice_service.service_id=service.id WHERE invoice_service.invoice_invoice_id='" + rs.getString("invoice_id") + "'");
 
                 while (rs2.next()) {
                     v.add(new ShopBill(rs2.getString("title"), rs2.getString("price")));
                 }
 
                 rs2.close();
-
             }
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
+            // Use absolute paths or ensure the relative paths are correct
             String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
             String path = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
 
+            // Ensure the JRXML file is accessible
+            if (!new File(jrxmlReportPath).exists()) {
+                throw new FileNotFoundException("JRXML file not found: " + jrxmlReportPath);
+            }
+
+            // Compile the Jasper report
             JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlReportPath);
 
+            // Fill the report
             JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameters, dataSource);
 
+            // View the report
             JasperViewer.viewReport(jasperPrint, false);
 
-            JasperPrintManager.printReport(jasperPrint, false);
+            // Print the report
+            JasperPrintManager.printReport(jasperPrint, true);
 
-//            String pdfFilePath = "src/invoice.pdf";
-//            JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
-
+            // Optionally export to PDF
+            // String pdfFilePath = "src/invoice.pdf";
+            // JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
             rs.close();
         } catch (Exception e) {
+            // Enhanced error logging
+            System.err.println("An error occurred: " + e.getMessage());
             e.printStackTrace();
         }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -775,9 +771,7 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
         if (jop == JOptionPane.YES_OPTION) {
             try {
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2, `cancel_status`='1' WHERE  `id`='" + reservationId + "'");
-                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2, `cancel_status`='1' WHERE  `id`='" + reservationId + "'");
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
-                MySQLTwo.execute("UPDATE `saloon_nemo`.`reservation_has_service` SET `status_id`=2 WHERE  `reservation_id`='" + reservationId + "'");
                 jButton1.setEnabled(false);
                 jButton2.setEnabled(false);
                 jButton3.setEnabled(false);

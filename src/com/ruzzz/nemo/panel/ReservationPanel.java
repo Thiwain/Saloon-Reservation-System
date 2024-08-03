@@ -7,7 +7,6 @@ package com.ruzzz.nemo.panel;
 import com.ruzzz.nemo.dialog.ServiceDialog;
 import com.formdev.flatlaf.FlatLaf;
 import com.ruzzz.nemo.connection.MySQL;
-import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -516,25 +515,12 @@ public class ReservationPanel extends javax.swing.JPanel {
                         + " 1,"
                         + " '" + employeeMap.get(jComboBox2.getSelectedItem().toString()) + "',"
                         + " 2)");
-                MySQLTwo.execute("INSERT INTO \n"
-                        + "    `saloon_nemo`.`reservation` \n"
-                        + "    (`id`, `customer_id`, `date`, `start_time`, `end_time`, `status_id`, `employee_user_id`, `cancel_status`)\n"
-                        + "    VALUES \n"
-                        + "    ('" + resId + "',"
-                        + "'" + CustomerDataBean.getcId() + "',"
-                        + "'" + convertDateString(jDateChooser2.getDate()) + "',"
-                        + " '" + convertToMySQLTimeFormat(jFormattedTextField4.getText()) + "',"
-                        + " '" + convertToMySQLTimeFormat(jFormattedTextField5.getText()) + "',"
-                        + " 1,"
-                        + " '" + employeeMap.get(jComboBox2.getSelectedItem().toString()) + "',"
-                        + " 2)");
 
                 for (int i = 0; i < jTable2.getRowCount(); i++) {
                     DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
                     int row = i;
                     ServiceTableBean.setServiceId(String.valueOf(dtm.getValueAt(row, 0)));
                     MySQL.execute("INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('" + resId + "', '" + ServiceTableBean.getServiceId() + "', 1)");
-                    MySQLTwo.execute("INSERT INTO `saloon_nemo`.`reservation_has_service` (`reservation_id`, `service_id`, `status_id`) VALUES ('" + resId + "', '" + ServiceTableBean.getServiceId() + "', 1)");
                 }
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "Booking Success!");

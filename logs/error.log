@@ -228,3 +228,47 @@ Jul 31, 2024 10:48:13 PM com.ruzzz.nemo.panel.CustomerPanel <init>
 WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
 Jul 31, 2024 10:49:04 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Aug 01, 2024 12:50:05 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 12:50:06 AM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 12:50:39 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Aug 01, 2024 7:58:21 PM com.ruzzz.nemo.panel.ReservationListPanel printExcel
+WARNING: TABLE EXPORT ERROR; Error: java.lang.ArrayIndexOutOfBoundsException: 9 >= 9
+Aug 01, 2024 8:08:52 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 01, 2024 8:09:52 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 590,937 milliseconds ago. The last packet sent successfully to the server was 591,010 milliseconds ago.
+Aug 01, 2024 8:43:27 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 8:43:29 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 8:43:32 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 01, 2024 8:44:20 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Aug 01, 2024 8:48:07 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 8:48:09 PM com.ruzzz.nemo.panel.CustomerPanel <init>
+WARNING: LOGGED USER DATA LOADING Exception; Error: java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "com.ruzzz.nemo.model.LoggedUserData.getUserRole()" is null
+Aug 01, 2024 8:48:11 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 01, 2024 8:48:29 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Aug 01, 2024 9:26:40 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 03, 2024 12:51:13 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 03, 2024 1:01:04 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 03, 2024 1:01:16 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 03, 2024 1:26:42 PM com.ruzzz.nemo.panel.IncomePanel loadYears
+WARNING: ERROR WHILELOADING YEAR COMBOBOXcom.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1,525,675 milliseconds ago. The last packet sent successfully to the server was 1,525,774 milliseconds ago.
+Aug 03, 2024 1:28:15 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.

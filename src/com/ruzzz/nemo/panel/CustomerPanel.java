@@ -5,7 +5,6 @@
 package com.ruzzz.nemo.panel;
 
 import com.ruzzz.nemo.connection.MySQL;
-import com.ruzzz.nemo.connection.MySQLTwo;
 import com.ruzzz.nemo.gui.ControlPanel;
 import com.ruzzz.nemo.model.CustomerDataBean;
 import com.ruzzz.nemo.model.LoggedUserData;
@@ -526,8 +525,6 @@ public class CustomerPanel extends javax.swing.JPanel {
                     if (n == JOptionPane.YES_NO_OPTION) {
                         MySQL.execute("INSERT INTO `saloon_nemo`.`customer` (`mobile`, `first_name`, `last_name`, `email`, `gender_id`, `time_stamp`) "
                                 + "VALUES ('" + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" + jTextField3.getText() + "', '" + jTextField4.getText() + "', " + genderMap.get(jComboBox4.getSelectedItem()) + ",  CURRENT_TIMESTAMP)");
-                        MySQLTwo.execute("INSERT INTO `saloon_nemo`.`customer` (`mobile`, `first_name`, `last_name`, `email`, `gender_id`, `time_stamp`) "
-                                + "VALUES ('" + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" + jTextField3.getText() + "', '" + jTextField4.getText() + "', " + genderMap.get(jComboBox4.getSelectedItem()) + ",  CURRENT_TIMESTAMP)");
 
                         infoLogger.info("Customer Registered by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| Customer :" + "Mobile:" + jTextField1.getText() + "Name :" + jTextField2.getText() + " " + jTextField3.getText());
                         MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
@@ -676,9 +673,6 @@ public class CustomerPanel extends javax.swing.JPanel {
                     MySQL.execute("UPDATE `saloon_nemo`.`customer` "
                             + "SET `first_name`='" + jTextField2.getText() + "', `last_name`='" + jTextField3.getText() + "',  `email`='" + jTextField4.getText() + "' "
                             + "WHERE  `mobile`='" + jTextField1.getText() + "'");
-                    MySQLTwo.execute("UPDATE `saloon_nemo`.`customer` "
-                            + "SET `first_name`='" + jTextField2.getText() + "', `last_name`='" + jTextField3.getText() + "',  `email`='" + jTextField4.getText() + "' "
-                            + "WHERE  `mobile`='" + jTextField1.getText() + "'");
 
                     MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                             + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
@@ -823,7 +817,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
 
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/excel/" + jTextField5.getText() + "-" + getCurrentDate() + "-" + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
+                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
 
             workbook.write(out);
             out.close();
