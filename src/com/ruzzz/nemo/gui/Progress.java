@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.gui;
 
+import com.ruzzz.nemo.model.CheckInternetConnection;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
 import java.net.URL;
@@ -19,8 +20,8 @@ public class Progress extends javax.swing.JFrame {
     public Progress() {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
-     
-               ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
+
+        ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
         this.setIconImage(icon.getImage());
 
         progress();
@@ -28,6 +29,7 @@ public class Progress extends javax.swing.JFrame {
     }
 
     private void progress() {
+
         new Thread(() -> {
             for (int i = 0; i <= 100; i++) {
                 jProgressBar2.setValue(i);
@@ -39,7 +41,8 @@ public class Progress extends javax.swing.JFrame {
                         jLabel8.setText("Loading Classes...");
                         break;
                     case 20:
-                        jLabel8.setText("Loading Classes........");
+                        jLabel8.setText("Check Connection........");
+                        CheckInternetConnection.checkConnectivity();
                         break;
                     case 30:
                         jLabel8.setText("Loading Classes...");
@@ -79,6 +82,7 @@ public class Progress extends javax.swing.JFrame {
             new SignIn().setVisible(true);
 
         }).start();
+
     }
 
     @SuppressWarnings("unchecked")

@@ -272,3 +272,7 @@ WARNING: ERROR WHILELOADING YEAR COMBOBOXcom.mysql.cj.jdbc.exceptions.Communicat
 The last packet successfully received from the server was 1,525,675 milliseconds ago. The last packet sent successfully to the server was 1,525,774 milliseconds ago.
 Aug 03, 2024 1:28:15 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLNonTransientConnectionException: No operations allowed after connection closed.
+Aug 14, 2024 10:57:42 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 5,891,033 milliseconds ago. The last packet sent successfully to the server was 5,891,129 milliseconds ago.

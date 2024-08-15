@@ -192,3 +192,7 @@ Aug 03, 2024 1:00:48 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
 INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
 Aug 03, 2024 1:28:15 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Aug 14, 2024 9:18:33 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Aug 14, 2024 10:57:42 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama

@@ -29,7 +29,7 @@ public class SaveIncomeData {
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
 
-        // Root element
+      
         Element root = document.createElement("IncomeData");
         root.setAttribute("year", year);
         document.appendChild(root);

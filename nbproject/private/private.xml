@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/panel/CustomerPanel.java</file>
-            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/panel/CaisherAccessPanel.java</file>
-            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/panel/AdminAccessPanel.java</file>
-            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/panel/ActivityPanel.java</file>
+            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/dialog/ReservationDeatailDialog.java</file>
+            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/gui/SignIn.java</file>
+            <file>file:/C:/Users/Acer/Documents/NetBeansProjects/SaloonNemo/src/com/ruzzz/nemo/chart/Chart.java</file>
         </group>
     </open-files>
 </project-private>

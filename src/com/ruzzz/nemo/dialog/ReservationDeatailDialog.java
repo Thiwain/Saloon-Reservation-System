@@ -732,30 +732,23 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
-            // Use absolute paths or ensure the relative paths are correct
             String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
             String path = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
 
-            // Ensure the JRXML file is accessible
+
             if (!new File(jrxmlReportPath).exists()) {
                 throw new FileNotFoundException("JRXML file not found: " + jrxmlReportPath);
             }
 
-            // Compile the Jasper report
             JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlReportPath);
 
-            // Fill the report
             JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameters, dataSource);
 
-            // View the report
             JasperViewer.viewReport(jasperPrint, false);
 
-            // Print the report
             JasperPrintManager.printReport(jasperPrint, true);
 
-            // Optionally export to PDF
-            // String pdfFilePath = "src/invoice.pdf";
-            // JasperExportManager.exportReportToPdfFile(jasperPrint, pdfFilePath);
+      
             rs.close();
         } catch (Exception e) {
             // Enhanced error logging

@@ -29,7 +29,7 @@ public class SaveReservation {
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
 
-        // Root element
+        
         Element root = document.createElement("ReservationData");
         root.setAttribute("year", year);
         document.appendChild(root);
