@@ -51,8 +51,8 @@ public class ControlPanel extends javax.swing.JFrame {
 
         loadPanel(new WelcomePanel());
 
-        loadAccessPanelToSideBar();
-//        loadAccessPanel(new AdminAccessPanel(this));
+//        loadAccessPanelToSideBar();
+        loadAccessPanel(new AdminAccessPanel(this));
 
         cusPanel = new CustomerPanel(this, resPanel);
         resPanel = new ReservationPanel(this, cusPanel);
