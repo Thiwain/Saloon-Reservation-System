@@ -4,6 +4,7 @@
  */
 package com.ruzzz.nemo.gui;
 
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.ruzzz.nemo.model.CheckInternetConnection;
 import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
@@ -25,7 +26,6 @@ public class Progress extends javax.swing.JFrame {
         this.setIconImage(icon.getImage());
 
         progress();
-        applyTheme();
     }
 
     private void progress() {
@@ -155,7 +155,7 @@ public class Progress extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,7 +178,7 @@ public class Progress extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        FlatMacLightLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Progress().setVisible(true);

@@ -216,3 +216,11 @@ Aug 15, 2024 9:56:38 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:null null
 Aug 15, 2024 10:05:35 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 INFO: SYSTEM CLOSED by Name:null null
+Aug 15, 2024 11:55:18 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Aug 15, 2024 11:56:06 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama
+Aug 18, 2024 10:02:38 AM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+INFO: LOGIN SUCCESS; Name:Thiwian Medagama| Email:thiwainm@gmail.com
+Aug 18, 2024 10:10:08 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+INFO: SYSTEM CLOSED by Name:Thiwian Medagama

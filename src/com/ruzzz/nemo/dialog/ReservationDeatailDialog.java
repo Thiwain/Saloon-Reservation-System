@@ -553,11 +553,15 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
             try {
                 MySQL.execute("UPDATE `saloon_nemo`.`reservation` SET `status_id`=2 WHERE  `id`='" + reservationId + "'");
 
-                MySQL.execute("INSERT INTO"
-                        + " `saloon_nemo`.`invoice`"
-                        + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
-                        + " VALUES "
-                        + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
+                if (Double.parseDouble(jFormattedTextField1.getText()) <= 0) {
+                    Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Values");
+                } else {
+                    MySQL.execute("INSERT INTO"
+                            + " `saloon_nemo`.`invoice`"
+                            + " (`invoice_id`, `reservation_id`, `date_time_issued`, `total`, `service_charge`)"
+                            + " VALUES "
+                            + "('" + invoiceId + "', '" + reservationId + "', CURRENT_TIMESTAMP, '" + jLabel16.getText() + "', '" + jFormattedTextField1.getText() + "')");
+                }
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -735,7 +739,6 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
             String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
             String path = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
 
-
             if (!new File(jrxmlReportPath).exists()) {
                 throw new FileNotFoundException("JRXML file not found: " + jrxmlReportPath);
             }
@@ -748,7 +751,6 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             JasperPrintManager.printReport(jasperPrint, true);
 
-      
             rs.close();
         } catch (Exception e) {
             // Enhanced error logging

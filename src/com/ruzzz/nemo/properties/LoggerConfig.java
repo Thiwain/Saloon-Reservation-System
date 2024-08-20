@@ -22,7 +22,7 @@ public class LoggerConfig {
 
             LogManager.getLogManager().reset();
 
-            // Configure infoLogger for INFO and below
+
             FileHandler infoFileHandler = new FileHandler("logs/user.log", 50000, 1, true);
             infoFileHandler.setFormatter(new SimpleFormatter());
             infoFileHandler.setLevel(Level.INFO);
@@ -33,7 +33,7 @@ public class LoggerConfig {
             infoConsoleHandler.setLevel(Level.INFO);
             infoLogger.addHandler(infoConsoleHandler);
 
-            // Configure errorLogger for WARNING and above
+        
             FileHandler errorFileHandler = new FileHandler("logs/error.log", 50000, 1, true);
             errorFileHandler.setFormatter(new SimpleFormatter());
             errorFileHandler.setLevel(Level.WARNING);

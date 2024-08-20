@@ -436,6 +436,12 @@ public class ServicePanel extends javax.swing.JPanel {
         } else if (jFormattedTextField3.getText().isEmpty()) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Service Title is required!");
             return false;
+        } else if (Double.parseDouble(jFormattedTextField3.getText()) <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Values");
+            return false;
+        } else if (Double.parseDouble(jFormattedTextField2.getText()) <= 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Values");
+            return false;
         } else {
             return true;
         }

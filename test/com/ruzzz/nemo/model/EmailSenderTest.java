@@ -31,7 +31,7 @@ public class EmailSenderTest {
 
     @Test
     public void testSendEmail() {
-        es.sendEmail("Test", "<h1>Test</h1>", "thiwainm@gmail.");
+        es.sendEmail("Test", "<h1>Test</h1>", "thiwainm@gmail.com");
     }
 
 }

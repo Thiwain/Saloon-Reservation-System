@@ -28,3 +28,13 @@ Aug 15, 2024 9:57:29 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfi
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
 Aug 15, 2024 10:05:36 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
 WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Aug 15, 2024 11:55:38 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 18, 2024 8:41:09 AM com.ruzzz.nemo.model.EmailSender sendEmail
+WARNING: Email Sender Exception; Error: javax.mail.internet.AddressException: Domain ends with dot in string ``thiwainm@gmail.''
+Aug 18, 2024 10:03:06 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 18, 2024 10:03:45 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Aug 18, 2024 10:29:41 AM com.ruzzz.nemo.model.EmailSender sendEmail
+WARNING: Email Sender Exception; Error: javax.mail.internet.AddressException: Domain ends with dot in string ``thiwainm@gmail.''
