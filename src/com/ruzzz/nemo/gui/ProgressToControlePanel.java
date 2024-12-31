@@ -30,7 +30,6 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
 
 //        jProgressBar1.setBounds(10, 10, 200, 20); // Example positioning
 //        add(jProgressBar1);
-
         LoggedUserData.setUserRole("ADMIN");
         System.out.println("\n" + LoggedUserData.getFirstName() + "\n" + LoggedUserData.getLastName() + "\n" + LoggedUserData.getUserRole());
 

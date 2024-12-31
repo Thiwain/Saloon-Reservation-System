@@ -66,3 +66,9 @@ Dec 31, 2024 12:36:00 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProf
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
 Dec 31, 2024 12:36:21 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Dec 31, 2024 12:39:47 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Dec 31, 2024 12:39:58 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Dec 31, 2024 12:40:36 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
