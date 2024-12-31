@@ -9,11 +9,10 @@ public class MySQL {
 
     private static Connection connection;
 
- 
-    private static final String username = "dbmasteruser";
-    private static final String password = ",%>:lM,8.ov3c~s,AeHGO(s;uChHEitG";
+    private static final String username = "root";
+    private static final String password = "2005@Thiwain";
     private static final String database = "saloon_nemo";
-    private static final String url = "ls-30ce19b36dcfd4adb024b2d7cda912aa59933775.cr2a06owmr1t.ap-southeast-1.rds.amazonaws.com";
+    private static final String url = "localhost";
 
     static {
 

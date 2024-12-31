@@ -39,6 +39,8 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
             for (int i = 0; i <= 100; i++) {
                 jProgressBar1.setValue(i);
 
+                System.out.println("jProgressBar1: " + (jProgressBar1 == null ? "null" : "initialized"));
+
                 jLabel1.setText(i + "%");
 
                 switch (i) {
@@ -87,8 +89,8 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
                     throw new RuntimeException(e);
                 }
             }
-            this.dispose();
             new ControlPanel().setVisible(true);
+            this.dispose();
         }).start();
     }
 

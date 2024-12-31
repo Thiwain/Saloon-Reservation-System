@@ -38,3 +38,7 @@ Aug 18, 2024 10:03:45 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProf
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
 Aug 18, 2024 10:29:41 AM com.ruzzz.nemo.model.EmailSender sendEmail
 WARNING: Email Sender Exception; Error: javax.mail.internet.AddressException: Domain ends with dot in string ``thiwainm@gmail.''
+Nov 10, 2024 6:45:14 PM com.ruzzz.nemo.gui.SignIn jButton2ActionPerformed
+WARNING: Login Exception; Error: java.lang.NullPointerException: Cannot invoke "java.sql.Connection.createStatement()" because "com.ruzzz.nemo.connection.MySQL.connection" is null
+Dec 31, 2024 10:14:58 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null

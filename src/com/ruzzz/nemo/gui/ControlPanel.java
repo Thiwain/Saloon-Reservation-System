@@ -48,11 +48,9 @@ public class ControlPanel extends javax.swing.JFrame {
         this.setIconImage(icon.getImage());
 
         applyTheme();
-
-        loadPanel(new WelcomePanel());
-
         loadAccessPanelToSideBar();
-//        loadAccessPanel(new AdminAccessPanel(this));
+
+        loadAccessPanel(new AdminAccessPanel(this));
 
         cusPanel = new CustomerPanel(this, resPanel);
         resPanel = new ReservationPanel(this, cusPanel);
@@ -106,10 +104,17 @@ public class ControlPanel extends javax.swing.JFrame {
     }
 
     private void loadAccessPanelToSideBar() {
-        if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
-            loadAccessPanel(new AdminAccessPanel(this));
-        } else {
-            loadAccessPanel(new CaisherAccessPanel(this));
+        try {
+//            if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
+            System.out.println("Creating AdminAccessPanel...");
+            JPanel adminPanel = new AdminAccessPanel(this);
+            System.out.println("AdminAccessPanel created successfully!");
+            loadAccessPanel(adminPanel);
+//            } else {
+//                loadAccessPanel(new CaisherAccessPanel(this));
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -357,7 +362,7 @@ public class ControlPanel extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        applyTheme();
+//        applyTheme();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ControlPanel().setVisible(true);
