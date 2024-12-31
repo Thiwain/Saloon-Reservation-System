@@ -13,9 +13,11 @@ import com.ruzzz.nemo.model.Role;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.validation.ValidationProcess;
+import java.awt.Desktop;
 import java.awt.Frame;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -251,10 +253,10 @@ public class EmployeePanel extends javax.swing.JPanel {
             XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
             XSSFRow row;
 
-            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
+            Map<String, Object[]> autoSpaTableData = new TreeMap<String, Object[]>();
 
             for (int i = 0; i < jTable2.getRowCount(); i++) {
-                studentData.put(String.valueOf(i),
+                autoSpaTableData.put(String.valueOf(i),
                         new Object[]{jTable2.getValueAt(i, 0),
                             jTable2.getValueAt(i, 1),
                             jTable2.getValueAt(i, 2),
@@ -266,12 +268,12 @@ public class EmployeePanel extends javax.swing.JPanel {
                             jTable2.getValueAt(i, 8)});
             }
 
-            Set<String> keyid = studentData.keySet();
+            Set<String> keyid = autoSpaTableData.keySet();
 
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
-                Object[] objectArr = studentData.get(key);
+                Object[] objectArr = autoSpaTableData.get(key);
                 int cellid = 0;
                 for (Object obj : objectArr) {
                     Cell cell = row.createCell(cellid++);
@@ -279,15 +281,18 @@ public class EmployeePanel extends javax.swing.JPanel {
                 }
             }
 
-            FileOutputStream out = new FileOutputStream(
-                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox6.getSelectedItem().toString()));
-
+            String fileExtension = jComboBox6.getSelectedItem().toString();
+            filename = "excel" + File.separator + "EmployList" + String.valueOf(System.currentTimeMillis()) + fileExtension;
+            File file = new File(filename);
+            FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
+
             out.close();
         } catch (Exception e) {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
+    private String filename;
 
     private Boolean validateInsert() {
         if (!ValidationProcess.validateMobile(jTextField6.getText())) {
@@ -350,8 +355,6 @@ public class EmployeePanel extends javax.swing.JPanel {
         jButton5 = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jComboBox6 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
@@ -590,8 +593,6 @@ public class EmployeePanel extends javax.swing.JPanel {
 
         jPanel17.setLayout(new java.awt.BorderLayout());
 
-        jLabel23.setText("File Name");
-
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".csv", ".xlsx" }));
         jComboBox6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -614,11 +615,7 @@ public class EmployeePanel extends javax.swing.JPanel {
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addContainerGap(562, Short.MAX_VALUE)
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(744, Short.MAX_VALUE)
                 .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -627,13 +624,10 @@ public class EmployeePanel extends javax.swing.JPanel {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel23)
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jComboBox6, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -678,7 +672,7 @@ public class EmployeePanel extends javax.swing.JPanel {
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -945,10 +939,20 @@ public class EmployeePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (!jTextField5.getText().isEmpty()) {
-            printExcel();
-        } else {
-            JOptionPane.showMessageDialog(null, "File Name is Required!");
+        printExcel();
+        int o = JOptionPane.showConfirmDialog(null, "Download File?", "Information", JOptionPane.YES_NO_OPTION);
+        if (o == JOptionPane.YES_OPTION) {
+            File file = new File(filename);
+            System.out.println(filename);
+            try {
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No file found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1200,7 +1204,6 @@ public class EmployeePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1242,7 +1245,6 @@ public class EmployeePanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;

@@ -9,8 +9,10 @@ import com.ruzzz.nemo.connection.MySQL;
 import com.ruzzz.nemo.gui.ControlPanel;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -241,12 +243,11 @@ public class ReservationListPanel extends javax.swing.JPanel {
             XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
             XSSFRow row;
 
-            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
+            Map<String, Object[]> autoSpaTableData = new TreeMap<String, Object[]>();
 
             for (int i = 0; i < jTable1.getRowCount(); i++) {
-                studentData.put(String.valueOf(i),
-                        new Object[]{
-                            jTable1.getValueAt(i, 0),
+                autoSpaTableData.put(String.valueOf(i),
+                        new Object[]{jTable1.getValueAt(i, 0),
                             jTable1.getValueAt(i, 1),
                             jTable1.getValueAt(i, 2),
                             jTable1.getValueAt(i, 3),
@@ -254,16 +255,15 @@ public class ReservationListPanel extends javax.swing.JPanel {
                             jTable1.getValueAt(i, 5),
                             jTable1.getValueAt(i, 6),
                             jTable1.getValueAt(i, 7),
-                            jTable1.getValueAt(i, 8)
-                        });
+                            jTable1.getValueAt(i, 8)});
             }
 
-            Set<String> keyid = studentData.keySet();
+            Set<String> keyid = autoSpaTableData.keySet();
 
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
-                Object[] objectArr = studentData.get(key);
+                Object[] objectArr = autoSpaTableData.get(key);
                 int cellid = 0;
                 for (Object obj : objectArr) {
                     Cell cell = row.createCell(cellid++);
@@ -271,15 +271,18 @@ public class ReservationListPanel extends javax.swing.JPanel {
                 }
             }
 
-            FileOutputStream out = new FileOutputStream(
-                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox3.getSelectedItem().toString()));
-
+            String fileExtension = jComboBox3.getSelectedItem().toString();
+            filename = "excel" + File.separator + "EmployList" + String.valueOf(System.currentTimeMillis()) + fileExtension;
+            File file = new File(filename);
+            FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
+
             out.close();
         } catch (Exception e) {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
+    private String filename;
 
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
@@ -316,8 +319,6 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
@@ -492,8 +493,6 @@ public class ReservationListPanel extends javax.swing.JPanel {
 
         add(jPanel6, java.awt.BorderLayout.PAGE_START);
 
-        jLabel9.setText("File Name");
-
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".csv", ".xlsx" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -516,11 +515,7 @@ public class ReservationListPanel extends javax.swing.JPanel {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(617, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(799, Short.MAX_VALUE)
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -530,12 +525,9 @@ public class ReservationListPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -596,10 +588,20 @@ public class ReservationListPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (!jTextField5.getText().isEmpty()) {
-            printExcel();
-        } else {
-            JOptionPane.showMessageDialog(null, "File Name is Required!");
+        printExcel();
+        int o = JOptionPane.showConfirmDialog(null, "Download File?", "Information", JOptionPane.YES_NO_OPTION);
+        if (o == JOptionPane.YES_OPTION) {
+            File file = new File(filename);
+            System.out.println(filename);
+            try {
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No file found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -666,7 +668,6 @@ public class ReservationListPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -677,7 +678,6 @@ public class ReservationListPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
     private raven.datetime.component.time.TimePicker timePicker1;
     private raven.datetime.component.time.TimePicker timePicker2;
     // End of variables declaration//GEN-END:variables

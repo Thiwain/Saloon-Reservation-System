@@ -12,8 +12,10 @@ import com.ruzzz.nemo.model.Role;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import static com.ruzzz.nemo.properties.LoggerConfig.infoLogger;
 import com.ruzzz.nemo.validation.ValidationProcess;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -36,11 +38,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import raven.toast.Notifications;
 
 public class CustomerPanel extends javax.swing.JPanel {
-    
+
     private static ControlPanel cP;
-    
+
     private static ReservationPanel rp;
-    
+
     public CustomerPanel(JFrame cp, ReservationPanel rP) {
         initComponents();
         loadGenders();
@@ -62,7 +64,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             errorLogger.warning("LOGGED USER DATA LOADING Exception; Error: " + e);
         }
     }
-    
+
     public void hideForCaisher() {
         jPanel11.setVisible(false);
         jDateChooser1.setEnabled(false);
@@ -72,7 +74,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jComboBox3.setEnabled(false);
         jButton3.setVisible(false);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -103,8 +105,6 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -274,18 +274,12 @@ public class CustomerPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel9.setText("File Name");
-
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(564, Short.MAX_VALUE)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(746, Short.MAX_VALUE)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,12 +289,9 @@ public class CustomerPanel extends javax.swing.JPanel {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -459,7 +450,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     HashMap<String, String> genderMap = new HashMap<>();
-    
+
     private void loadGenders() {
         Vector<String> v = new Vector<>();
         try {
@@ -483,7 +474,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
-    
+
     private boolean validateCustomer() {
         if (!ValidationProcess.validateMobile(jTextField1.getText())) {
             return false;
@@ -500,7 +491,7 @@ public class CustomerPanel extends javax.swing.JPanel {
             return true;
         }
     }
-    
+
     private void clearUserData() {
         jTextField1.setText("");
         jTextField1.setEnabled(true);
@@ -518,18 +509,18 @@ public class CustomerPanel extends javax.swing.JPanel {
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+
         if (validateCustomer()) {
             try {
-                
+
                 ResultSet checkNo = MySQL.execute("SELECT * FROM `customer` WHERE `mobile`='" + jTextField1.getText() + "'");
                 if (!checkNo.next()) {
-                    
+
                     int n = JOptionPane.showConfirmDialog(null, "Confirm Registration?", "", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_NO_OPTION) {
                         MySQL.execute("INSERT INTO `saloon_nemo`.`customer` (`mobile`, `first_name`, `last_name`, `email`, `gender_id`, `time_stamp`) "
                                 + "VALUES ('" + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" + jTextField3.getText() + "', '" + jTextField4.getText() + "', " + genderMap.get(jComboBox4.getSelectedItem()) + ",  CURRENT_TIMESTAMP)");
-                        
+
                         infoLogger.info("Customer Registered by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| Customer :" + "Mobile:" + jTextField1.getText() + "Name :" + jTextField2.getText() + " " + jTextField3.getText());
                         MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                                 + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
@@ -545,7 +536,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                     jTextField1.setText("");
                     checkNo.close();
                 }
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
                 errorLogger.warning("CUSTOMER REGISTRATION Exception; Error: " + e);
@@ -558,11 +549,11 @@ public class CustomerPanel extends javax.swing.JPanel {
 //        cP.loadCustomer();
         clearUserData();
     }//GEN-LAST:event_jButton3ActionPerformed
-    
+
     private static String convertDateString(String dateStr) {
         SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         try {
             Date date = inputFormat.parse(dateStr);
             return outputFormat.format(date);
@@ -571,16 +562,16 @@ public class CustomerPanel extends javax.swing.JPanel {
             return null;
         }
     }
-    
+
     private static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return currentDate.format(formatter);
     }
-    
+
     private static boolean querySelection = false;
     private static boolean querySelection2 = false;
-    
+
     public static boolean isDate1NotLater(Date date1, Date date2) {
         if (date1 == null && date2 == null) {
             querySelection = true;
@@ -590,26 +581,26 @@ public class CustomerPanel extends javax.swing.JPanel {
             System.out.println("d1 is empty");
             return false;
         }
-        
+
         LocalDate d2 = convertToLocalDate(date2);
         LocalDate d1 = convertToLocalDate(date1);
-        
+
         return !(d1 != null && d1.isAfter(d2));
     }
-    
+
     private static LocalDate convertToLocalDate(Date date) {
         if (date == null) {
             return null;
         }
         return new java.sql.Date(date.getTime()).toLocalDate();
     }
-    
+
     private void customerSort(String searchTxt) {
         try {
             Date date1 = jDateChooser1.getDate();
             Date date2 = jDateChooser2.getDate();
             boolean isNotLater = isDate1NotLater(date1, date2);
-            
+
             StringBuilder query = new StringBuilder("SELECT * FROM customer ");
             query.append("INNER JOIN gender ON customer.gender_id=gender.id ");
             query.append("WHERE (");
@@ -617,11 +608,11 @@ public class CustomerPanel extends javax.swing.JPanel {
             query.append("OR customer.last_name LIKE '%").append(searchTxt).append("%' ");
             query.append("OR customer.mobile LIKE '%").append(searchTxt).append("%' ");
             query.append("OR customer.email LIKE '%").append(searchTxt).append("%')");
-            
+
             if (jComboBox3.getSelectedIndex() != 0) {
                 query.append(" AND customer.gender_id='").append(jComboBox3.getSelectedIndex()).append("'");
             }
-            
+
             if (date1 != null || date2 != null) {
                 if (isNotLater) {
                     if (date2 == null) {
@@ -635,13 +626,13 @@ public class CustomerPanel extends javax.swing.JPanel {
                     Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_CENTER, "Invalid Date Selection !");
                 }
             }
-            
+
             query.append(" ORDER BY customer.time_stamp ").append(jComboBox1.getSelectedItem().toString());
-            
+
             ResultSet rs = MySQL.execute(query.toString());
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
-            
+
             while (rs.next()) {
                 Vector<String> customerList = new Vector<>();
                 customerList.add(rs.getString("id"));
@@ -654,12 +645,12 @@ public class CustomerPanel extends javax.swing.JPanel {
                 tableModel.addRow(customerList);
             }
             rs.close();
-            
+
         } catch (Exception e) {
             errorLogger.warning("CUSTOMER LOADING loadCustomer() Exception; Error: " + e);
         }
     }
-    
+
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         customerSort(jTextField6.getText());
@@ -677,12 +668,12 @@ public class CustomerPanel extends javax.swing.JPanel {
                     MySQL.execute("UPDATE `saloon_nemo`.`customer` "
                             + "SET `first_name`='" + jTextField2.getText() + "', `last_name`='" + jTextField3.getText() + "',  `email`='" + jTextField4.getText() + "' "
                             + "WHERE  `mobile`='" + jTextField1.getText() + "'");
-                    
+
                     MySQL.execute("INSERT INTO `saloon_nemo`.`log_record` (`employee_user_id`, `date_time`, `description`) "
                             + "VALUES ('" + LoggedUserData.getUserId() + "', CURRENT_TIMESTAMP, "
                             + "'CUSTOMER:" + jTextField1.getText() + "," + jTextField2.getText() + " " + jTextField3.getText() + " "
                             + " -> Updated By" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "')");
-                    
+
                     infoLogger.info("Customer Updated by Name:" + LoggedUserData.getFirstName() + " " + LoggedUserData.getLastName() + "| Customer :" + "Mobile:" + jTextField1.getText() + "Name :" + jTextField2.getText() + " " + jTextField3.getText());
                     Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_CENTER, "User Updated !");
                     clearUserData();
@@ -699,16 +690,16 @@ public class CustomerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
+
         if (evt.getClickCount() == 1) {
-            
+
             jTextField1.setEnabled(false);
             jButton5.setEnabled(false);
             jButton4.setEnabled(true);
             jComboBox4.setEnabled(false);
-            
+
             int row = jTable1.getSelectedRow();
-            
+
             String mobile = jTable1.getValueAt(row, 1).toString();
             jTextField1.setText(mobile);
             String fname = jTable1.getValueAt(row, 2).toString();
@@ -719,9 +710,9 @@ public class CustomerPanel extends javax.swing.JPanel {
             jComboBox4.setSelectedIndex(Integer.parseInt(gender));
             String email = jTable1.getValueAt(row, 5).toString();
             jTextField4.setText(email);
-            
+
         }
-        
+
         if (evt.getClickCount() == 2) {
             int row = jTable1.getSelectedRow();
             String id = jTable1.getValueAt(row, 0).toString();
@@ -741,10 +732,20 @@ public class CustomerPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (!jTextField5.getText().isEmpty()) {
-            printExcel();
-        } else {
-            JOptionPane.showMessageDialog(null, "File Name is Required!");
+        printExcel();
+        int o = JOptionPane.showConfirmDialog(null, "Download File?", "Information", JOptionPane.YES_NO_OPTION);
+        if (o == JOptionPane.YES_OPTION) {
+            File file = new File(filename);
+            System.out.println(filename);
+            try {
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No file found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -758,14 +759,14 @@ public class CustomerPanel extends javax.swing.JPanel {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         String searchText = jTextField1.getText();
-        
+
         try {
             ResultSet rs = MySQL.execute("SELECT *\n"
                     + "FROM customer INNER JOIN gender ON customer.gender_id = gender.id\n"
                     + "WHERE mobile LIKE '" + searchText + "%'");
-            
+
             jComboBox3.setSelectedIndex(0);
-            
+
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
             tableModel.setRowCount(0);
             int rowNO = 0;
@@ -787,17 +788,17 @@ public class CustomerPanel extends javax.swing.JPanel {
             errorLogger.warning("Customer Loading error from search; Error: " + e);
         }
     }//GEN-LAST:event_jTextField1KeyReleased
-    
+
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet(" Customer Data ");
+            XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
             XSSFRow row;
-            
-            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
-            
+
+            Map<String, Object[]> autoSpaTableData = new TreeMap<String, Object[]>();
+
             for (int i = 0; i < jTable1.getRowCount(); i++) {
-                studentData.put(String.valueOf(i),
+                autoSpaTableData.put(String.valueOf(i),
                         new Object[]{jTable1.getValueAt(i, 0),
                             jTable1.getValueAt(i, 1),
                             jTable1.getValueAt(i, 2),
@@ -806,29 +807,32 @@ public class CustomerPanel extends javax.swing.JPanel {
                             jTable1.getValueAt(i, 5),
                             jTable1.getValueAt(i, 6)});
             }
-            
-            Set<String> keyid = studentData.keySet();
-            
+
+            Set<String> keyid = autoSpaTableData.keySet();
+
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
-                Object[] objectArr = studentData.get(key);
+                Object[] objectArr = autoSpaTableData.get(key);
                 int cellid = 0;
                 for (Object obj : objectArr) {
                     Cell cell = row.createCell(cellid++);
                     cell.setCellValue((String) obj);
                 }
             }
-            
-            FileOutputStream out = new FileOutputStream(
-                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
-            
+
+            String fileExtension = jComboBox2.getSelectedItem().toString();
+            filename = "excel" + File.separator + "EmployList" + String.valueOf(System.currentTimeMillis()) + fileExtension;
+            File file = new File(filename);
+            FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
+
             out.close();
         } catch (Exception e) {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
+    private String filename;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -852,7 +856,6 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -873,7 +876,6 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

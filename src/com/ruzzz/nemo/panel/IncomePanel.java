@@ -14,6 +14,7 @@ import static com.ruzzz.nemo.model.SaveReservation.saveReservationDataToXML;
 import static com.ruzzz.nemo.panel.CustomerPanel.isDate1NotLater;
 import static com.ruzzz.nemo.properties.LoggerConfig.errorLogger;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -524,28 +525,28 @@ public class IncomePanel extends javax.swing.JPanel {
     private void printExcel() {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet(" Customer Data ");
+            XSSFSheet spreadsheet = workbook.createSheet(" Employee Data ");
             XSSFRow row;
 
-            Map<String, Object[]> studentData = new TreeMap<String, Object[]>();
+            Map<String, Object[]> autoSpaTableData = new TreeMap<String, Object[]>();
 
             for (int i = 0; i < jTable2.getRowCount(); i++) {
-                studentData.put(String.valueOf(i),
+                autoSpaTableData.put(String.valueOf(i),
                         new Object[]{jTable2.getValueAt(i, 0),
                             jTable2.getValueAt(i, 1),
                             jTable2.getValueAt(i, 2),
                             jTable2.getValueAt(i, 3),
                             jTable2.getValueAt(i, 4),
                             jTable2.getValueAt(i, 5),
-                            jTable2.getValueAt(i, 6),});
+                            jTable2.getValueAt(i, 6)});
             }
 
-            Set<String> keyid = studentData.keySet();
+            Set<String> keyid = autoSpaTableData.keySet();
 
             int rowid = 0;
             for (String key : keyid) {
                 row = spreadsheet.createRow(rowid++);
-                Object[] objectArr = studentData.get(key);
+                Object[] objectArr = autoSpaTableData.get(key);
                 int cellid = 0;
                 for (Object obj : objectArr) {
                     Cell cell = row.createCell(cellid++);
@@ -553,15 +554,18 @@ public class IncomePanel extends javax.swing.JPanel {
                 }
             }
 
-            FileOutputStream out = new FileOutputStream(
-                    new File("excel/" + jTextField5.getText() + String.valueOf(System.currentTimeMillis()) + jComboBox2.getSelectedItem().toString()));
-
+            String fileExtension = jComboBox3.getSelectedItem().toString();
+            filename = "excel" + File.separator + "EmployList" + String.valueOf(System.currentTimeMillis()) + fileExtension;
+            File file = new File(filename);
+            FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
+
             out.close();
         } catch (Exception e) {
             errorLogger.warning("TABLE EXPORT ERROR; Error: " + e);
         }
     }
+    private String filename;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -630,8 +634,6 @@ public class IncomePanel extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel30 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
@@ -1043,8 +1045,6 @@ public class IncomePanel extends javax.swing.JPanel {
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel29.setText("Reservations:");
 
-        jLabel30.setText("File Name");
-
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ".csv", ".xlsx" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1077,32 +1077,25 @@ public class IncomePanel extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel8Layout.createSequentialGroup()
-                                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -1122,22 +1115,18 @@ public class IncomePanel extends javax.swing.JPanel {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(123, 123, 123)
+                .addGap(156, 156, 156)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel24, jLabel25, jLabel26, jLabel27});
 
-        jPanel8Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton7, jComboBox3, jTextField5});
+        jPanel8Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton7, jComboBox3});
 
         jPanel5.add(jPanel8, java.awt.BorderLayout.LINE_END);
 
@@ -1266,7 +1255,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
         );
 
         add(jPanel3, java.awt.BorderLayout.CENTER);
@@ -1308,10 +1297,20 @@ public class IncomePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if (!jTextField5.getText().isEmpty()) {
-            printExcel();
-        } else {
-            JOptionPane.showMessageDialog(null, "File Name is Required!");
+        printExcel();
+        int o = JOptionPane.showConfirmDialog(null, "Download File?", "Information", JOptionPane.YES_NO_OPTION);
+        if (o == JOptionPane.YES_OPTION) {
+            File file = new File(filename);
+            System.out.println(filename);
+            try {
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No file found", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1419,7 +1418,6 @@ public class IncomePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1448,6 +1446,5 @@ public class IncomePanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }
