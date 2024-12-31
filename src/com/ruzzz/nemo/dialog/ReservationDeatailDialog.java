@@ -736,8 +736,8 @@ public class ReservationDeatailDialog extends java.awt.Dialog {
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(v);
 
-            String jrxmlReportPath = "src/com/ruzzz/nemo/report/Blank_A4_3.jrxml";
-            String path = "src/com/ruzzz/nemo/report/Blank_A4_3.jasper";
+            String jrxmlReportPath = "src//com//ruzzz//nemo//report//Blank_A4_3.jrxml";
+            String path = "src//com//ruzzz//nemo//report//Blank_A4_3.jasper";
 
             if (!new File(jrxmlReportPath).exists()) {
                 throw new FileNotFoundException("JRXML file not found: " + jrxmlReportPath);

@@ -31,7 +31,7 @@ public class JasperTest {
             parameterMap.put("Parameter2", "2024-08-01-2024-08-02");
             parameterMap.put("Parameter3", "0.00");
             parameterMap.put("Parameter4", "0.00");
-            String path = "src/com/ruzzz/nemo/report/income.jasper";
+            String path = "src//com//ruzzz//nemo//report//income.jasper";
             JasperReport report = JasperCompileManager.compileReport(path);
             JasperPrint jprint = JasperFillManager.fillReport(path, parameterMap, new JREmptyDataSource());
             JasperViewer.viewReport(jprint, false);

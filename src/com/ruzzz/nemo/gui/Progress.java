@@ -6,11 +6,8 @@ package com.ruzzz.nemo.gui;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.ruzzz.nemo.model.CheckInternetConnection;
-import static com.ruzzz.nemo.properties.ThemeManager.applyTheme;
 import java.awt.Color;
-import java.net.URL;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 /**
  *

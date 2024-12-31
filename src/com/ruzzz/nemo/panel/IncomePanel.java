@@ -1358,7 +1358,7 @@ public class IncomePanel extends javax.swing.JPanel {
                 parameterMap.put("Parameter2", convertDateString(jDateChooser5.getDate().toString()) + "-" + convertDateString(jDateChooser6.getDate().toString()));
                 parameterMap.put("Parameter3", jLabel25.getText());
                 parameterMap.put("Parameter4", jLabel27.getText());
-                String path = "src/com/ruzzz/nemo/report/income.jrxml";
+                String path = "src//com//ruzzz//nemo//report//income.jrxml";
 
                 DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
 

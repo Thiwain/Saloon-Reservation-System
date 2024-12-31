@@ -27,7 +27,7 @@ public class SignIn extends javax.swing.JFrame {
     public SignIn() {
         initComponents();
 
-        this.setTitle("Log In");
+        this.setTitle("Sign In");
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
         this.setIconImage(icon.getImage());

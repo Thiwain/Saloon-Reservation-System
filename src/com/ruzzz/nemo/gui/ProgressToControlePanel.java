@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 import raven.toast.Notifications;
 
 /**
@@ -27,6 +28,12 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
 
+//        jProgressBar1.setBounds(10, 10, 200, 20); // Example positioning
+//        add(jProgressBar1);
+
+        LoggedUserData.setUserRole("ADMIN");
+        System.out.println("\n" + LoggedUserData.getFirstName() + "\n" + LoggedUserData.getLastName() + "\n" + LoggedUserData.getUserRole());
+
         ImageIcon icon = new ImageIcon(getClass().getResource("/com/ruzzz/nemo/img/scissors_icon.png"));
         this.setIconImage(icon.getImage());
 
@@ -35,61 +42,81 @@ public class ProgressToControlePanel extends javax.swing.JFrame {
     }
 
     private void progress() {
-        new Thread(() -> {
-            for (int i = 0; i <= 100; i++) {
-                jProgressBar1.setValue(i);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i <= 100; i++) {
+                    final int progress = i;
 
-                jLabel1.setText(i + "%");
-
-                switch (i) {
-                    case 10:
-                        jLabel3.setText("Loading...");
-                        break;
-                    case 20:
-                        jLabel3.setText("Loading........");
-                        break;
-                    case 30:
-                        jLabel3.setText("Loading...");
-                        break;
-                    case 40:
-                        if (LoggedUserData.getUserRole().equals(Role.ADMIN.name())) {
-                            Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_CENTER, "Please wait a while.....");
-                            SaveData.SaveData();
-                            jLabel3.setText("Loading Finantial Data........");
-                        } else {
-                            jLabel3.setText("Loading........");
+                    // Safely update the UI from the Event Dispatch Thread (EDT)
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            jProgressBar1.setValue(progress);
+                            jLabel1.setText(progress + "%");
+                            if (progress % 10 == 0) {
+                                updateProgressMessage(progress);
+                            }
                         }
-                        break;
-                    case 50:
-                        jLabel3.setText("Loading...");
-                        break;
-                    case 60:
-                        jLabel3.setText("Loading........");
-                        break;
-                    case 70:
-                        jLabel3.setText("Loading...");
-                        break;
-                    case 80:
-                        jLabel3.setText("Loading........");
-                        break;
-                    case 90:
-                        jLabel3.setText("Loading...");
-                        break;
-                    case 100:
-                        jLabel3.setText("Loading......");
-                        break;
-                    default:
-                        break;
+                    });
+
+                    // Simulate loading delay
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        // Log or handle interruption
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
                 }
-                try {
-                    Thread.sleep(30);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+
+                // Open the ControlPanel and dispose of the current frame on EDT
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new ControlPanel().setVisible(true);
+                        dispose();
+                    }
+                });
             }
-            this.dispose();
-            new ControlPanel().setVisible(true);
         }).start();
+    }
+
+// Helper method to update progress messages
+    private void updateProgressMessage(int progress) {
+        switch (progress) {
+            case 10:
+            case 30:
+            case 50:
+            case 70:
+            case 90:
+                jLabel3.setText("Loading...");
+                break;
+            case 20:
+            case 60:
+            case 80:
+                jLabel3.setText("Loading........");
+                break;
+            case 40:
+                if ("ADMIN".equals(LoggedUserData.getUserRole())) {
+                    Notifications.getInstance().show(
+                            Notifications.Type.INFO,
+                            Notifications.Location.TOP_CENTER,
+                            "Please wait a while..."
+                    );
+                    SaveData.SaveData();
+                    jLabel3.setText("Loading Financial Data........");
+                } else {
+                    jLabel3.setText("Loading........");
+                }
+                break;
+            case 100:
+                jLabel3.setText("Loading complete.");
+                break;
+            default:
+                // No action needed for other values
+                break;
+        }
     }
 
     @SuppressWarnings("unchecked")

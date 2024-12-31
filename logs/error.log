@@ -38,3 +38,31 @@ Aug 18, 2024 10:03:45 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProf
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
 Aug 18, 2024 10:29:41 AM com.ruzzz.nemo.model.EmailSender sendEmail
 WARNING: Email Sender Exception; Error: javax.mail.internet.AddressException: Domain ends with dot in string ``thiwainm@gmail.''
+Dec 31, 2024 11:49:59 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:51:21 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:52:20 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:54:09 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:55:21 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:55:43 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 11:59:55 AM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:25:32 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:26:52 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:28:32 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:32:24 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:32:47 PM com.ruzzz.nemo.gui.ControlPanel formWindowClosing
+WARNING: SYSTEM CLOSE LOG UPDATE ERROR; Error: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`saloon_nemo`.`log_record`, CONSTRAINT `fk_log_record_employee1` FOREIGN KEY (`employee_user_id`) REFERENCES `employee` (`user_id`))
+Dec 31, 2024 12:36:00 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Dec 31, 2024 12:36:21 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
