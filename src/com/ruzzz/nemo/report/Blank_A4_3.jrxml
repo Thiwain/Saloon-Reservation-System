@@ -30,7 +30,7 @@
 	<title>
 		<band height="73" splitType="Stretch">
 			<staticText>
-				<reportElement x="40" y="0" width="180" height="40" uuid="daaff1b4-2047-489e-b08f-68c25ac346a3"/>
+				<reportElement x="0" y="0" width="210" height="40" uuid="daaff1b4-2047-489e-b08f-68c25ac346a3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Segoe UI Black" size="24"/>
 				</textElement>
@@ -43,10 +43,6 @@
 				</textElement>
 				<text><![CDATA[583/8A Bambalapitiya Galle Road, Colombo/ 0117689007/ nemo.support@slnemo.com]]></text>
 			</staticText>
-			<image>
-				<reportElement x="-10" y="0" width="50" height="40" uuid="dae09606-0c22-4239-8100-71980c7cfe36"/>
-				<imageExpression><![CDATA["C:/Users/Acer/Downloads/753894_hairdresser_beauty_hair_salon_scissors_icon.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>

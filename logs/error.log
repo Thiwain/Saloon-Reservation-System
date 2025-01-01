@@ -94,3 +94,5 @@ Dec 31, 2024 5:54:19 PM com.ruzzz.nemo.panel.IncomePanel printExcel
 WARNING: TABLE EXPORT ERROR; Error: java.lang.ArrayIndexOutOfBoundsException: 7 >= 7
 Dec 31, 2024 5:57:50 PM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
 WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null
+Jan 01, 2025 10:03:34 AM com.ruzzz.nemo.panel.IncomePanel calculateIncomeAndProfitCombo
+WARNING: ERROR WHILE CALCULATE IMCOME TOTAL BY COMBOBOXjava.lang.NullPointerException: Cannot invoke "String.trim()" because "in" is null

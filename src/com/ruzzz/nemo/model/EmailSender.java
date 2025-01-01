@@ -41,7 +41,7 @@ public class EmailSender {
 
         // Replace with your Gmail credentials
         String username = "medagamathiwain@gmail.com";
-        String password = "uelt skyt idjl mazs";
+        String password = "jafj cqvt gcwf btqi";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
