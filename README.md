@@ -2,7 +2,7 @@
 # SaloonNemo
 
 ## Project Overview
-SaloonNemo is a comprehensive salon reservation system designed to streamline the booking process for salons and their clients. This system allows clients to easily book appointments online, while providing salon staff with an efficient way to manage these reservations. The project is developed using Java and other supporting technologies.
+SaloonNemo is a comprehensive salon reservation system designed to streamline the booking process for salons and their clients. This system allows system user to easily book appointments online, while providing salon staff with an efficient way to manage these reservations. The project is developed using Java and other supporting technologies.
 
 ## Features
 - **User Registration and Login**: Secure registration and login system for both clients and salon staff.
